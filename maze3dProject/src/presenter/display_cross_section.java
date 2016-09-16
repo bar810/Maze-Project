@@ -3,7 +3,7 @@ package presenter;
 import view.MyView;
 import model.MyModel;
 /**
- * Display cross section class
+ * Display cross section class.
  * implements Command class and override doCommand interface.
  * the purpose of this class is to print the maze by choosing coordinate.
  * @author bar brownshtein and avihai sabiher

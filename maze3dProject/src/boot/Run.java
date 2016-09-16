@@ -10,7 +10,7 @@ import view.MyView;
 
 /*TODO:
  fresvetb
- gg
+ ggcdc
 */
 
 public class Run {

@@ -62,7 +62,13 @@ public class MyModel extends Observable implements model {
 	}
 	@Override
 	public void Solve(String name, String algo) {
-		if (mazes.get(name) != null) {
+		//solve is exist
+		if(solutions.containsKey(name)){
+			setChanged();
+			System.out.println("chack chack chack");
+			notifyObservers("solve_ready " + name);
+		}
+		else if (mazes.get(name) != null) {
 			MazeSearchableAdapter mazeAdapter = new MazeSearchableAdapter(mazes.get(name));
 			FutureTask<Solution> f = new FutureTask<Solution>(new Callable<Solution>() {
 				@Override

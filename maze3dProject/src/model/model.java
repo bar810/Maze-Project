@@ -1,5 +1,8 @@
 package model;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public interface model {
 	public void generateMaze(String name, int flos, int rows, int cols);
 	public void Solve(String name, String algo);
@@ -12,4 +15,9 @@ public interface model {
 	public String Exit ();
 	public void saveToFile (String name, String fileName);
 	public void loadFromFile (String fileName, String name);
+//	public void loadFromFileZip(String name);
+//	public void saveToFileZip(String name);
+	public void saveSolution(String name);
+	public void loadSolution(String name);
+
 }

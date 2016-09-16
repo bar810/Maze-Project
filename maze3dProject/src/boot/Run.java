@@ -9,8 +9,8 @@ import view.MyView;
 
 
 /*TODO:
- fresvetb
- ggcdc
+save and load with zip part B
+i need to save the solution, but each run shuld have the same name for diffrent mazes
 */
 
 public class Run {

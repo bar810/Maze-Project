@@ -70,7 +70,7 @@ public class MyModel extends Observable implements model {
 	public void Solve(String name, String algo) {
 		//solve is exist
 		//add
-		loadFromFile(name);
+		loadSolution(name);
 				
 		if(solutions.containsKey(name)){
 			setChanged();
@@ -255,7 +255,7 @@ public class MyModel extends Observable implements model {
 		} catch (IOException e1) {
 			message = "save faild";
 		}
-		message="solution saved!";
+		message="solution saved!\n";
 		setChanged();
 		notifyObservers("display_msg");
 	}
@@ -263,6 +263,7 @@ public class MyModel extends Observable implements model {
 	@Override
 	public void loadSolution(String name)  {
 		try{
+		
 		ObjectInputStream ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("saves " + name + ".maz")));
 		String tmpName = (String) ois.readObject();
 		Solution tmpSolution = (Solution) ois.readObject();
@@ -274,7 +275,7 @@ public class MyModel extends Observable implements model {
 			message = "load faild- class not found";
 			e.printStackTrace();
 		}
-		message="solution loaded!";
+		message="solution loaded!\n";
 		setChanged();
 		notifyObservers("display_msg");
 	}

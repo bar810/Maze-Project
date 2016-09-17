@@ -254,7 +254,7 @@ public class MyModel extends Observable implements model {
 	public void saveSolutions(){
 		ObjectOutputStream oos=null;
 		try{
-			oos = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("AllSolutions")));
+			oos = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("AllSolutionsCatch")));
 			oos.writeObject(this.solutions);
 			oos.close();
 			} catch (IOException e1) {
@@ -270,7 +270,7 @@ public class MyModel extends Observable implements model {
 	public void loadSolutions()  {
 		ObjectInputStream ois=null;
 		try{
-		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("AllSolutions")));
+		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("AllSolutionsCatch")));
 		this.solutions=(HashMap<String, Solution>) ois.readObject();
 		ois.close();
 		} catch (IOException e1) {
@@ -287,7 +287,7 @@ public class MyModel extends Observable implements model {
 	public void saveMazes(){
 		ObjectOutputStream oos=null;
 		try{
-			oos = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("AllMazes")));
+			oos = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("AllMazesCatch")));
 			oos.writeObject(this.mazes);
 			oos.close();
 			} catch (IOException e1) {
@@ -300,7 +300,7 @@ public class MyModel extends Observable implements model {
 	public void loadMazes(){
 		ObjectInputStream ois=null;
 		try{
-		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("AllMazes")));
+		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("AllMazesCatch")));
 		this.mazes=(HashMap<String, Maze3d>) ois.readObject();
 		ois.close();
 		} catch (IOException e1) {

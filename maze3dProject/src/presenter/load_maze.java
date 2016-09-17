@@ -15,12 +15,12 @@ public class load_maze implements Command {
 	}
 	@Override
 	public void doCommand(String[] args) {
-		if (args.length == 3){
+		if (args.length == 2){
 			//right input
-			m.loadFromFile(args[1], args[2]);
+			m.loadFromFile(args[1]);
 		}
 		else{
-			((MyView)v).Print("Load_maze [fileName] [name] \n");
+			((MyView)v).Print("Load_maze  [name] \n");
 		}
 	}
 }

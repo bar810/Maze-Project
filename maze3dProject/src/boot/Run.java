@@ -10,7 +10,8 @@ import view.MyView;
 
 /*TODO:
 save and load with zip part B
-i need to save the solution, but each run shuld have the same name for diffrent mazes
+i save all tthe data in exit method but in the constrctor he cant load beacuse the list is empty
+need to check if the solution save methos is ok
 */
 
 public class Run {

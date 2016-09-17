@@ -1,5 +1,6 @@
 package presenter;
 
+import model.MyModel;
 import view.MyView;
 /**
  * Exit class
@@ -9,11 +10,15 @@ import view.MyView;
  */
 public class exit implements Command{
 	private MyView v;
-	public exit(MyView view) {
+	private MyModel m;
+	
+	public exit(MyView view,MyModel model) {
 		this.v = view;
+		this.m=model;
 	}
 	@Override
 	public void doCommand(String[] args) {
-		((MyView)v).Print("Shutdown the program. thank you \n");	
+		m.Exit();
+		((MyView)v).Print("\nShutdown the program. thank you \n");	
 	}
 }

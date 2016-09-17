@@ -16,12 +16,12 @@ public class save_maze implements Command {
 	}
 	@Override
 	public void doCommand(String[] args) {
-			if (args.length == 3){
+			if (args.length == 2){
 				//right input
-			m.saveToFile(args[1], args[2]);
+			m.saveToFile(args[1]);
 			}
 			else{
-				((MyView)v).Print("save_maze [name] [fileName.maz]");
+				((MyView)v).Print("save_maze [name] ");
 			}
 		}
 

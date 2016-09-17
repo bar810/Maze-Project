@@ -10,11 +10,10 @@ public interface model {
 	public void getCrossSection(String axis, int index, String name);
 	public void getMaze3d(String name);	
 	public String getPendingMessage ();
-	public void saveToFile(String name);
-	public void loadFromFile(String Name);
-	public String Exit ();
-	public void saveToFile (String name, String fileName);
-	public void loadFromFile (String fileName, String name);
+
+	public void Exit ();
+	public void saveToFile (String name);
+	public void loadFromFile (String name);
 //	public void loadFromFileZip(String name);
 //	public void saveToFileZip(String name);
 	public void saveSolution(String name);

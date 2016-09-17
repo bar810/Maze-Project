@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -35,12 +36,14 @@ public class MyModel extends Observable implements model {
 	int[][] maze2d = null;
 	ExecutorService exs;
 	Maze3dGenerator mg;
+	
 	public MyModel(int numThreads) {
 		exs = Executors.newFixedThreadPool(numThreads);
+		loadAllToFile(mazes, solutions);
 	}
 	@Override
 	public void generateMaze(String name, int flos, int rows, int cols) {
-
+	
 		mg = new GrowingTreeGenerator();
 		maze = mazes.get(name);
 		if (maze == null) {
@@ -69,8 +72,7 @@ public class MyModel extends Observable implements model {
 	@Override
 	public void Solve(String name, String algo) {
 		//solve is exist
-		//add
-		loadSolution(name);
+		
 				
 		if(solutions.containsKey(name)){
 			setChanged();
@@ -94,10 +96,7 @@ public class MyModel extends Observable implements model {
 				}
 			});
 			exs.execute(f);
-			//add
-			saveSolution(name);
-			
-			//
+		
 			message = "Solution created!\n";
 			setChanged();
 			notifyObservers("solve_ready " + name);
@@ -109,6 +108,7 @@ public class MyModel extends Observable implements model {
 		
 	}
 	}
+	
 	@Override
 	public void Display_Sol(String name) {
 		if (mazes.get(name) != null) {
@@ -181,15 +181,15 @@ public class MyModel extends Observable implements model {
 	}
 
 	@Override
-	public void saveToFile (String name, String fileName){
+	public void saveToFile (String name){
 		if (mazes.get(name) != null){
 			try{
-				OutputStream out = new myCompressorOutputStream(new FileOutputStream(fileName));
+				OutputStream out = new myCompressorOutputStream(new FileOutputStream("maze_"+name+".maz"));
 				try{
 					out.write(mazes.get(name).toByteArray());
 					out.flush();
 					out.close();
-					message= "Maze saved to " + fileName;
+					message= "Maze saved to maze_" + name;
 					setChanged();
 					notifyObservers("save_ready " + name);
 				}
@@ -207,12 +207,12 @@ public class MyModel extends Observable implements model {
 	}
 	
 	@Override
-	public void loadFromFile (String fileName, String name){
+	public void loadFromFile ( String name){
 		byte [] b = new byte [3];
 		InputStream in = null;
 		Maze3d maze = null;
 		try {
-			in = new FileInputStream(fileName);
+			in = new FileInputStream("maze_"+name+".maz");
 		} 
 		catch (FileNotFoundException e2) {
 			message= "Loading Failed : File Not Found 0x01";
@@ -228,7 +228,7 @@ public class MyModel extends Observable implements model {
 			message= "Loading Failed : Couldn't read the file 0x01";
 		}
 		try {
-			in = new MyDecompressorInputStream(new FileInputStream(fileName));
+			in = new MyDecompressorInputStream(new FileInputStream("maze_"+name+".maz"));
 		} catch (FileNotFoundException e1) {
 			message= "Loading Failed : File Not Found 0x02";
 		}
@@ -248,7 +248,7 @@ public class MyModel extends Observable implements model {
 	@Override
 	public void saveSolution(String name) {
 		try{
-		ObjectOutputStream oos = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("saves " + name + ".maz")));
+		ObjectOutputStream oos = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("solution_" + name + ".maz")));
 		oos.writeObject(name);
 		oos.writeObject(solutions.get(name));
 		oos.close();
@@ -263,8 +263,7 @@ public class MyModel extends Observable implements model {
 	@Override
 	public void loadSolution(String name)  {
 		try{
-		
-		ObjectInputStream ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("saves " + name + ".maz")));
+		ObjectInputStream ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("solution_" + name + ".maz")));
 		String tmpName = (String) ois.readObject();
 		Solution tmpSolution = (Solution) ois.readObject();
 		solutions.put(tmpName, tmpSolution);
@@ -280,100 +279,23 @@ public class MyModel extends Observable implements model {
 		notifyObservers("display_msg");
 	}
 	
-	
-//	@Override
-//	public void saveToFileZip(String name) {
-//		ObjectOutputStream oos = null;
-//		if (mazes.get(name) != null) {
-//
-//			try {
-//				oos = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("saves " + name + ".maz")));	
-//				
-//				try {
-//					oos.writeObject(name);
-//					oos.writeObject(mazes.get(name));
-//					message = "Maze saved! \nBut no solution saved. \n";
-//					if (solutions.get(name) != null) {
-//						try {
-//							oos.writeObject(solutions.get(name));
-//							message = "Maze and Solution saved!";
-//						} catch (IOException e) {
-//							message = "Couldn't save solution to file\n" + e.getMessage() + "\n";
-//						}
-//					}
-//				} catch (IOException e1) {
-//					message = "Couldn't save maze to file\n" + e1.getMessage() + "\n";
-//				}
-//			} catch (FileNotFoundException e2) {
-//				message = "Couldn't create save file\n" + e2.getMessage() + "\n";
-//			} catch (IOException e2) {
-//				message = "Couldn't save to file\n" + e2.getMessage() + "\n";
-//			}
-//
-//			try {
-//				oos.close();
-//			} catch (IOException e1) {
-//				message = "Couldn't close the file\n" + e1.getMessage() + "\n";
-//			}
-//			setChanged();
-//			notifyObservers("display_msg");
-//			}
-//		}
-//		
-//	
-//
-//	public void loadFromFileZip(String name) {
-//		ObjectInputStream ois = null;
-//		String tmpName = null;
-//		Maze3d tmpMaze3d = null;
-//		Solution tmpSolution = null;
-//
-//		try {
-//			ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("saves " + name + ".maz")));
-//			try {
-//				tmpName = (String) ois.readObject();
-//				try {
-//					tmpMaze3d = (Maze3d) ois.readObject();
-//					mazes.put(tmpName, tmpMaze3d);
-//					setChanged();
-//					notifyObservers(tmpMaze3d);
-//					message = "Maze " + tmpName + " Loaded successfuly\n";
-//					try {
-//						tmpSolution = (Solution) ois.readObject();
-//						solutions.put(tmpName, tmpSolution);
-//						message = "Maze and Solution " + tmpName + " Loaded successfuly\n";
-//					} catch (ClassNotFoundException e) {
-//						message = e.getMessage() + "\n";
-//					} catch (IOException e) {
-//						message = "Maze " + tmpName + " loaded \nBut Couldn't read Solution " + e.getMessage() + "\n";
-//					}
-//				} catch (ClassNotFoundException e) {
-//					message = e.getMessage() + "\n";
-//				} catch (IOException e) {
-//					message = "Couldn't read Maze from file " + e.getMessage() + "\n";
-//				}
-//			} catch (ClassNotFoundException e) {
-//				message = e.getMessage() + "\n";
-//			}
-//		} catch (FileNotFoundException e3) {
-//			message = "Couldn't find file specified \n" + e3.getMessage() + "\n";
-//		} catch (IOException e3) {
-//			message = "Couldn't read from file " + e3.getMessage() + "\n";
-//		}
-//
-//		try {
-//			ois.close();
-//		} catch (IOException e) {
-//			message = "Couldn't close the file " + e.getMessage() + "\n";
-//		}
-//
-//		setChanged();
-//		notifyObservers("display_msg");
-//	}
-
-	
-	
-	
+	public void saveAllToFile(HashMap<String, Maze3d> mazes,HashMap<String, Solution> solutions){
+		
+		for(Entry<String, Maze3d> entry : mazes.entrySet()) {
+		    String name = entry.getKey();
+		    saveToFile(name);
+		    saveSolution(name);
+		}
+		
+		
+	}
+	public void loadAllToFile(HashMap<String, Maze3d> mazes,HashMap<String, Solution> solutions){
+		for(Entry<String, Maze3d> entry : mazes.entrySet()) {
+		    String name = entry.getKey();
+		    loadFromFile(name);
+		    loadSolution(name);
+		}
+	}
 	
 	@Override
 	public String getPendingMessage() {
@@ -381,18 +303,11 @@ public class MyModel extends Observable implements model {
 	}
 
 	@Override
-	public void saveToFile(String name) {
-		// TODO Auto-generated catch block
-	}
-
-	@Override
-	public void loadFromFile(String Name) {
-		// TODO Auto-generated catch block
-	}
-
-	@Override
-	public String Exit() {
-		return null;
+	public void Exit() {
+		saveAllToFile(mazes, solutions);
+		message= "\nall the data was saved!";
+		setChanged();
+		notifyObservers("display_msg");
 	}
 
 }

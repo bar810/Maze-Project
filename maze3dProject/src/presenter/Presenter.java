@@ -39,7 +39,7 @@ public class Presenter extends Observable implements Observer{
 		commands.put("display_cross_section", new display_cross_section(view,model));
 		commands.put("save_maze", new save_maze(view,model));
 		commands.put("load_maze", new load_maze(view,model));
-		commands.put("exit", new exit(view));;
+		commands.put("exit", new exit(view,model));;
 		commands.put("display_msg", new display_message(view,model));
 		commands.put("load_ready",  new load_ready(view,model));
 		commands.put("maze_ready", new maze_ready(view, model));

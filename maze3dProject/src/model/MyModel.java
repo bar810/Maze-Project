@@ -1,12 +1,17 @@
 package model;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Observable;
@@ -39,7 +44,8 @@ public class MyModel extends Observable implements model {
 	
 	public MyModel(int numThreads) {
 		exs = Executors.newFixedThreadPool(numThreads);
-		loadAllToFile(mazes, solutions);
+	loadAllMazesFromFile(mazes);
+	
 	}
 	@Override
 	public void generateMaze(String name, int flos, int rows, int cols) {
@@ -72,8 +78,6 @@ public class MyModel extends Observable implements model {
 	@Override
 	public void Solve(String name, String algo) {
 		//solve is exist
-		
-				
 		if(solutions.containsKey(name)){
 			setChanged();
 			message= "The solution for this maze is already exist!";
@@ -96,7 +100,6 @@ public class MyModel extends Observable implements model {
 				}
 			});
 			exs.execute(f);
-		
 			message = "Solution created!\n";
 			setChanged();
 			notifyObservers("solve_ready " + name);
@@ -207,7 +210,7 @@ public class MyModel extends Observable implements model {
 	}
 	
 	@Override
-	public void loadFromFile ( String name){
+	public void loadFromFile (String name){
 		byte [] b = new byte [3];
 		InputStream in = null;
 		Maze3d maze = null;
@@ -249,7 +252,7 @@ public class MyModel extends Observable implements model {
 	public void saveSolution(String name) {
 		try{
 		ObjectOutputStream oos = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("solution_" + name + ".maz")));
-		oos.writeObject(name);
+		//oos.writeObject(name);
 		oos.writeObject(solutions.get(name));
 		oos.close();
 		} catch (IOException e1) {
@@ -260,13 +263,15 @@ public class MyModel extends Observable implements model {
 		notifyObservers("display_msg");
 	}
 
+
 	@Override
 	public void loadSolution(String name)  {
 		try{
 		ObjectInputStream ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("solution_" + name + ".maz")));
-		String tmpName = (String) ois.readObject();
-		Solution tmpSolution = (Solution) ois.readObject();
-		solutions.put(tmpName, tmpSolution);
+		//String tmpName = (String) ois.readObject();
+		Solution tmpSolution =new Solution<>();
+				tmpSolution=(Solution) ois.readObject();
+		solutions.put(name, tmpSolution);
 		ois.close();
 		} catch (IOException e1) {
 			message = "load faild";
@@ -279,23 +284,49 @@ public class MyModel extends Observable implements model {
 		notifyObservers("display_msg");
 	}
 	
-	public void saveAllToFile(HashMap<String, Maze3d> mazes,HashMap<String, Solution> solutions){
-		
+	public void saveAllMazesToFile(HashMap<String, Maze3d> mazes){
+		PrintStream out = null;
+		try {
+			 out = new PrintStream(new FileOutputStream("mazes_names.txt"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		for(Entry<String, Maze3d> entry : mazes.entrySet()) {
 		    String name = entry.getKey();
+		    out.println(name);
 		    saveToFile(name);
-		    saveSolution(name);
 		}
-		
-		
+		  out.println("end");
 	}
-	public void loadAllToFile(HashMap<String, Maze3d> mazes,HashMap<String, Solution> solutions){
-		for(Entry<String, Maze3d> entry : mazes.entrySet()) {
-		    String name = entry.getKey();
-		    loadFromFile(name);
-		    loadSolution(name);
+	public void loadAllMazesFromFile(HashMap<String, Maze3d> mazes){
+	
+		ArrayList<String> names=new ArrayList<String>();
+		String temp=new String();
+		BufferedReader br = null;
+		int i=0;
+		try {
+			br = new BufferedReader(new FileReader("mazes_names.txt"));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
+		while(!temp.equals("end")){
+			try {
+				names.add(br.readLine());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			temp=names.get(i);
+			i++;
+		}
+		names.remove(i-1);
+	for(int k=0;k<names.size();k++){
+		loadFromFile(names.get(k));
 	}
+			    
+}   
 	
 	@Override
 	public String getPendingMessage() {
@@ -304,10 +335,9 @@ public class MyModel extends Observable implements model {
 
 	@Override
 	public void Exit() {
-		saveAllToFile(mazes, solutions);
+		saveAllMazesToFile(mazes);
 		message= "\nall the data was saved!";
 		setChanged();
 		notifyObservers("display_msg");
-	}
-
+	}	
 }

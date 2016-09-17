@@ -17,8 +17,6 @@ public class save_ready implements Command {
 	@Override
 	public void doCommand(String[] args) {
 		String name = args[0];
-		String msg = "the maze are saved !";
-		v.displayMessage(msg);
 	}
 
 }

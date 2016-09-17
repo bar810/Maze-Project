@@ -9,7 +9,6 @@ import view.MyView;
 
 
 /*TODO:
-save al mazes is good but why all is erase?
 need todo save all solutions
 */
 

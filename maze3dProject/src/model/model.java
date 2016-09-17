@@ -14,7 +14,6 @@ public interface model {
 	public void Exit ();
 	public void saveToFile (String name);
 	public void loadFromFile (String name);
-	public void saveSolution(String name);
-	public void loadSolution(String name);
+
 
 }

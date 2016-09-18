@@ -13,9 +13,8 @@ import view.MyView;
 
 /*TODO:
  * ask the lecture:
-		testing class
-		what need to implements view interface?
-		why ??? in gui class
+		testing class		
+		
 */
 
 public class Run {
@@ -38,6 +37,9 @@ public class Run {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}	
+		
+		
+		//cli view
 		MyView view = new MyView(in, out);
 		MyModel model = new MyModel(50,properties);
 		Presenter presenter = new Presenter(model, view,50,properties);

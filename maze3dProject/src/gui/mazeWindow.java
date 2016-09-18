@@ -11,6 +11,12 @@ import org.eclipse.swt.widgets.Composite;
 
 public class mazeWindow extends baseWindow {
 
+	@Override
+	protected void initWidgets() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 

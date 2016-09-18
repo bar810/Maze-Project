@@ -50,15 +50,15 @@ public class MyView extends Observable implements view, Observer {
 		writer.write(str);
 		writer.flush();
 	}
-	@Override
+
 	public void setMaze3dData(Maze3d maze) {
 		// TODO Auto-generated method stub
 	}
-	@Override
+	
 	public void setSolution(Solution arg) {
 		// TODO Auto-generated method stub
 	}
-	@Override
+	
 	public void displayMessage(String msg) {
 		writer.println(msg);
 		writer.flush();		

@@ -6,9 +6,9 @@ public class Properties implements Serializable {
 
 
 	/*
-	 * DFS = 0 / BFS = 1
-	 * GUI = 0 / CLI = 1
-	 * Simple  = 0 / growing = 1 
+	 * solveAlgorithem: DFS = 0 / BFS = 1
+	 * runTimeEnv: GUI = 0 / CLI = 1
+	 * mazeGenerator: Simple  = 0 / growing = 1 
 	 * 
 	 */
 	
@@ -20,7 +20,7 @@ public class Properties implements Serializable {
 	
 	public Properties() {
 		mazeGenerator = 1;
-		solveAlgorithm = 2;
+		solveAlgorithm = 1;
 		runtimeEnv = 1;
 		maxNumOfThreads = 50;
 		

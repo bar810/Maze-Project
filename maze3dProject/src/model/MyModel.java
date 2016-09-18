@@ -313,6 +313,7 @@ public class MyModel extends Observable implements model {
 	public void loadMazes(){
 		ObjectInputStream ois=null;
 		try{
+			//GZIP is make it small. object can save any object. the object must be seriazible
 		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("AllMazesCatch")));
 		this.mazes=(HashMap<String, Maze3d>) ois.readObject();
 		ois.close();
@@ -342,6 +343,11 @@ public class MyModel extends Observable implements model {
 	}	
 	public void setProperties(Properties p) {
 		this.properties=p;
-			
 		}
+	public void resetProperties(){
+		properties.setMaxNumOfThreads(50);
+		properties.setMazeGenerator(1);
+		properties.setRuntimeEnv(1);
+		properties.setSolveAlgorithm(1);
+	}
 }

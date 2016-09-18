@@ -27,11 +27,13 @@ import algorithms.demo.MazeSearchableAdapter;
 import algorithms.mazeGenerators.GrowingTreeGenerator;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Maze3dGenerator;
+import algorithms.mazeGenerators.SimpleMaze3dGenerator;
 import algorithms.search.BFS;
 import algorithms.search.DFS;
 import algorithms.search.Solution;
 import io.MyDecompressorInputStream;
 import io.myCompressorOutputStream;
+import presenter.Properties;
 public class MyModel extends Observable implements model {
 
 	private HashMap<String, Maze3d> mazes = new HashMap<String, Maze3d>();
@@ -41,17 +43,28 @@ public class MyModel extends Observable implements model {
 	int[][] maze2d = null;
 	ExecutorService exs;
 	Maze3dGenerator mg;
+	Properties properties;
 	
-	public MyModel(int numThreads) {
+	public MyModel(int numThreads,Properties p) {
 		exs = Executors.newFixedThreadPool(numThreads);
-	
+		this.properties=p;
 		loadSolutions();
 		loadMazes();
 	}
 	@Override
 	public void generateMaze(String name, int flos, int rows, int cols) {
 	
-		mg = new GrowingTreeGenerator();
+		mg = null;
+		switch (properties.getMazeGenerator()) {
+		case 0:
+			mg = new SimpleMaze3dGenerator();
+			break;
+		case 1:
+			mg = new GrowingTreeGenerator();
+			break;
+		default:
+			break;
+		}
 		maze = mazes.get(name);
 		if (maze == null) {
 			FutureTask<Maze3d> f = new FutureTask<Maze3d>(new Callable<Maze3d>() {
@@ -322,11 +335,13 @@ public class MyModel extends Observable implements model {
 
 	@Override
 	public void Exit() {
-
 		saveSolutions();
 		saveMazes();
-		message= "\nAll the data was saved!";
 		setChanged();
 		notifyObservers("display_msg");
 	}	
+	public void setProperties(Properties p) {
+		this.properties=p;
+			
+		}
 }

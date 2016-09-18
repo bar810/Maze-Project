@@ -6,7 +6,6 @@ import java.util.Observer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
 import model.MyModel;
 import view.MyView;
 
@@ -17,12 +16,17 @@ public class Presenter extends Observable implements Observer{
 	private HashMap<String, Command> commands;
 	private HashMap<String, Command> ModelCmd;
 	private ExecutorService exs;
+	public Properties properties;
 	
-	public Presenter(MyModel model2, MyView view2,int threads) {
+	public Presenter(MyModel model2, MyView view2,int threads,Properties p) {
 		this.model = model2;
 		this.view = view2;
 		this.set();
 		exs = Executors.newFixedThreadPool(threads);
+		this.properties=p;
+		
+		model.setProperties(properties);
+		view.setProperties(properties);
 	}
 	public HashMap<String, Command> get (){
 		return commands;

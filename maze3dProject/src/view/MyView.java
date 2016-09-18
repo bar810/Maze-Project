@@ -7,12 +7,14 @@ import java.util.Observer;
 
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.search.Solution;
+import presenter.Properties;
 
 public class MyView extends Observable implements view, Observer {
 
 	CLI cli;
 	private BufferedReader reader;
 	private PrintWriter writer;
+	Properties properties;
 	
 	public MyView(BufferedReader reader ,PrintWriter writer) throws Exception {
 		this.reader = reader;
@@ -60,5 +62,9 @@ public class MyView extends Observable implements view, Observer {
 	public void displayMessage(String msg) {
 		writer.println(msg);
 		writer.flush();		
+	}
+	public void setProperties(Properties p) {
+	this.properties=p;
+		
 	}
 }

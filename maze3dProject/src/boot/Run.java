@@ -13,8 +13,7 @@ import view.MyView;
 
 
 /*TODO:
-proporties class
-junit test class
+
 */
 
 public class Run {

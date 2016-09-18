@@ -13,7 +13,11 @@ import view.MyView;
 
 
 /*TODO:
-
+ * ask the lecture:
+		GUI can't import
+		testing class
+		what need to implements view interface?
+		why ???
 */
 
 public class Run {

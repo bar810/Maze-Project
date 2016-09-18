@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-
 import model.MyModel;
 import presenter.Presenter;
 import presenter.Properties;
@@ -14,10 +13,9 @@ import view.MyView;
 
 /*TODO:
  * ask the lecture:
-		GUI can't import
 		testing class
 		what need to implements view interface?
-		why ???
+		why ??? in gui class
 */
 
 public class Run {

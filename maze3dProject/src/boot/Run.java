@@ -10,17 +10,19 @@ import presenter.Properties;
 import presenter.PropertiesHandler;
 import view.MyView;
 
-
 /*TODO:
 			
 */
-
 public class Run {
 	public static void main(String[] args) throws Exception {
+		
+		
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		PrintWriter out = new PrintWriter(System.out);
-		
+		MyModel model = null;
+		MyView view = null;
 		Properties properties = null;
+		
 		try {
 			properties = PropertiesHandler.getInstance();
 		} catch (FileNotFoundException e2) {
@@ -32,17 +34,24 @@ public class Run {
 				System.out.println("Could not save default properties file, please check manually");
 			}
 		} catch (Exception e2) {
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}	
+		model = new MyModel(properties.getMaxNumOfThreads(),properties);
 		
-		
-		//cli view
-		MyView view = new MyView(in, out);
-		MyModel model = new MyModel(50,properties);
-		Presenter presenter = new Presenter(model, view,50,properties);
-		model.addObserver(presenter);
-		view.addObserver(presenter);
-		view.start();
+		switch (properties.getRuntimeEnv()) {
+		case 0://using for GUI view in the future
+			
+		case 1://CLI view
+			try {
+				view = new MyView(in, out);
+				Presenter presenter = new Presenter(model, view,2,properties);
+				view.addObserver(presenter);
+				model.addObserver(presenter);
+				view.start();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			break;
+		}
 	}
 }

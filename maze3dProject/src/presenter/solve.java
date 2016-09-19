@@ -23,8 +23,11 @@ public class solve implements Command {
 		if (args.length == 3){
 			m.Solve(args[1] , args[2]);
 		}
+		else if(args.length==2){
+			m.Solve(args[1],"properties" );
+		}
 		else{
-			((MyView) v).Print("Solve [(name] [(dfs/bfs/breadthfs) algorithm]\n");
+			((MyView) v).Print("Solve [(name] [(dfs/bfs) algorithm]\n");
 		}
 	}
 }

@@ -12,9 +12,7 @@ import view.MyView;
 
 
 /*TODO:
- * ask the lecture:
-		testing class		
-		
+			
 */
 
 public class Run {

@@ -109,6 +109,13 @@ public class MyModel extends Observable implements model {
 					case "bfs":
 						solutions.put(name, new BFS().search(mazeAdapter));
 						break;
+					case "properties":
+						int temp=properties.getSolveAlgorithm();
+						if(temp==1)
+							solutions.put(name, new BFS().search(mazeAdapter));
+						if(temp==2)
+							solutions.put(name, new DFS().search(mazeAdapter));
+						break;
 					}
 					return solutions.get(name);
 				}
@@ -349,5 +356,11 @@ public class MyModel extends Observable implements model {
 		properties.setMazeGenerator(1);
 		properties.setRuntimeEnv(1);
 		properties.setSolveAlgorithm(1);
+		System.out.println("properties was reset to defualt !");
+	}
+	public void eraseAllData(){
+		this.mazes.clear();
+		this.solutions.clear();
+		System.out.println("All data was cleared !");
 	}
 }

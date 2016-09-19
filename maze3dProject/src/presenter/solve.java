@@ -1,7 +1,7 @@
 package presenter;
+import view.view;
+import model.model;
 
-import view.MyView;
-import model.MyModel;
 /**
  * Solve class
  * the class is implements Command interface and override doCommands function
@@ -12,9 +12,9 @@ import model.MyModel;
  * @author bar brownshtein and avihai sabiher
  */
 public class solve implements Command {
-	private MyModel m;
-	private MyView v;
-	public solve(MyView view , MyModel model) {
+	private model m;
+	private view v;
+	public solve(view view , model model) {
 		this.m = model;
 		this.v = view;
 	}
@@ -27,7 +27,7 @@ public class solve implements Command {
 			m.Solve(args[1],"properties" );
 		}
 		else{
-			((MyView) v).Print("Solve [(name] [(dfs/bfs) algorithm]\n");
+			 v.Print("Solve [(name] [(dfs/bfs) algorithm]\n");
 		}
 	}
 }

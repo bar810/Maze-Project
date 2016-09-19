@@ -1,7 +1,8 @@
 package presenter;
 
-import view.MyView;
-import model.MyModel;
+import model.model;
+import view.view;
+
 /**
  * Display cross section class.
  * implements Command class and override doCommand interface.
@@ -9,9 +10,9 @@ import model.MyModel;
  * @author bar brownshtein and avihai sabiher
  */
 public class display_cross_section implements Command {
-	private MyModel m;
-	private MyView v;
-	public display_cross_section(MyView view , MyModel model) {
+	private model m;
+	private view v;
+	public display_cross_section(view view , model model) {
 		this.m = model;
 		this.v = view;
 	}
@@ -21,7 +22,7 @@ public class display_cross_section implements Command {
 			m.getCrossSection(args[1],Integer.parseInt(args[2]),args[3]);
 	}
 	else{
-		((MyView) v).Print("Syntax should be: display_cross_section [X/Y/Z] [Index] [name]\n");
+		 v.Print("Syntax should be: display_cross_section [X/Y/Z] [Index] [name]\n");
 	}		
 }	
 }

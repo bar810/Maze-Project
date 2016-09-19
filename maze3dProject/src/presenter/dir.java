@@ -1,5 +1,5 @@
 package presenter;
-import view.MyView;
+import view.view;
 /**
  * Dir class
  * the class is implements Command interface and override doCommand function
@@ -8,13 +8,13 @@ import view.MyView;
  *
  */
 public class dir implements Command{
-	private MyView v;
-	public dir(MyView view) {
+	private view v;
+	public dir(view view) {
 		this.v = view;
 	}
 	@Override
 	public void doCommand(String[] args) {
 		ClassLoader clo = dir.class.getClassLoader();
-		((MyView)v).Print(clo.getResource("").toString());
+		v.Print(clo.getResource("").toString());
 	}
 }

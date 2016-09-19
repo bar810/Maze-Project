@@ -1,16 +1,16 @@
 package presenter;
 
 
-import model.MyModel;
-import view.MyView;
+import model.model;
+import view.view;
 
 public class load_ready implements Command {
 
 	
-	private MyModel m;
-	private MyView v;
+	private model m;
+	private view v;
 	
-	public load_ready(MyView view , MyModel model) {
+	public load_ready(view view , model model) {
 		this.m = model;
 		this.v = view;
 	}

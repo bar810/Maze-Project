@@ -1,7 +1,7 @@
 package presenter;
 
-import model.MyModel;
-import view.MyView;
+import model.model;
+import view.view;
 /**
  * Exit class
  * this class is implements Command interface and override doCommand function
@@ -9,16 +9,16 @@ import view.MyView;
  * @author bar brownshtein and avihai sabiher
  */
 public class exit implements Command{
-	private MyView v;
-	private MyModel m;
+	private view v;
+	private model m;
 	
-	public exit(MyView view,MyModel model) {
+	public exit(view view,model model) {
 		this.v = view;
 		this.m=model;
 	}
 	@Override
 	public void doCommand(String[] args) {
 		m.Exit();
-		((MyView)v).Print("\nShutdown the program. thank you \n");	
+		v.Print("\nShutdown the program. thank you \n");	
 	}
 }

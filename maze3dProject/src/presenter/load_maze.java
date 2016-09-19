@@ -1,15 +1,11 @@
 package presenter;
-
-
-import model.Model;
-import model.MyModel;
-import view.MyView;
-import view.View;
+import model.model;
+import view.view;
 
 public class load_maze implements Command {
-	private MyModel m;
-	private MyView v;
-	public load_maze(MyView v , MyModel m) {
+	private model m;
+	private view v;
+	public load_maze(view v , model m) {
 		this.m = m;
 		this.v = v;
 	}
@@ -20,7 +16,7 @@ public class load_maze implements Command {
 			m.loadFromFile(args[1]);
 		}
 		else{
-			((MyView)v).Print("Load_maze  [name] \n");
+			v.Print("Load_maze  [name] \n");
 		}
 	}
 }

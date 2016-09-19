@@ -1,7 +1,5 @@
 package model;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import presenter.Properties;
 
 public interface model {
 	public void generateMaze(String name, int flos, int rows, int cols);
@@ -10,10 +8,10 @@ public interface model {
 	public void getCrossSection(String axis, int index, String name);
 	public void getMaze3d(String name);	
 	public String getPendingMessage ();
-
 	public void Exit ();
 	public void saveToFile (String name);
 	public void loadFromFile (String name);
-
-
+	public void eraseAllData();
+	public void resetProperties();
+	public void setProperties(Properties p);
 }

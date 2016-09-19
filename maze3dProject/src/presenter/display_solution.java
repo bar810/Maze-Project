@@ -1,6 +1,6 @@
 package presenter;
-import model.MyModel;
-import view.MyView;
+import model.model;
+import view.view;
 /**
  * Display solution class
  * this class is implements Command interface and override doCommand function
@@ -9,9 +9,9 @@ import view.MyView;
  *
  */
 public class display_solution implements Command {
-	private MyModel m;
-	private MyView v;
-	public display_solution(MyView view , MyModel model) {
+	private model m;
+	private view v;
+	public display_solution(view view , model model) {
 		this.m = model;
 		this.v = view;
 	}
@@ -21,7 +21,7 @@ public class display_solution implements Command {
 			m.Display_Sol(args[1]);
 		}
 		else{
-			((MyView) v).Print("display_solution [name]\n");
+			 v.Print("display_solution [name]\n");
 		}		
 	}
 }

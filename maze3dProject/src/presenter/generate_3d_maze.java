@@ -1,6 +1,6 @@
 package presenter;
-import model.MyModel;
-import view.MyView;
+import model.model;
+import view.view;
 /**
  * Generate 3d maze class
  * the class is implements Command interface and override doCommand function
@@ -12,9 +12,9 @@ import view.MyView;
  * @author bar brownshtein and avihai sabiher
  */
 public class generate_3d_maze implements Command {
-	private MyModel m;
-	private MyView v;
-	public generate_3d_maze(MyView view , MyModel model) {
+	private model m;
+	private view v;
+	public generate_3d_maze(view view , model model) {
 		this.m = model;
 		this.v = view;
 	}
@@ -34,7 +34,7 @@ public class generate_3d_maze implements Command {
 			}	
 		}
 		else{
-			((MyView) v).Print("Syntax should be: generate_3d_maze [name] [flors] [rows] [colums]\n");
+			 v.Print("Syntax should be: generate_3d_maze [name] [flors] [rows] [colums]\n");
 		}
 	}
 	/**

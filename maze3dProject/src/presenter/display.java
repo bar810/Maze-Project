@@ -1,6 +1,6 @@
 package presenter;
-import view.MyView;
-import model.MyModel;
+import view.view;
+import model.model;
 /**
  * Display class
  * this class is implements Command interface and override doCommand function
@@ -8,19 +8,19 @@ import model.MyModel;
  * @author bar brownshtein and avihai sabiher
  */
 public class display implements Command {
-	private MyModel m;
-	private MyView v;
-	public display(MyView view , MyModel model) {
+	private model m;
+	private view v;
+	public display(view view , model model) {
 		this.m = model;
 		this.v = view;
 	}
 	@Override
 	public void doCommand(String[] args) {
 		if (args.length == 2){
-			((MyModel) m).getMaze3d(args[1]);
+			 m.getMaze3d(args[1]);
 		}
 		else{
-			((MyView) v).Print("display [name]\n");
+			 v.Print("display [name]\n");
 		}	
 	}
 }

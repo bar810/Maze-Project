@@ -1,13 +1,11 @@
 package presenter;
-
-
-import model.MyModel;
-import view.MyView;
+import model.model;
+import view.view;
 
 public class eraseAllData implements Command {
-	private MyModel m;
-	private MyView v;
-	public eraseAllData(MyView view , MyModel model) {
+	private model m;
+	private view v;
+	public eraseAllData(view view , model model) {
 		this.m = model;
 		this.v = view;
 	}

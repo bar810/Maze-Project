@@ -46,6 +46,7 @@ public class MyView extends Observable implements view, Observer {
 		//cliThread.start();	
 		cliThread.run();
 	}
+	@Override
 	public void Print (String str){
 		writer.write(str);
 		writer.flush();
@@ -58,11 +59,12 @@ public class MyView extends Observable implements view, Observer {
 	public void setSolution(Solution arg) {
 		// TODO Auto-generated method stub
 	}
-	
+	@Override
 	public void displayMessage(String msg) {
 		writer.println(msg);
 		writer.flush();		
 	}
+	@Override
 	public void setProperties(Properties p) {
 	this.properties=p;
 		

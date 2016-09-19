@@ -1,15 +1,15 @@
 package presenter;
 
 
-import model.MyModel;
-import view.MyView;
+import model.model;
+import view.view;
 
 public class save_ready implements Command {
 	
-	private MyModel m;
-	private MyView v;
+	private model m;
+	private view v;
 	
-	public save_ready(MyView view , MyModel model) {
+	public save_ready(view view , model model) {
 		this.m = model;
 		this.v = view;
 	}

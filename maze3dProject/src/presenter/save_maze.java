@@ -1,16 +1,13 @@
 package presenter;
+import model.model;
+import view.view;
 
-
-import model.Model;
-import model.MyModel;
-import view.MyView;
-import view.View;
 
 public class save_maze implements Command {
 
-	private MyModel m;
-	private MyView v;
-	public save_maze(MyView v , MyModel m) {
+	private model m;
+	private view v;
+	public save_maze(view v , model m) {
 		this.m = m;
 		this.v = v;
 	}
@@ -21,7 +18,7 @@ public class save_maze implements Command {
 			m.saveToFile(args[1]);
 			}
 			else{
-				((MyView)v).Print("save_maze [name] ");
+			v.Print("save_maze [name] ");
 			}
 		}
 

@@ -1,12 +1,12 @@
 package presenter;
 
-import model.MyModel;
-import view.MyView;
+import model.model;
+import view.view;
 
 public class solve_ready implements Command {
-	private MyModel m;
-	private MyView v;
-	public solve_ready(MyView view , MyModel model) {
+	private model m;
+	private view v;
+	public solve_ready(view view , model model) {
 		this.m = model;
 		this.v = view;
 	}

@@ -1,13 +1,12 @@
 package presenter;
+import model.model;
+import view.view;
 
-
-import model.MyModel;
-import view.MyView;
 
 public class resetProperties implements Command {
-	private MyModel m;
-	private MyView v;
-	public resetProperties(MyView v , MyModel m) {
+	private model m;
+	private view v;
+	public resetProperties(view v , model m) {
 		this.m = m;
 		this.v = v;
 	}

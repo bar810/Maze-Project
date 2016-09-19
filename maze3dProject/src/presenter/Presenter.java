@@ -6,21 +6,23 @@ import java.util.Observer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import model.model;
 import model.MyModel;
 import view.MyView;
+import view.view;
 
 public class Presenter extends Observable implements Observer{
 
-	private MyModel model;
-	private MyView view;
+	private model model;
+	private view view;
 	private HashMap<String, Command> commands;
 	private HashMap<String, Command> ModelCmd;
 	private ExecutorService exs;
 	public Properties properties;
 	
-	public Presenter(MyModel model2, MyView view2,int threads,Properties p) {
-		this.model = model2;
-		this.view = view2;
+	public Presenter(model model, view view,int threads,Properties p) {
+		this.model = model;
+		this.view = view;
 		this.set();
 		exs = Executors.newFixedThreadPool(threads);
 		this.properties=p;

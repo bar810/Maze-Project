@@ -1,19 +1,13 @@
 package model;
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -22,7 +16,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
-
 import algorithms.demo.MazeSearchableAdapter;
 import algorithms.mazeGenerators.GrowingTreeGenerator;
 import algorithms.mazeGenerators.Maze3d;
@@ -348,9 +341,11 @@ public class MyModel extends Observable implements model {
 		setChanged();
 		notifyObservers("display_msg");
 	}	
+	@Override
 	public void setProperties(Properties p) {
 		this.properties=p;
 		}
+	@Override
 	public void resetProperties(){
 		properties.setMaxNumOfThreads(50);
 		properties.setMazeGenerator(1);

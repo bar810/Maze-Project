@@ -21,7 +21,7 @@ public class ShellProporties extends dialogWindow {
 	protected void initWidgets() {
 		shell.setText(" Properties");
 		shell.setSize(500, 400);		
-				
+		shell.setLocation(400,400);
 		shell.setLayout(new GridLayout(1, false));	
 				
 		Group group1=new Group(shell,SWT.SHADOW_OUT);

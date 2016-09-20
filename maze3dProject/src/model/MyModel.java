@@ -370,7 +370,7 @@ public class MyModel extends Observable implements model {
 		return temp;
 	}
 	public void setPropertiesEX(String[] str){
-		if(str[2]=="GrowingTree")
+		if(str[1]=="GrowingTree")
 			properties.setMazeGenerator(1);
 		else
 			properties.setMazeGenerator(0);
@@ -379,7 +379,7 @@ public class MyModel extends Observable implements model {
 			properties.setMazeGenerator(1);
 		else
 			properties.setMazeGenerator(0);
-		if(str[2]=="GUI")
+		if(str[3]=="GUI")
 			properties.setMazeGenerator(0);
 		else
 			properties.setMazeGenerator(1);

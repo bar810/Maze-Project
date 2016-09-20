@@ -2,6 +2,8 @@ package gui;
 
 import java.util.Observable;
 
+import javax.xml.stream.Location;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -20,7 +22,8 @@ public class ShellNewMaze extends dialogWindow {
 	@Override
 	protected void initWidgets() {
 		shell.setText("New Maze");
-		shell.setSize(400, 300);		
+		shell.setSize(400, 300);	
+		shell.setLocation(400,400);
 				
 		shell.setLayout(new GridLayout(2, false));	
 				

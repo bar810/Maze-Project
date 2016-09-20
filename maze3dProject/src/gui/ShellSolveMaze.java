@@ -18,7 +18,7 @@ public class ShellSolveMaze extends dialogWindow {
 	protected void initWidgets() {
 		shell.setText("Solve Maze");
 		shell.setSize(200, 300);		
-				
+		shell.setLocation(400,400);
 		shell.setLayout(new GridLayout(1, false));	
 				
 		Label lblname = new Label(shell, SWT.NONE);

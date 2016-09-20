@@ -9,6 +9,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -28,6 +29,7 @@ public class GUIview extends Observable implements view, Observer{
 	private mazeDisplay mazeDisplay;
 	BufferedReader in;
 	PrintWriter out;
+	
 	
 	public GUIview(BufferedReader reader ,PrintWriter writer) {
 		this.in = reader;
@@ -125,9 +127,9 @@ public class GUIview extends Observable implements view, Observer{
 				
 			}
 		});
-		
-		
-		mazeDisplay = new mazeDisplay(shell, SWT.BORDER);	
+		shell.setText("PIZZA MAZE GAME");
+		shell.setImage(new Image(null,"img1.jpg"));
+		mazeDisplay = new mazeDisplay(shell, SWT.BORDER);
 		mazeDisplay.setBackground(new Color(null,255,255,255));
 		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		mazeDisplay.setFocus();

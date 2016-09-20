@@ -20,7 +20,7 @@ public class ShellDisplayMaze extends dialogWindow {
 	protected void initWidgets() {
 		shell.setText("Display Maze");
 		shell.setSize(400, 300);		
-				
+		shell.setLocation(400,400);
 		shell.setLayout(new GridLayout(2, false));	
 		
 		Label lblname = new Label(shell, SWT.NONE);

@@ -11,10 +11,14 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 
 public class ShellNewMaze extends dialogWindow {
+	
+	
+	
+	
 	@Override
 	protected void initWidgets() {
-		shell.setText("Generate maze window");
-		shell.setSize(300, 200);		
+		shell.setText("New Maze");
+		shell.setSize(400, 300);		
 				
 		shell.setLayout(new GridLayout(2, false));	
 				
@@ -59,6 +63,7 @@ public class ShellNewMaze extends dialogWindow {
 				int floors = Integer.parseInt(txtfloors.getText());
 				int rows = Integer.parseInt(txtRows.getText());
 				int cols = Integer.parseInt(txtCols.getText());
+				
 				
 				msg.setMessage("Generating maze: " +name);
 				

@@ -358,4 +358,5 @@ public class MyModel extends Observable implements model {
 		this.solutions.clear();
 		System.out.println("All data was cleared !");
 	}
+
 }

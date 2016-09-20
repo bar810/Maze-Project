@@ -39,11 +39,10 @@ public class GUIview extends baseWindow implements  Observer{
 		RowLayout rowLayout = new RowLayout(SWT.VERTICAL);
 		buttons.setLayout(rowLayout);
 		
-		
-		//New Maze
+	//buttons:
+	//New Maze
 		Button btnGenerateMaze = new Button(buttons, SWT.PUSH);
 		btnGenerateMaze.setText("New maze");
-		
 		btnGenerateMaze.addSelectionListener(new SelectionListener() {
 			
 			@Override
@@ -59,26 +58,60 @@ public class GUIview extends baseWindow implements  Observer{
 			}
 		});
 		
-		//Display Maze
+	//Display Maze
 		Button btnDisplayMaze = new Button(buttons, SWT.PUSH);
 		btnDisplayMaze.setText("Display maze");
-		
-		
-		//Get Advice
+		btnDisplayMaze.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				ShellDisplayMaze sol = new ShellDisplayMaze();				
+				sol.start(display);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	//Get Advice
 		Button btnGetAdvice = new Button(buttons, SWT.PUSH);
 		btnGetAdvice.setText("Get Advice");
-		
-		//Solve Maze
+	//Solve Maze
 		Button btnSolveMaze = new Button(buttons, SWT.PUSH);
 		btnSolveMaze.setText("Solve maze");
-		
-		
-		//Proporties
-		
+			btnSolveMaze.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				ShellSolveMaze sol = new ShellSolveMaze();				
+				sol.start(display);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	//Properties
 		Button btnProporties = new Button(buttons, SWT.PUSH);
 		btnProporties.setText("Proporties");
-		
-		
+		btnProporties.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				ShellProporties pro = new ShellProporties();				
+				pro.start(display);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		
 		

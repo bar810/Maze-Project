@@ -42,15 +42,16 @@ public class Run {
 		model = new MyModel(properties.getMaxNumOfThreads(),properties);
 		
 		switch (properties.getRuntimeEnv()) {
-		case 0://using for GUI view in the future
+		//GUI view
+		case 0:
 			mgv = new GUIview(in, out);
 			Presenter presenter = new Presenter(model, mgv,2,properties);
 			mgv.addObserver(presenter);
 			model.addObserver(presenter);
 			mgv.start();
 			break;
-			
-		case 1://CLI view
+		//CLI view	
+		case 1:
 			try {
 				view = new MyView(in, out);
 				Presenter presenter1 = new Presenter(model, view,2,properties);

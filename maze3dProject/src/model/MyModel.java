@@ -76,6 +76,7 @@ public class MyModel extends Observable implements model {
 			}
 			mazes.put(name, maze);
 			mazesNames.add(name);
+			saveMazes();
 			setChanged();
 			message = "Maze: " + name + " Generated succesfully!\n";
 			notifyObservers("maze_ready " + name);
@@ -340,7 +341,7 @@ public class MyModel extends Observable implements model {
 	@Override
 	public void Exit() {
 		saveSolutions();
-		saveMazes();
+		//saveMazes();
 		setChanged();
 		notifyObservers("display_msg");
 	}	
@@ -367,5 +368,21 @@ public class MyModel extends Observable implements model {
 		for(int i=0;i<mazesNames.size();i++)
 			temp[i]=mazesNames.get(i);
 		return temp;
+	}
+	public void setPropertiesEX(String[] str){
+		if(str[2]=="GrowingTree")
+			properties.setMazeGenerator(1);
+		else
+			properties.setMazeGenerator(0);
+			
+		if(str[2]=="BFS")
+			properties.setMazeGenerator(1);
+		else
+			properties.setMazeGenerator(0);
+		if(str[2]=="GUI")
+			properties.setMazeGenerator(0);
+		else
+			properties.setMazeGenerator(1);
+		
 	}
 }

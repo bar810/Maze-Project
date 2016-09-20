@@ -14,6 +14,8 @@ import org.eclipse.swt.widgets.Text;
 
 public class ShellDisplayMaze extends dialogWindow {
 
+	String update;
+	
 	@Override
 	protected void initWidgets() {
 		shell.setText("Display Maze");
@@ -53,6 +55,10 @@ public class ShellDisplayMaze extends dialogWindow {
 			}
 		
 		});
+	}
+	@Override
+	public String GetUpdate(){
+		return update;
 	}
 }
 

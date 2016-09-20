@@ -36,7 +36,6 @@ public class mazeDisplay extends Canvas {
 	public mazeDisplay(Composite parent, int style) {
 		super(parent, style);
 		
-		
 		character= new Character();
 		character.setPos(new Position(1,1,1));
 		
@@ -48,43 +47,42 @@ public class mazeDisplay extends Canvas {
 
 		this.addKeyListener(new KeyListener() {
 			
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
+		
 			
 			@Override
 			public void keyPressed(KeyEvent e) {
-				Position pos = character2.getPos();
-				switch (e.keyCode) {
-				case SWT.ARROW_DOWN:	
-					if(mazeData[character.getPos().z+1][character.getPos().y]!=1)
-						character.moveBack();
+			Position pos = character2.getPos();
+			switch (e.keyCode) {
+			case SWT.ARROW_DOWN:	
+				if(mazeData[character.getPos().z+1][character.getPos().y]!=1)						
+					character.moveBack();
 					redraw();
-					break;
-				case SWT.ARROW_UP:
-					if(mazeData[character.getPos().z-1][character.getPos().y]!=1)
-						character.moveForward();
-					redraw();
-					break;
-				case SWT.ARROW_RIGHT:	
-					if(mazeData[character.getPos().z][character.getPos().y+1]!=1){
-						flag=0;
-						character.setPos(character2.getPos());
-						character.moveRight();
+				break;
+			case SWT.ARROW_UP:
+				if(mazeData[character.getPos().z-1][character.getPos().y]!=1)
+					character.moveForward();
+				redraw();
+				break;
+			case SWT.ARROW_RIGHT:	
+				if(mazeData[character.getPos().z][character.getPos().y+1]!=1){
+					flag=0;
+					character.setPos(character2.getPos());
+					character.moveRight();
 					}
-					redraw();
-					break;
-				case SWT.ARROW_LEFT:	
-					if(mazeData[character.getPos().z][character.getPos().y-1]!=1){
-						flag=1;
-						character.moveLeft();
-						character2.setPos(character.getPos());
+				redraw();
+				break;
+			case SWT.ARROW_LEFT:	
+				if(mazeData[character.getPos().z][character.getPos().y-1]!=1){
+					flag=1;
+					character.moveLeft();
+					character2.setPos(character.getPos());
 					}
-					redraw();
-					break;
+				redraw();
+				break;
 				}
+			}
+		@Override
+		public void keyReleased(KeyEvent arg0) {
 			}
 		});
 		
@@ -96,8 +94,6 @@ public class mazeDisplay extends Canvas {
 				e.gc.setBackground(new Color(null,0,0,0));
 				e.gc.setForeground(new Color(null,255,255,255));
 				
-				   
-
 				   int width=getSize().x;
 				   int height=getSize().y;
 
@@ -122,30 +118,28 @@ public class mazeDisplay extends Canvas {
 				
 			}
 		});
-		
-		TimerTask task = new TimerTask() {
-			
-			@Override
-			public void run() {	
-				getDisplay().syncExec(new Runnable() {					
-
-					@Override
-					public void run() {
-						
-						//characterR.moveRight();
-						//redraw();
-					}
-				});
-				
-			}
-		};
-		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(task, 0, 500);
-	
 	}
-
-
-
+//		
+//		TimerTask task = new TimerTask() {
+//			
+//			@Override
+//			public void run() {	
+//				getDisplay().syncExec(new Runnable() {					
+//
+//					@Override
+//					public void run() {
+//						
+//						//characterR.moveRight();
+//						//redraw();
+//					}
+//				});
+//				
+//			}
+//		};
+//		Timer timer = new Timer();
+//		timer.scheduleAtFixedRate(task, 0, 500);
+//	
+//	}
 	public void mazeDisplay(Composite parent, int style) {}
 
 

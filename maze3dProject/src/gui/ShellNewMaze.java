@@ -65,7 +65,7 @@ public class ShellNewMaze extends dialogWindow {
 				int floors = Integer.parseInt(txtfloors.getText());
 				int rows = Integer.parseInt(txtRows.getText());
 				int cols = Integer.parseInt(txtCols.getText());
-				update="generate_3d_maze " +name +" "+ floors+" "+ rows+ " "+ cols;
+				update="generate_3d_maze"+ " " + name +" "+ floors +" "+ rows + " "+ cols;
 				msg.setMessage("Generating maze: " +name);
 				
 				msg.open();
@@ -79,7 +79,7 @@ public class ShellNewMaze extends dialogWindow {
 		});	
 		
 	}
-	
+	@Override
 	public String GetUpdate(){
 		return update;
 	}

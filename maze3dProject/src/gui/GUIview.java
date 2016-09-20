@@ -68,7 +68,6 @@ public class GUIview extends Observable implements view, Observer{
 				ShellDisplayMaze dis = new ShellDisplayMaze();				
 				dis.start(display);	
 			}
-			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 				// TODO Auto-generated method stub	
@@ -101,6 +100,8 @@ public class GUIview extends Observable implements view, Observer{
 			public void widgetSelected(SelectionEvent arg0) {
 				ShellProporties pro = new ShellProporties();				
 				pro.start(display);
+				setChanged();
+				notifyObservers(pro.GetUpdate());
 			}
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
@@ -108,6 +109,23 @@ public class GUIview extends Observable implements view, Observer{
 				
 			}
 		});
+	//exit
+		Button btnExit = new Button(buttons, SWT.PUSH);
+		btnExit.setText("Exit");
+		btnExit.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				setChanged();
+				notifyObservers("exit");
+				display.dispose();
+			}
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		
 		mazeDisplay = new mazeDisplay(shell, SWT.BORDER);	
 		mazeDisplay.setBackground(new Color(null,255,255,255));

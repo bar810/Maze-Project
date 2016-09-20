@@ -13,5 +13,6 @@ public interface model {
 	public void loadFromFile (String name);
 	public void eraseAllData();
 	public void resetProperties();
+	public void setPropertiesEX(String[] args);
 	public void setProperties(Properties p);
 }

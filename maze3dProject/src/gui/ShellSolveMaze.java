@@ -66,6 +66,7 @@ public class ShellSolveMaze extends dialogWindow {
 		});	
 		
 	}
+	@Override
 	public String GetUpdate(){
 		return update;
 	}

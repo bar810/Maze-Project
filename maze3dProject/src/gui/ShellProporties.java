@@ -13,9 +13,13 @@ import org.eclipse.swt.widgets.MessageBox;
 public class ShellProporties extends dialogWindow {
 	String update;
 
+	String Generator;
+	String Algorithem;
+	String enviroment;
+	
 	@Override
 	protected void initWidgets() {
-		shell.setText(" Proporties");
+		shell.setText(" Properties");
 		shell.setSize(500, 400);		
 				
 		shell.setLayout(new GridLayout(1, false));	
@@ -29,6 +33,27 @@ public class ShellProporties extends dialogWindow {
 		Button SI=new Button(group1,SWT.RADIO);
 		GR.setText("GrowingTree");
 		SI.setText("Simple");
+		GR.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				Generator="GrowingTree";
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		SI.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				Generator="Simple";
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		
 	
 		Group group2=new Group(shell,SWT.SHADOW_OUT);
 		
@@ -40,6 +65,27 @@ public class ShellProporties extends dialogWindow {
 		b.setText("BFS");
 		d.setText("DFS");
 		
+		b.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				Algorithem="BFS";
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		d.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				Algorithem="DFS";
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		
 		Group group3=new Group(shell,SWT.SHADOW_OUT);
 		group3.setText("Run time enviroment: ");
 		group3.setLayout(new GridLayout(2,true));
@@ -49,12 +95,33 @@ public class ShellProporties extends dialogWindow {
 		GUI.setText("GUI");
 		CLI.setText("CLI");
 		
+		GUI.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				enviroment="GUI";
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		CLI.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				enviroment="CLI";
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		
 		Button save=new Button(shell,SWT.PUSH);
-		save.setText("SAVE PROPORTIES");
+		save.setText("SAVE PROPERTIES");
 		
 		
 		Button reset=new Button(shell,SWT.PUSH);
-		reset.setText("RESETS PROPORTIES");
+		reset.setText("DEAFULT PROPERTIES");
 		
 	
 	
@@ -68,7 +135,7 @@ public class ShellProporties extends dialogWindow {
 				msg.setMessage("proporties save!");
 				
 				String algo = msg.getText();
-				
+				update="setProperties"+" "+Generator+" "+Algorithem+" "+enviroment;
 				msg.open();
 				shell.close();
 			}
@@ -99,6 +166,10 @@ public class ShellProporties extends dialogWindow {
 			}
 		});	
 		
+	}
+	@Override
+	public String GetUpdate(){
+		return update;
 	}
 
 }

@@ -16,7 +16,7 @@ import algorithms.mazeGenerators.Position;
 
 public class mazeDisplay extends Canvas {
 	
-	private CharacterR characterR;
+	private Character character;
 	//private CharacterL characterL;
 	private target tar;
 	private int[][] mazeData = {
@@ -35,11 +35,9 @@ public class mazeDisplay extends Canvas {
 	public mazeDisplay(Composite parent, int style) {
 		super(parent, style);
 		
-		//characterL= new CharacterL();
 		
-		characterR= new CharacterR();
-		characterR.setPos(new Position(1,1, 1));
-		//characterL.setPos(new Position(1,1, 1));
+		character= new Character();
+		character.setPos(new Position(1,1,1));
 		//tar=new target();
 		//tar.setPos(new Position(1,1,1));
 
@@ -53,24 +51,26 @@ public class mazeDisplay extends Canvas {
 			
 			@Override
 			public void keyPressed(KeyEvent e) {
-				Position pos = characterR.getPos();
+				Position pos = character.getPos();
 				switch (e.keyCode) {
 				case SWT.ARROW_DOWN:	
-					characterR.moveDown();
-					//characterL.setPos(characterR.getPos());
+					if(mazeData[character.getPos().z+1][character.getPos().y]!=1)
+						character.moveBack();
 					redraw();
 					break;
 				case SWT.ARROW_UP:
-					characterR.moveUp();
+					if(mazeData[character.getPos().z-1][character.getPos().y]!=1)
+						character.moveForward();
 					redraw();
 					break;
 				case SWT.ARROW_RIGHT:	
-					characterR.moveRight();
+					if(mazeData[character.getPos().z][character.getPos().y+1]!=1)
+						character.moveRight();
 					redraw();
 					break;
-				case SWT.LEFT:	
-					//if(mazeData[characterR.getPos().y+1][characterR.getPos().z]!=1)
-					characterR.moveLeft();
+				case SWT.ARROW_LEFT:	
+					if(mazeData[character.getPos().z][character.getPos().y-1]!=1)
+						character.moveLeft();
 					redraw();
 					break;
 				}
@@ -100,7 +100,7 @@ public class mazeDisplay extends Canvas {
 				      }
 				   
 				 
-				   characterR.draw(w, h, e.gc);
+				   character.draw(w, h, e.gc);
 				
 			}
 		});

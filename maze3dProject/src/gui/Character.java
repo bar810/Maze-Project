@@ -1,16 +1,16 @@
 package gui;
-
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-
 import algorithms.mazeGenerators.Position;
 
-public class CharacterL {
+
+
+public class Character {
 	private Position pos;
 	private Image img;
 	
-	public CharacterL() {
-		img = new Image(null, "CharacterL.jpg");
+	public Character() {
+		img = new Image(null, "Character.jpg");
 	}
 
 	public Position getPos() {
@@ -27,21 +27,24 @@ public class CharacterL {
 	}
 	
 	public void moveRight() {
-		pos.z++;
-	}
-	public void moveDown() {
-		pos.x--;
-	}
-	public void moveForward() {
-		pos.y--;
-	}
-	public void moveBack() {
 		pos.y++;
 	}
-	public void moveUp() {
+	
+	public void moveForward() {
+		pos.z--;
+	}
+	public void moveBack() {
+		pos.z++;
+	}
+	
+	public void moveLeft() {
+		
+		pos.y--;
+	}
+	public void moveDown() {
 		pos.x++;
 	}
-	public void moveLeft() {
-		pos.z--;
+	public void moveUp() {
+		pos.x--;
 	}
 }

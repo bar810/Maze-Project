@@ -16,8 +16,9 @@ import algorithms.mazeGenerators.Position;
 
 public class mazeDisplay extends Canvas {
 	
+	int flag=0;
 	private Character character;
-	//private CharacterL characterL;
+	private Character2 character2;
 	private target tar;
 	private int[][] mazeData = {
 			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -38,8 +39,12 @@ public class mazeDisplay extends Canvas {
 		
 		character= new Character();
 		character.setPos(new Position(1,1,1));
-		//tar=new target();
-		//tar.setPos(new Position(1,1,1));
+		
+		character2= new Character2();
+		character2.setPos(new Position(1,1,1));
+		
+		tar=new target();
+		tar.setPos(new Position(12,9,1));
 
 		this.addKeyListener(new KeyListener() {
 			
@@ -51,7 +56,7 @@ public class mazeDisplay extends Canvas {
 			
 			@Override
 			public void keyPressed(KeyEvent e) {
-				Position pos = character.getPos();
+				Position pos = character2.getPos();
 				switch (e.keyCode) {
 				case SWT.ARROW_DOWN:	
 					if(mazeData[character.getPos().z+1][character.getPos().y]!=1)
@@ -64,13 +69,19 @@ public class mazeDisplay extends Canvas {
 					redraw();
 					break;
 				case SWT.ARROW_RIGHT:	
-					if(mazeData[character.getPos().z][character.getPos().y+1]!=1)
+					if(mazeData[character.getPos().z][character.getPos().y+1]!=1){
+						flag=0;
+						character.setPos(character2.getPos());
 						character.moveRight();
+					}
 					redraw();
 					break;
 				case SWT.ARROW_LEFT:	
-					if(mazeData[character.getPos().z][character.getPos().y-1]!=1)
+					if(mazeData[character.getPos().z][character.getPos().y-1]!=1){
+						flag=1;
 						character.moveLeft();
+						character2.setPos(character.getPos());
+					}
 					redraw();
 					break;
 				}
@@ -81,8 +92,10 @@ public class mazeDisplay extends Canvas {
 			
 			@Override
 			public void paintControl(PaintEvent e) {
-				e.gc.setForeground(new Color(null,0,0,0));
-				   e.gc.setBackground(new Color(null,0,0,0));
+				
+				e.gc.setBackground(new Color(null,0,0,0));
+				e.gc.setForeground(new Color(null,255,255,255));
+				
 				   
 
 				   int width=getSize().x;
@@ -98,9 +111,14 @@ public class mazeDisplay extends Canvas {
 				          if(mazeData[i][j]!=0)
 				              e.gc.fillRectangle(x,y,w,h);
 				      }
-				   
+				  
+				  if(flag==1)
+					  character2.draw(w, h, e.gc);
+				  if(flag==0)
+				  character.draw(w, h, e.gc);
+				  
+				  tar.draw(w, h, e.gc);
 				 
-				   character.draw(w, h, e.gc);
 				
 			}
 		});

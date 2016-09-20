@@ -8,6 +8,7 @@ import java.util.Observer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -22,21 +23,16 @@ import view.view;
 
 public class GUIview extends Observable implements view, Observer{
 
-
 	protected Display display;
 	protected Shell shell;	
-	
 	private mazeDisplay mazeDisplay;
-	private Character character;
 	BufferedReader in;
 	PrintWriter out;
-	
 	
 	public GUIview(BufferedReader reader ,PrintWriter writer) {
 		this.in = reader;
 		this.out = writer;
 	}
-	
 	
 	protected void initWidgets() {
 		GridLayout grid = new GridLayout(2, false);
@@ -51,7 +47,6 @@ public class GUIview extends Observable implements view, Observer{
 		Button btnGenerateMaze = new Button(buttons, SWT.PUSH);
 		btnGenerateMaze.setText("New maze");
 		btnGenerateMaze.addSelectionListener(new SelectionListener() {
-			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				ShellNewMaze win = new ShellNewMaze();				
@@ -59,30 +54,24 @@ public class GUIview extends Observable implements view, Observer{
 				setChanged();
 				notifyObservers(win.GetUpdate());
 			}
-			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 				// TODO Auto-generated method stub
-				
 			}
 		});
-		
 	//Display Maze
 		Button btnDisplayMaze = new Button(buttons, SWT.PUSH);
 		btnDisplayMaze.setText("Display maze");
 		btnDisplayMaze.addSelectionListener(new SelectionListener() {
-			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				ShellDisplayMaze dis = new ShellDisplayMaze();				
-				dis.start(display);
-				
+				dis.start(display);	
 			}
 			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				// TODO Auto-generated method stub	
 			}
 		});
 	//Get Advice
@@ -92,7 +81,6 @@ public class GUIview extends Observable implements view, Observer{
 		Button btnSolveMaze = new Button(buttons, SWT.PUSH);
 		btnSolveMaze.setText("Solve maze");
 			btnSolveMaze.addSelectionListener(new SelectionListener() {
-			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				ShellSolveMaze sol = new ShellSolveMaze();				
@@ -100,24 +88,20 @@ public class GUIview extends Observable implements view, Observer{
 				setChanged();
 				notifyObservers(sol.GetUpdate());
 			}
-			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				// TODO Auto-generated method stub	
 			}
 		});
 	//Properties
 		Button btnProporties = new Button(buttons, SWT.PUSH);
 		btnProporties.setText("Proporties");
 		btnProporties.addSelectionListener(new SelectionListener() {
-			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				ShellProporties pro = new ShellProporties();				
 				pro.start(display);
 			}
-			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 				// TODO Auto-generated method stub
@@ -125,40 +109,27 @@ public class GUIview extends Observable implements view, Observer{
 			}
 		});
 		
-		
 		mazeDisplay = new mazeDisplay(shell, SWT.BORDER);	
+		mazeDisplay.setBackground(new Color(null,255,255,255));
 		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		mazeDisplay.setFocus();
 	}
-
+	
 	public void Print(String str) {
 		// TODO Auto-generated method stub
-		
 	}
-
-
 	public void displayMessage(String msg) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
-
-	
 	public void setProperties(Properties p) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
-
-
-
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub
-		
 	}
-
 	public void addObserver(Presenter presenter) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 	public void start() {
 		display = new Display();
@@ -175,6 +146,4 @@ public class GUIview extends Observable implements view, Observer{
 		}
 		display.dispose();
 	}
-
-
 }

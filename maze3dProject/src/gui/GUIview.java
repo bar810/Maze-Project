@@ -1,5 +1,10 @@
 package gui;
 
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.util.Observable;
+import java.util.Observer;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -9,13 +14,21 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
+import presenter.Presenter;
 import presenter.Properties;
 
-public class mazeWindow extends baseWindow {
+public class GUIview extends baseWindow implements  Observer{
 
 
 	private mazeDisplay mazeDisplay;
 	private Character character;
+	BufferedReader in;
+	PrintWriter out;
+	
+	public GUIview(BufferedReader reader ,PrintWriter writer) {
+		this.in = reader;
+		this.out = writer;
+	}
 	
 	@Override
 	protected void initWidgets() {
@@ -35,7 +48,7 @@ public class mazeWindow extends baseWindow {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				NewMaze win = new NewMaze();				
+				ShellNewMaze win = new ShellNewMaze();				
 				win.start(display);
 			}
 			
@@ -97,6 +110,19 @@ public class mazeWindow extends baseWindow {
 
 	@Override
 	public void setProperties(Properties p) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addObserver(Presenter presenter) {
 		// TODO Auto-generated method stub
 		
 	}

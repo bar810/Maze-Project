@@ -15,18 +15,18 @@ import org.eclipse.swt.widgets.Composite;
 import algorithms.mazeGenerators.Position;
 
 public class mazeDisplay extends Canvas {
-
-
-
-
-
+	
+	private int[][] mazeData;
+	private Character character;
+	private target tar;
+	
 	public mazeDisplay(Composite parent, int style) {
 		super(parent, style);
 		character = new Character();
 		character.setPos(new Position(1,1, 1));
-		//target tar=new target();
-	//	tar.setPos(new Position(1,1,1));
-		redraw();
+		//tar=new target();
+		//tar.setPos(new Position(1,1,1));
+
 		this.addKeyListener(new KeyListener() {
 			
 			@Override
@@ -39,14 +39,25 @@ public class mazeDisplay extends Canvas {
 			public void keyPressed(KeyEvent e) {
 				Position pos = character.getPos();
 				switch (e.keyCode) {
-				case SWT.ARROW_RIGHT:					
-					character.setPos(new Position(pos.x + 1, pos.y, pos.z));
-					character.moveRight();
+				case SWT.ARROW_RIGHT:	
+					if(mazeData[character.getPos().y+1][character.getPos().y]!=1)
+						character.moveRight();
 					redraw();
 					break;
 				
-				case SWT.ARROW_LEFT:					
-					character.setPos(new Position(pos.x, pos.y-1,pos.z));
+				case SWT.ARROW_LEFT:
+					if(mazeData[character.getPos().y-1][character.getPos().y]!=1)
+					character.moveLeft();
+					redraw();
+					break;
+				case SWT.ARROW_UP:	
+					if(mazeData[character.getPos().z-1][character.getPos().y]!=1)
+					character.moveForward();
+					redraw();
+					break;
+				case SWT.ARROW_DOWN:	
+					if(mazeData[character.getPos().z+1][character.getPos().y]!=1)
+					character.moveDown();
 					redraw();
 					break;
 				}
@@ -91,7 +102,7 @@ public class mazeDisplay extends Canvas {
 					public void run() {
 						
 						//character.moveRight();
-						redraw();
+						//redraw();
 					}
 				});
 				
@@ -102,20 +113,7 @@ public class mazeDisplay extends Canvas {
 	
 	}
 
-	private int[][] mazeData = {
-			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-			{1,0,0,0,0,0,0,0,1,1,0,1,0,0,1},
-			{0,0,1,1,1,1,1,0,0,1,0,1,0,1,1},
-			{1,1,1,0,0,0,1,0,1,1,0,1,0,0,1},
-			{1,0,1,0,1,1,1,0,0,0,0,1,1,0,1},
-			{1,1,0,0,0,1,0,0,1,1,1,1,0,0,1},
-			{1,0,0,1,0,0,1,0,0,0,0,1,0,1,1},
-			{1,0,1,1,0,1,1,0,1,1,0,0,0,1,1},
-			{1,0,0,0,0,0,0,0,0,1,0,1,0,0,1},
-			{1,1,1,1,1,1,1,1,1,1,1,1,0,1,1}		
-	};
-	
-	private Character character;
+
 
 	public void mazeDisplay(Composite parent, int style) {}
 

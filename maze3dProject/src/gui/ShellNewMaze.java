@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 
-public class NewMaze extends dialogWindow {
+public class ShellNewMaze extends dialogWindow {
 	@Override
 	protected void initWidgets() {
 		shell.setText("Generate maze window");
@@ -18,6 +18,19 @@ public class NewMaze extends dialogWindow {
 				
 		shell.setLayout(new GridLayout(2, false));	
 				
+		Label lblname = new Label(shell, SWT.NONE);
+		lblname.setText("name: ");
+		
+		Text txtname = new Text(shell, SWT.BORDER);
+		txtname.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		
+		Label lblfloors = new Label(shell, SWT.NONE);
+		lblfloors.setText("floors: ");
+		
+		Text txtfloors = new Text(shell, SWT.BORDER);
+		txtfloors.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		
+		
 		Label lblRows = new Label(shell, SWT.NONE);
 		lblRows.setText("Rows: ");
 		
@@ -41,11 +54,13 @@ public class NewMaze extends dialogWindow {
 			public void widgetSelected(SelectionEvent arg0) {				
 				MessageBox msg = new MessageBox(shell, SWT.OK);
 				msg.setText("Title");
-				//msg.setMessage("Button was clicked");
+				msg.setMessage("Button was clicked");
+				String name=txtname.getText();
+				int floors = Integer.parseInt(txtfloors.getText());
 				int rows = Integer.parseInt(txtRows.getText());
 				int cols = Integer.parseInt(txtCols.getText());
 				
-				msg.setMessage("Generating maze with rows: " + rows + " cols: " + cols);
+				msg.setMessage("Generating maze: " +name);
 				
 				msg.open();
 				shell.close();

@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-import gui.mazeWindow;
+import gui.GUIview;
 import model.MyModel;
 import presenter.Presenter;
 import presenter.Properties;
@@ -24,6 +24,7 @@ public class Run {
 		MyModel model = null;
 		MyView view = null;
 		Properties properties = null;
+		GUIview mgv=null;
 		
 		try {
 			properties = PropertiesHandler.getInstance();
@@ -42,16 +43,19 @@ public class Run {
 		
 		switch (properties.getRuntimeEnv()) {
 		case 0://using for GUI view in the future
-			mazeWindow win = new mazeWindow();
-			win.start();
+			mgv = new GUIview(in, out);
+			Presenter presenter = new Presenter(model, mgv,2,properties);
+			mgv.addObserver(presenter);
+			model.addObserver(presenter);
+			mgv.start();
 			break;
 			
 		case 1://CLI view
 			try {
 				view = new MyView(in, out);
-				Presenter presenter = new Presenter(model, view,2,properties);
-				view.addObserver(presenter);
-				model.addObserver(presenter);
+				Presenter presenter1 = new Presenter(model, view,2,properties);
+				view.addObserver(presenter1);
+				model.addObserver(presenter1);
 				view.start();
 			} catch (Exception e1) {
 				e1.printStackTrace();

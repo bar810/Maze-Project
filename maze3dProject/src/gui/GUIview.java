@@ -49,6 +49,9 @@ public class GUIview extends baseWindow implements  Observer{
 			public void widgetSelected(SelectionEvent arg0) {
 				ShellNewMaze win = new ShellNewMaze();				
 				win.start(display);
+			
+				
+				
 			}
 			
 			@Override

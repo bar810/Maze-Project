@@ -1,5 +1,7 @@
 package gui;
 
+import java.util.Observable;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -12,7 +14,7 @@ import org.eclipse.swt.widgets.Text;
 
 public class ShellNewMaze extends dialogWindow {
 	
-	
+	String update;
 	
 	
 	@Override
@@ -63,8 +65,7 @@ public class ShellNewMaze extends dialogWindow {
 				int floors = Integer.parseInt(txtfloors.getText());
 				int rows = Integer.parseInt(txtRows.getText());
 				int cols = Integer.parseInt(txtCols.getText());
-				
-				
+				update="generate_3d_maze +name + floors+ rooes+ cols";
 				msg.setMessage("Generating maze: " +name);
 				
 				msg.open();
@@ -77,5 +78,9 @@ public class ShellNewMaze extends dialogWindow {
 			}
 		});	
 		
+	}
+	
+	public String GetUpdate(){
+		return update;
 	}
 }

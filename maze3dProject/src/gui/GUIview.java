@@ -13,24 +13,31 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 import presenter.Presenter;
 import presenter.Properties;
+import view.view;
 
-public class GUIview extends baseWindow implements  Observer{
+public class GUIview extends Observable implements view, Observer{
 
 
+	protected Display display;
+	protected Shell shell;	
+	
 	private mazeDisplay mazeDisplay;
 	private Character character;
 	BufferedReader in;
 	PrintWriter out;
+	
 	
 	public GUIview(BufferedReader reader ,PrintWriter writer) {
 		this.in = reader;
 		this.out = writer;
 	}
 	
-	@Override
+	
 	protected void initWidgets() {
 		GridLayout grid = new GridLayout(2, false);
 		shell.setLayout(grid);
@@ -49,9 +56,8 @@ public class GUIview extends baseWindow implements  Observer{
 			public void widgetSelected(SelectionEvent arg0) {
 				ShellNewMaze win = new ShellNewMaze();				
 				win.start(display);
-			
-				
-				
+				setChanged();
+				notifyObservers(win.GetUpdate());
 			}
 			
 			@Override
@@ -68,8 +74,9 @@ public class GUIview extends baseWindow implements  Observer{
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				ShellDisplayMaze sol = new ShellDisplayMaze();				
-				sol.start(display);
+				ShellDisplayMaze dis = new ShellDisplayMaze();				
+				dis.start(display);
+				
 			}
 			
 			@Override
@@ -90,6 +97,8 @@ public class GUIview extends baseWindow implements  Observer{
 			public void widgetSelected(SelectionEvent arg0) {
 				ShellSolveMaze sol = new ShellSolveMaze();				
 				sol.start(display);
+				setChanged();
+				notifyObservers(sol.GetUpdate());
 			}
 			
 			@Override
@@ -117,34 +126,23 @@ public class GUIview extends baseWindow implements  Observer{
 		});
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		mazeDisplay = new mazeDisplay(shell, SWT.BORDER);	
 		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		mazeDisplay.setFocus();
 	}
 
-	@Override
 	public void Print(String str) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+
 	public void displayMessage(String msg) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	
 	public void setProperties(Properties p) {
 		// TODO Auto-generated method stub
 		
@@ -162,7 +160,21 @@ public class GUIview extends baseWindow implements  Observer{
 		// TODO Auto-generated method stub
 		
 	}
-
+	public void start() {
+		display = new Display();
+		shell = new Shell(display);
+		
+		initWidgets();
+		shell.open();		
+		
+		// main event loop
+		while(!shell.isDisposed()){ // window isn't closed
+			if(!display.readAndDispatch()){
+				display.sleep();
+			}
+		}
+		display.dispose();
+	}
 
 
 }

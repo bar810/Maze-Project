@@ -6,32 +6,40 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 
 public class ShellSolveMaze extends dialogWindow {
 
+	String update;
 	@Override
 	protected void initWidgets() {
 		shell.setText("Solve Maze");
-		shell.setSize(200, 200);		
+		shell.setSize(200, 300);		
 				
 		shell.setLayout(new GridLayout(1, false));	
 				
 		Label lblname = new Label(shell, SWT.NONE);
-		lblname.setText("algorithem: ");
-	
+		lblname.setText("choose maze: ");
 		
-		Button BFS=new Button(shell,SWT.RADIO);
-		Button DFS=new Button(shell,SWT.RADIO);
-		BFS.setText("BFS");
-		DFS.setText("DFS");
+		String[] items= "maze1 maze2 maze3 maze4 maze5 maze6".split(" ");
+		Combo combo =new Combo(shell,SWT.SINGLE|SWT.DROP_DOWN);
+		combo.setItems(items);
+		
+		Label lblname2 = new Label(shell, SWT.NONE);
+		lblname2.setText("choose algorithem: ");
+	 
+		
+		String[] items2= "BFS DFS".split(" ");
+		Combo combo2 =new Combo(shell,SWT.SINGLE|SWT.DROP_DOWN);
+		combo2.setItems(items2);
+	
 		
 		
 				
 		Button btnGenerateMaze = new Button(shell, SWT.PUSH);
-		shell.setDefaultButton(BFS);//proporties put here
 		btnGenerateMaze.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
 		btnGenerateMaze.setText("solve");
 		
@@ -40,11 +48,12 @@ public class ShellSolveMaze extends dialogWindow {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {				
 				MessageBox msg = new MessageBox(shell, SWT.OK);
-				msg.setText("Algorithem");
+				//msg.setText("Algorithem");
 				msg.setMessage("Button was clicked");
-				String algo = msg.getText();
-				
-				msg.setMessage("Solving maze: " +algo);
+				String name=combo.getText();
+				String algo = combo2.getText();
+				update="solve_maze " +name+" "+algo;
+				msg.setMessage("Solving maze: " +name+" with algorithem: "+algo);
 				
 				msg.open();
 				shell.close();
@@ -57,5 +66,7 @@ public class ShellSolveMaze extends dialogWindow {
 		});	
 		
 	}
-
+	public String GetUpdate(){
+		return update;
+	}
 }

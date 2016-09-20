@@ -1,16 +1,16 @@
 package gui;
+
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+
 import algorithms.mazeGenerators.Position;
 
-
-
-public class Character {
+public class CharacterL {
 	private Position pos;
 	private Image img;
 	
-	public Character() {
-		img = new Image(null, "character.jpg");
+	public CharacterL() {
+		img = new Image(null, "CharacterL.jpg");
 	}
 
 	public Position getPos() {

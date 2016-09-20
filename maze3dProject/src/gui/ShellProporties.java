@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 
 public class ShellProporties extends dialogWindow {
-
+	String update;
 
 	@Override
 	protected void initWidgets() {
@@ -66,6 +66,7 @@ public class ShellProporties extends dialogWindow {
 				MessageBox msg = new MessageBox(shell, SWT.OK);
 				msg.setText("SAVE");
 				msg.setMessage("proporties save!");
+				
 				String algo = msg.getText();
 				
 				msg.open();
@@ -85,6 +86,7 @@ public class ShellProporties extends dialogWindow {
 				MessageBox msg = new MessageBox(shell, SWT.OK);
 				msg.setText("RESET");
 				msg.setMessage("proporties RESET!");
+				update="resetProperties";
 				String algo = msg.getText();
 				
 				msg.open();

@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.concurrent.Callable;
@@ -31,6 +32,7 @@ public class MyModel extends Observable implements model {
 
 	private HashMap<String, Maze3d> mazes = new HashMap<String, Maze3d>();
 	private HashMap<String, Solution> solutions = new HashMap<String, Solution>();
+	public ArrayList<String> mazesNames=new ArrayList<>();
 	Maze3d maze;
 	String message;
 	int[][] maze2d = null;
@@ -73,6 +75,7 @@ public class MyModel extends Observable implements model {
 				e.printStackTrace();
 			}
 			mazes.put(name, maze);
+			mazesNames.add(name);
 			setChanged();
 			message = "Maze: " + name + " Generated succesfully!\n";
 			notifyObservers("maze_ready " + name);
@@ -358,5 +361,11 @@ public class MyModel extends Observable implements model {
 		this.solutions.clear();
 		System.out.println("All data was cleared !");
 	}
-
+	
+	public String[] getMazesNames(){
+		String[] temp=new String[mazesNames.size()];
+		for(int i=0;i<mazesNames.size();i++)
+			temp[i]=mazesNames.get(i);
+		return temp;
+	}
 }

@@ -5,10 +5,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import model.model;
-import model.MyModel;
-import view.MyView;
 import view.view;
 
 public class Presenter extends Observable implements Observer{
@@ -16,7 +13,6 @@ public class Presenter extends Observable implements Observer{
 	private model model;
 	private view view;
 	private HashMap<String, Command> commands;
-	private HashMap<String, Command> ModelCmd;
 	private ExecutorService exs;
 	public Properties properties;
 	
@@ -35,7 +31,6 @@ public class Presenter extends Observable implements Observer{
 	}
 	public void set (){
 		commands = new HashMap<String, Command>();
-		ModelCmd = new HashMap<String, Command>();
 	
 		commands.put("dir", new dir(view));
 		commands.put("generate_3d_maze", new generate_3d_maze(view,model));

@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+
+import gui.mazeWindow;
 import model.MyModel;
 import presenter.Presenter;
 import presenter.Properties;
@@ -40,6 +42,9 @@ public class Run {
 		
 		switch (properties.getRuntimeEnv()) {
 		case 0://using for GUI view in the future
+			mazeWindow win = new mazeWindow();
+			win.start();
+			break;
 			
 		case 1://CLI view
 			try {

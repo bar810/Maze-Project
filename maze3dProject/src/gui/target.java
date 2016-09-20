@@ -1,16 +1,15 @@
 package gui;
+
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import algorithms.mazeGenerators.Position;
 
-
-
-public class Character {
+public class target {
 	private Position pos;
 	private Image img;
 	
-	public Character() {
-		img = new Image(null, "character.jpg");
+	public target() {
+		img = new Image(null, "target.jpg");
 	}
 
 	public Position getPos() {
@@ -26,22 +25,4 @@ public class Character {
 				cellWidth * pos.x, cellHeight * pos.y, cellWidth, cellHeight);
 	}
 	
-	public void moveRight() {
-		pos.y++;
-	}
-	public void moveLeft() {
-		pos.y--;
-	}
-	public void moveForward() {
-		pos.z--;
-	}
-	public void moveBack() {
-		pos.z++;
-	}
-	public void moveUp() {
-		pos.x++;
-	}
-	public void moveDown() {
-		pos.x--;
-	}
 }

@@ -13,6 +13,10 @@ public class Properties implements Serializable {
 	 */
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer mazeGenerator;
 	private Integer solveAlgorithm;
 	private Integer maxNumOfThreads;
@@ -21,7 +25,7 @@ public class Properties implements Serializable {
 	public Properties() {
 		mazeGenerator = 1;
 		solveAlgorithm = 1;
-		runtimeEnv = 1;
+		runtimeEnv = 0;
 		maxNumOfThreads = 50;
 		
        

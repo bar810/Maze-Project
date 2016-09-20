@@ -17,7 +17,7 @@ import algorithms.mazeGenerators.Position;
 public class mazeDisplay extends Canvas {
 	
 	private CharacterR characterR;
-	private CharacterL characterL;
+	//private CharacterL characterL;
 	private target tar;
 	private int[][] mazeData = {
 			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -35,10 +35,11 @@ public class mazeDisplay extends Canvas {
 	public mazeDisplay(Composite parent, int style) {
 		super(parent, style);
 		
-		characterL= new CharacterL();
+		//characterL= new CharacterL();
 		
 		characterR= new CharacterR();
 		characterR.setPos(new Position(1,1, 1));
+		//characterL.setPos(new Position(1,1, 1));
 		//tar=new target();
 		//tar.setPos(new Position(1,1,1));
 

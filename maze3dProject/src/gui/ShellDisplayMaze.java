@@ -28,8 +28,18 @@ public class ShellDisplayMaze extends Observable {
 	
 
 	protected Shell shell;	
+	ArrayList<String> names=new ArrayList<>();
+	
+	public ShellDisplayMaze(ArrayList<String>names){
+		this.names=names;
+	}
 
-
+	String[] getNames(){
+		String[] temp = new String[names.size()];
+		for(int i=0;i<names.size();i++)
+			temp[i]=names.get(i);
+		return temp;
+	}
 	
 	
 	public void start(Display display) {		
@@ -53,7 +63,7 @@ public class ShellDisplayMaze extends Observable {
 		
 		
 		
-		String[] items= "".split(" ");
+		String[] items=getNames();
 		Combo combo =new Combo(shell,SWT.SINGLE|SWT.DROP_DOWN);
 		combo.setItems(items);
 		

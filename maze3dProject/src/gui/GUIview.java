@@ -42,16 +42,14 @@ public class GUIview extends Observable implements view, Observer{
 	BufferedReader in;
 	PrintWriter out;
 	Properties p;
+	ArrayList<String> names= new ArrayList<>();
 	
 	
 	public GUIview(BufferedReader reader ,PrintWriter writer) {
 		this.in = reader;
 		this.out = writer;
+		loadMazes();
 	}
-	
-
-	
-
 
 	protected void initWidgets() {
 		GridLayout grid = new GridLayout(2, false);
@@ -80,7 +78,7 @@ public class GUIview extends Observable implements view, Observer{
 			}
 		});
 	//Display Maze
-		ShellDisplayMaze dis = new ShellDisplayMaze();	
+		ShellDisplayMaze dis = new ShellDisplayMaze(names);	
 		dis.addObserver(this);
 		Button btnDisplayMaze = new Button(buttons, SWT.PUSH);
 		btnDisplayMaze.setText("Display maze");
@@ -137,6 +135,7 @@ public class GUIview extends Observable implements view, Observer{
 		btnExit.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				saveMazes();
 				setChanged();
 				notifyObservers("exit");
 				display.dispose();
@@ -163,11 +162,26 @@ public class GUIview extends Observable implements view, Observer{
 		msg2.setMessage(msg);
 		msg2.open();
 	}
+	
+	
+	
+	
+	@Override
+	public void getInformation(String name){
+		this.names.add(name);
+	}
+	
+	
 	public void setProperties(Properties p) {
 	this.p=p;	
 	}
 	@Override
 	public void update(Observable arg0, Object arg1) {
+		if(arg1=="erase_all"){
+			names.removeAll(names);
+			saveMazes();
+			loadMazes();
+		}
 		setChanged();
 		notifyObservers(arg1);
 	}
@@ -186,5 +200,38 @@ public class GUIview extends Observable implements view, Observer{
 		}
 		display.dispose();
 	}
+	
+	public void saveMazes(){
+		ObjectOutputStream oos=null;
+		try{
+			oos = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("AllMazesNamesCatch")));
+			oos.writeObject(this.names);
+			oos.close();
+			} catch (IOException e1) {
+			}
+			
+	}
+	
+	public void loadMazes(){
+		ObjectInputStream ois=null;
+		try{
+			//GZIP is make it small. object can save any object. the object must be seriazible
+		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("AllMazesNamesCatch")));
+		this.names=(ArrayList<String>) ois.readObject();
+		ois.close();
+		} catch (IOException e1) {
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 		
 }

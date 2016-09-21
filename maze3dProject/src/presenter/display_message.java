@@ -12,8 +12,6 @@ public class display_message implements Command{
 	}
 	@Override
 	public void doCommand(String[] args) {
-		
-		
 		if(args.length==1)
 		v.Print(m.getPendingMessage());	
 		else

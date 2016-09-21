@@ -69,4 +69,9 @@ public class MyView extends Observable implements view, Observer {
 	this.properties=p;
 		
 	}
+	@Override
+	public void getInformation(String info) {
+		// TODO Auto-generated method stub
+		
+	}
 }

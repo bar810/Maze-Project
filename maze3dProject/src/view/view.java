@@ -8,5 +8,5 @@ public interface view {
 	public void Print (String str);
 	public void displayMessage(String msg);
 	public void setProperties(Properties p);
-	
+	public void getInformation(String info);
 }

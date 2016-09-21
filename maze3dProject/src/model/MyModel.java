@@ -78,6 +78,7 @@ public class MyModel extends Observable implements model {
 			mazesNames.add(name);
 			saveMazes();
 			saveSolutions();
+			sendMazesNames(name);
 			setChanged();
 			message = "Maze: " + name + " Generated succesfully!\n";
 			notifyObservers("maze_ready " + name);
@@ -389,7 +390,10 @@ public class MyModel extends Observable implements model {
 		
 	}
 
-	
+	void sendMazesNames(String name){
+		setChanged();
+		notifyObservers("getInformation" +" "+name);
+	}
 	
 	
 }

@@ -1,23 +1,37 @@
 package gui;
 
+import java.util.Observable;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 
-public class ShellProporties extends dialogWindow {
-	String update;
+public class ShellProporties extends Observable{
+	
+
+	protected Shell shell;	
+
+	public void start(Display display) {		
+		shell = new Shell(display);
+		initWidgets();
+		shell.open();		
+	}
+	
+
 
 	String Generator;
 	String Algorithem;
 	String enviroment;
 	
-	@Override
+
 	protected void initWidgets() {
 		shell.setText(" Properties");
 		shell.setSize(500, 400);		
@@ -65,6 +79,8 @@ public class ShellProporties extends dialogWindow {
 		b.setText("BFS");
 		d.setText("DFS");
 		
+		
+		
 		b.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -94,6 +110,8 @@ public class ShellProporties extends dialogWindow {
 		Button CLI=new Button(group3,SWT.RADIO);
 		GUI.setText("GUI");
 		CLI.setText("CLI");
+		
+		
 		
 		GUI.addSelectionListener(new SelectionListener() {
 			@Override
@@ -135,7 +153,8 @@ public class ShellProporties extends dialogWindow {
 				msg.setMessage("proporties save!");
 				
 				String algo = msg.getText();
-				update="setProperties"+" "+Generator+" "+Algorithem+" "+enviroment;
+				setChanged();
+				notifyObservers("setPropertiesEX"+" "+Generator+" "+Algorithem+" "+enviroment);
 				msg.open();
 				shell.close();
 			}
@@ -146,16 +165,17 @@ public class ShellProporties extends dialogWindow {
 			}
 		});	
 		
-	reset.addSelectionListener(new SelectionListener() {
+			reset.addSelectionListener(new SelectionListener() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {				
 				MessageBox msg = new MessageBox(shell, SWT.OK);
 				msg.setText("RESET");
 				msg.setMessage("proporties RESET!");
-				update="resetProperties";
-				String algo = msg.getText();
 				
+				String algo = msg.getText();
+				setChanged();
+				notifyObservers("reset_properties");
 				msg.open();
 				shell.close();
 			}
@@ -167,9 +187,6 @@ public class ShellProporties extends dialogWindow {
 		});	
 		
 	}
-	@Override
-	public String GetUpdate(){
-		return update;
-	}
+
 
 }

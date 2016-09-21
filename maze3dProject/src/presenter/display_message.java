@@ -12,6 +12,10 @@ public class display_message implements Command{
 	}
 	@Override
 	public void doCommand(String[] args) {
-		v.Print(m.getPendingMessage());	
+		v.displayMessage(args[1]);
+		
+		
+		//	v.Print(m.getPendingMessage());	
+		//v.displayMessage(]);
 		}
 }

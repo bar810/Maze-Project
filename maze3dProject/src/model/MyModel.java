@@ -83,7 +83,7 @@ public class MyModel extends Observable implements model {
 		} else {
 			message = "This name already exists!\n";
 			setChanged();
-			notifyObservers("display_msg");
+			notifyObservers("display_msg maze_is_exist");
 		}	
 	}
 	@Override
@@ -277,9 +277,6 @@ public class MyModel extends Observable implements model {
 			} catch (IOException e1) {
 				message = "save faild";
 			}
-			message="";
-			setChanged();
-			notifyObservers("display_msg");
 	}
 		
 		
@@ -297,8 +294,7 @@ public class MyModel extends Observable implements model {
 			e.printStackTrace();
 		}
 		message="Mazes loaded!\n";
-		setChanged();
-		notifyObservers("display_msg");
+		
 	}
 
 	public void saveMazes(){
@@ -311,8 +307,7 @@ public class MyModel extends Observable implements model {
 				message = "save faild";
 			}
 			message="";
-			setChanged();
-			notifyObservers("display_msg");
+			
 	}
 	public void loadMazes(){
 		ObjectInputStream ois=null;
@@ -328,8 +323,6 @@ public class MyModel extends Observable implements model {
 			e.printStackTrace();
 		}
 		message="Mazes loaded!\n";
-		setChanged();
-		notifyObservers("display_msg");
 	}
 	  
 	
@@ -341,9 +334,9 @@ public class MyModel extends Observable implements model {
 	@Override
 	public void Exit() {
 		saveSolutions();
-		//saveMazes();
-		setChanged();
-		notifyObservers("display_msg");
+		saveMazes();
+//		setChanged();
+//		notifyObservers("display_msg");
 	}	
 	@Override
 	public void setProperties(Properties p) {

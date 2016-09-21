@@ -16,6 +16,7 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import presenter.Presenter;
@@ -46,15 +47,16 @@ public class GUIview extends Observable implements view, Observer{
 		
 	//buttons:
 	//New Maze
+		ShellNewMaze win = new ShellNewMaze();	
+		win.addObserver(this);
 		Button btnGenerateMaze = new Button(buttons, SWT.PUSH);
 		btnGenerateMaze.setText("New maze");
 		btnGenerateMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				ShellNewMaze win = new ShellNewMaze();				
 				win.start(display);
-				setChanged();
-				notifyObservers(win.GetUpdate());
+				
+				
 			}
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
@@ -67,7 +69,7 @@ public class GUIview extends Observable implements view, Observer{
 		btnDisplayMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				ShellDisplayMaze dis = new ShellDisplayMaze();				
+				ShellDisplayMaze dis = new ShellDisplayMaze();	
 				dis.start(display);	
 			}
 			@Override
@@ -95,15 +97,16 @@ public class GUIview extends Observable implements view, Observer{
 			}
 		});
 	//Properties
+		ShellProporties pro = new ShellProporties();
+		pro.addObserver(this);	
 		Button btnProporties = new Button(buttons, SWT.PUSH);
 		btnProporties.setText("Proporties");
 		btnProporties.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				ShellProporties pro = new ShellProporties();				
+							
 				pro.start(display);
-				setChanged();
-				notifyObservers(pro.GetUpdate());
+				
 			}
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
@@ -139,17 +142,18 @@ public class GUIview extends Observable implements view, Observer{
 		// TODO Auto-generated method stub
 	}
 	public void displayMessage(String msg) {
-		// TODO Auto-generated method stub	
+		MessageBox msg2 = new MessageBox(shell, SWT.OK);
+		msg2.setMessage(msg);
+		msg2.open();
 	}
 	public void setProperties(Properties p) {
 		// TODO Auto-generated method stub	
 	}
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-	}
-	public void addObserver(Presenter presenter) {
-		// TODO Auto-generated method stub	
+		setChanged();
+		notifyObservers(arg1);
+	
 	}
 	public void start() {
 		display = new Display();

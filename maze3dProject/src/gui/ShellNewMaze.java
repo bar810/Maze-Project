@@ -10,16 +10,23 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-public class ShellNewMaze extends dialogWindow {
+public class ShellNewMaze extends Observable {
 	
-	String update;
+	protected Shell shell;	
 	
+	public void start(Display display) {		
+		shell = new Shell(display);
+		initWidgets();
+		shell.open();		
+	}
 	
-	@Override
+	//@Override
 	protected void initWidgets() {
 		shell.setText("New Maze");
 		shell.setSize(400, 300);	
@@ -68,10 +75,9 @@ public class ShellNewMaze extends dialogWindow {
 				int floors = Integer.parseInt(txtfloors.getText());
 				int rows = Integer.parseInt(txtRows.getText());
 				int cols = Integer.parseInt(txtCols.getText());
-				update="generate_3d_maze"+ " " + name +" "+ floors +" "+ rows + " "+ cols;
-				msg.setMessage("Generating maze: " +name);
-				
-				msg.open();
+			
+				setChanged();
+				notifyObservers("generate_3d_maze"+ " " +name+" "+floors+" "+rows+ " "+cols);
 				shell.close();
 			}
 			
@@ -82,8 +88,5 @@ public class ShellNewMaze extends dialogWindow {
 		});	
 		
 	}
-	@Override
-	public String GetUpdate(){
-		return update;
-	}
+
 }

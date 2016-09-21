@@ -5,6 +5,10 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
+
 import model.model;
 import view.view;
 
@@ -58,7 +62,7 @@ public class Presenter extends Observable implements Observer{
 		if (tempCmd == null){
 			view.Print("Command Not Found!");
 		}
-		else{
+		else{		
 			tempCmd.doCommand(spliter);
 		}
 	}

@@ -83,7 +83,7 @@ public class MyModel extends Observable implements model {
 		} else {
 			message = "This name already exists!\n";
 			setChanged();
-			notifyObservers("display_msg maze_is_exist");
+			notifyObservers("display_msg maze_is_exist!");
 		}	
 	}
 	@Override
@@ -335,8 +335,8 @@ public class MyModel extends Observable implements model {
 	public void Exit() {
 		saveSolutions();
 		saveMazes();
-//		setChanged();
-//		notifyObservers("display_msg");
+		setChanged();
+		notifyObservers("display_msg GOOD_BYE_!");
 	}	
 	@Override
 	public void setProperties(Properties p) {

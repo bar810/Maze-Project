@@ -152,13 +152,10 @@ public class ShellProporties extends Observable{
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {				
 				MessageBox msg = new MessageBox(shell, SWT.OK);
-				msg.setText("SAVE");
-				msg.setMessage("proporties save!");
 				
 				String algo = msg.getText();
 				setChanged();
 				notifyObservers("setPropertiesEX"+" "+Generator+" "+Algorithem+" "+enviroment);
-				msg.open();
 				shell.close();
 			}
 			
@@ -173,13 +170,10 @@ public class ShellProporties extends Observable{
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {				
 				MessageBox msg = new MessageBox(shell, SWT.OK);
-				msg.setText("RESET");
-				msg.setMessage("proporties RESET!");
 				
 				String algo = msg.getText();
 				setChanged();
 				notifyObservers("reset_properties");
-				msg.open();
 				shell.close();
 			}
 			

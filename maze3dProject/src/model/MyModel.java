@@ -348,7 +348,9 @@ public class MyModel extends Observable implements model {
 		properties.setMazeGenerator(1);
 		properties.setRuntimeEnv(1);
 		properties.setSolveAlgorithm(1);
-		System.out.println("properties was reset to defualt !");
+		setChanged();
+		notifyObservers("display_msg Return_to_deafult_properties!");
+	
 	}
 	public void eraseAllData(){
 		this.mazes.clear();
@@ -377,6 +379,8 @@ public class MyModel extends Observable implements model {
 			properties.setMazeGenerator(0);
 		else
 			properties.setMazeGenerator(1);
+		setChanged();
+		notifyObservers("display_msg Properties_saved!");
 		
 	}
 }

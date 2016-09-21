@@ -78,7 +78,6 @@ public class MyModel extends Observable implements model {
 			mazesNames.add(name);
 			saveMazes();
 			saveSolutions();
-			saveNames();//add here
 			setChanged();
 			message = "Maze: " + name + " Generated succesfully!\n";
 			notifyObservers("maze_ready " + name);
@@ -388,18 +387,6 @@ public class MyModel extends Observable implements model {
 		setChanged();
 		notifyObservers("display_msg Properties_saved!");
 		
-	}
-	public void saveNames(){
-		ObjectOutputStream oos=null;
-		try{
-			oos = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("AllMazesNamesCatch")));
-			oos.writeObject(this.mazesNames);
-			oos.close();
-			} catch (IOException e1) {
-				message = "save faild";
-			}
-			message="";
-			
 	}
 
 	

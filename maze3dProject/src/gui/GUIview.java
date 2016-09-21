@@ -1,9 +1,18 @@
 package gui;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -19,12 +28,14 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
+import algorithms.mazeGenerators.Maze3d;
 import presenter.Presenter;
 import presenter.Properties;
 import view.view;
 
 public class GUIview extends Observable implements view, Observer{
 
+	private static final Observable ShellNewMaze = null;
 	protected Display display;
 	protected Shell shell;	
 	private mazeDisplay mazeDisplay;
@@ -37,6 +48,8 @@ public class GUIview extends Observable implements view, Observer{
 		this.in = reader;
 		this.out = writer;
 	}
+	
+
 	
 
 
@@ -157,7 +170,6 @@ public class GUIview extends Observable implements view, Observer{
 	public void update(Observable arg0, Object arg1) {
 		setChanged();
 		notifyObservers(arg1);
-	
 	}
 	public void start() {
 		display = new Display();
@@ -174,4 +186,5 @@ public class GUIview extends Observable implements view, Observer{
 		}
 		display.dispose();
 	}
+		
 }

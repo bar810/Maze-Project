@@ -27,7 +27,9 @@ import algorithms.mazeGenerators.Maze3d;
 public class ShellDisplayMaze extends Observable {
 	
 
-	protected Shell shell;	
+	protected Shell shell;
+	String[] names;
+	
 
 
 	
@@ -53,7 +55,7 @@ String update;
 		
 		
 		
-		String[] items= "".split(" ");
+		String[] items= names;
 		Combo combo =new Combo(shell,SWT.SINGLE|SWT.DROP_DOWN);
 		combo.setItems(items);
 		

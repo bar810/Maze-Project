@@ -100,7 +100,7 @@ public class GUIview extends Observable implements view, Observer{
 		ShellProporties pro = new ShellProporties();
 		pro.addObserver(this);	
 		Button btnProporties = new Button(buttons, SWT.PUSH);
-		btnProporties.setText("Proporties");
+		btnProporties.setText("Properties");
 		btnProporties.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {

@@ -353,7 +353,8 @@ public class MyModel extends Observable implements model {
 	public void eraseAllData(){
 		this.mazes.clear();
 		this.solutions.clear();
-		System.out.println("All data was cleared !");
+		setChanged();
+		notifyObservers("display_msg Data_erased!");
 	}
 	
 	public String[] getMazesNames(){

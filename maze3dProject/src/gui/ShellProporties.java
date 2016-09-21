@@ -141,6 +141,9 @@ public class ShellProporties extends Observable{
 		Button reset=new Button(shell,SWT.PUSH);
 		reset.setText("DEAFULT PROPERTIES");
 		
+		Button erase=new Button(shell,SWT.PUSH);
+		erase.setText("Erase Data");
+		
 	
 	
 		
@@ -185,6 +188,25 @@ public class ShellProporties extends Observable{
 				
 			}
 		});	
+			
+			
+			erase.addSelectionListener(new SelectionListener() {
+				
+				@Override
+				public void widgetSelected(SelectionEvent arg0) {				
+					MessageBox msg = new MessageBox(shell, SWT.OK);
+					msg.setText("ERASE");
+					String algo = msg.getText();
+					setChanged();
+					notifyObservers("erase_all");
+					shell.close();
+				}
+				
+				@Override
+				public void widgetDefaultSelected(SelectionEvent arg0) {			
+					
+				}
+			});	
 		
 	}
 

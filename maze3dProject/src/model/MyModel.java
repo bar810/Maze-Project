@@ -186,7 +186,7 @@ public class MyModel extends Observable implements model {
 
 		message = sb.toString();
 		setChanged();
-		notifyObservers("display_msg");	
+		notifyObservers("getMaze message");	
 	}
 
 	@Override
@@ -195,11 +195,11 @@ public class MyModel extends Observable implements model {
 			message = mazes.get(name).toString() + "\nStart Position: " + mazes.get(name).getStartPosition()
 					+ "\nGoal Position: " + mazes.get(name).getGoalPosition() + "\n";
 			setChanged();
-			notifyObservers("display_msg");
+			notifyObservers("display_msg ");
 		} else {
 			message = "Couldn't find maze by name!\n";
 			setChanged();
-			notifyObservers("display_msg");
+			notifyObservers("display_msg cant_find_maze!");
 		}		
 	}
 

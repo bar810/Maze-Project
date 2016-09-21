@@ -12,6 +12,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
+import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Position;
 
 public class mazeDisplay extends Canvas {
@@ -20,6 +21,12 @@ public class mazeDisplay extends Canvas {
 	private Character character;
 	private Character2 character2;
 	private target tar;
+	//try
+	
+	
+	
+	
+	//
 	private int[][] mazeData = {
 			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 			{1,0,0,0,0,0,0,0,1,1,0,1,0,0,1},

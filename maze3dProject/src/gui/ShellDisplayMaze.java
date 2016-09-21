@@ -83,6 +83,10 @@ public class ShellDisplayMaze extends Observable {
 				
 				msg.open();
 				shell.close();
+			//try
+				setChanged();
+				notifyObservers("display_cross_section"+" "+"x"+" "+"2"+" "+ combo.getText());
+			//
 			}
 
 			@Override

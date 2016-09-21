@@ -43,6 +43,7 @@ public class GUIview extends Observable implements view, Observer{
 	PrintWriter out;
 	Properties p;
 	ArrayList<String> names= new ArrayList<>();
+	public Maze3d maze;
 	
 	
 	public GUIview(BufferedReader reader ,PrintWriter writer) {
@@ -85,7 +86,7 @@ public class GUIview extends Observable implements view, Observer{
 		btnDisplayMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				dis.start(display);	
+				dis.start(display);
 			}
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
@@ -119,9 +120,7 @@ public class GUIview extends Observable implements view, Observer{
 		btnProporties.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-							
 				pro.start(display);
-				
 			}
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
@@ -169,6 +168,11 @@ public class GUIview extends Observable implements view, Observer{
 	@Override
 	public void getInformation(String name){
 		this.names.add(name);
+	}
+	
+	@Override
+	public void getMaze(String maze){
+
 	}
 	
 	

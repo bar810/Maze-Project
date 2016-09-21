@@ -74,4 +74,9 @@ public class MyView extends Observable implements view, Observer {
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public void getMaze(String name) {
+		// TODO Auto-generated method stub
+		
+	}
 }

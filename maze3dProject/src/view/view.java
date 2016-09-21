@@ -9,4 +9,5 @@ public interface view {
 	public void displayMessage(String msg);
 	public void setProperties(Properties p);
 	public void getInformation(String info);
+	public void getMaze(String name);
 }

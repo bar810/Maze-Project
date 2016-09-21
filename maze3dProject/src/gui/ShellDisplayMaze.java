@@ -1,5 +1,7 @@
 package gui;
 
+import java.util.Observable;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -7,16 +9,27 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-public class ShellDisplayMaze extends dialogWindow {
-
-	String update;
+public class ShellDisplayMaze extends Observable {
 	
-	@Override
+protected Shell shell;	
+	
+	public void start(Display display) {		
+		shell = new Shell(display);
+		initWidgets();
+		shell.open();		
+	}
+	
+	
+String update;
+	
+
 	protected void initWidgets() {
 		shell.setText("Display Maze");
 		shell.setSize(400, 300);		
@@ -56,10 +69,7 @@ public class ShellDisplayMaze extends dialogWindow {
 		
 		});
 	}
-	@Override
-	public String GetUpdate(){
-		return update;
-	}
+
 }
 
 

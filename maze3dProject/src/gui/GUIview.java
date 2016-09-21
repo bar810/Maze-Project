@@ -30,11 +30,14 @@ public class GUIview extends Observable implements view, Observer{
 	private mazeDisplay mazeDisplay;
 	BufferedReader in;
 	PrintWriter out;
+	String[] mazesNames;
+	Properties p;
 	
 	
 	public GUIview(BufferedReader reader ,PrintWriter writer) {
 		this.in = reader;
 		this.out = writer;
+		this.mazesNames=mazesNames;
 	}
 	
 	protected void initWidgets() {
@@ -64,12 +67,13 @@ public class GUIview extends Observable implements view, Observer{
 			}
 		});
 	//Display Maze
+		ShellDisplayMaze dis = new ShellDisplayMaze();	
+		dis.addObserver(this);
 		Button btnDisplayMaze = new Button(buttons, SWT.PUSH);
 		btnDisplayMaze.setText("Display maze");
 		btnDisplayMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				ShellDisplayMaze dis = new ShellDisplayMaze();	
 				dis.start(display);	
 			}
 			@Override
@@ -147,7 +151,7 @@ public class GUIview extends Observable implements view, Observer{
 		msg2.open();
 	}
 	public void setProperties(Properties p) {
-		// TODO Auto-generated method stub	
+	this.p=p;	
 	}
 	@Override
 	public void update(Observable arg0, Object arg1) {

@@ -46,6 +46,7 @@ public class Run {
 		case 0:
 			mgv = new GUIview(in, out);
 			Presenter presenter = new Presenter(model, mgv,2,properties);
+			
 			mgv.addObserver(presenter);
 			model.addObserver(presenter);
 			mgv.start();

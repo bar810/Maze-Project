@@ -53,6 +53,7 @@ public class Presenter extends Observable implements Observer{
 		commands.put("erase_all",  new eraseAllData(view,model));
 		commands.put("reset_properties",  new resetProperties(view,model));
 		commands.put("setPropertiesEX",  new setProperties(view,model));
+		commands.put("getMazesNames",  new getMazesNames(view,model));
 	}
 	@Override
 	public void update(Observable o, Object arg) {

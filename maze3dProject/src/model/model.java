@@ -15,4 +15,7 @@ public interface model {
 	public void resetProperties();
 	public void setPropertiesEX(String[] args);
 	public void setProperties(Properties p);
+	public void loadMazes();
+	public void saveMazes();
+	public String getMazesNames();
 }

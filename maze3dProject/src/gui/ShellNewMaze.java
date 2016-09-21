@@ -75,10 +75,11 @@ public class ShellNewMaze extends Observable {
 				int floors = Integer.parseInt(txtfloors.getText());
 				int rows = Integer.parseInt(txtRows.getText());
 				int cols = Integer.parseInt(txtCols.getText());
-			
 				setChanged();
 				notifyObservers("generate_3d_maze"+ " " +name+" "+floors+" "+rows+ " "+cols);
+				
 				shell.close();
+				
 			}
 			
 			@Override

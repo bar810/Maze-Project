@@ -30,16 +30,16 @@ public class GUIview extends Observable implements view, Observer{
 	private mazeDisplay mazeDisplay;
 	BufferedReader in;
 	PrintWriter out;
-	String[] mazesNames;
 	Properties p;
 	
 	
 	public GUIview(BufferedReader reader ,PrintWriter writer) {
 		this.in = reader;
 		this.out = writer;
-		this.mazesNames=mazesNames;
 	}
 	
+
+
 	protected void initWidgets() {
 		GridLayout grid = new GridLayout(2, false);
 		shell.setLayout(grid);
@@ -58,8 +58,8 @@ public class GUIview extends Observable implements view, Observer{
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				win.start(display);
-				
-				
+				setChanged();
+				notifyObservers("loadMazes");
 			}
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {

@@ -1,6 +1,12 @@
 package gui;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Observable;
+import java.util.zip.GZIPInputStream;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -16,9 +22,15 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import algorithms.mazeGenerators.Maze3d;
+
 public class ShellDisplayMaze extends Observable {
 	
-protected Shell shell;	
+
+	protected Shell shell;	
+
+
+	
 	
 	public void start(Display display) {		
 		shell = new Shell(display);
@@ -39,7 +51,9 @@ String update;
 		Label lblname = new Label(shell, SWT.NONE);
 		lblname.setText("choose maze: ");
 		
-		String[] items= "maze1 maze2 maze3 maze4 maze5 maze6".split(" ");
+		
+		
+		String[] items= "".split(" ");
 		Combo combo =new Combo(shell,SWT.SINGLE|SWT.DROP_DOWN);
 		combo.setItems(items);
 		

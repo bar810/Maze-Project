@@ -1,6 +1,10 @@
 package gui;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Observable;
+import java.util.zip.GZIPOutputStream;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -201,8 +205,9 @@ public class ShellProporties extends Observable{
 					
 				}
 			});	
-		
+	}
+			
 	}
 
 
-}
+

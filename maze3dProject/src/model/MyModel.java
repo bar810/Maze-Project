@@ -77,6 +77,8 @@ public class MyModel extends Observable implements model {
 			mazes.put(name, maze);
 			mazesNames.add(name);
 			saveMazes();
+			saveSolutions();
+			saveNames();//add here
 			setChanged();
 			message = "Maze: " + name + " Generated succesfully!\n";
 			notifyObservers("maze_ready " + name);
@@ -296,7 +298,7 @@ public class MyModel extends Observable implements model {
 		message="Mazes loaded!\n";
 		
 	}
-
+@Override
 	public void saveMazes(){
 		ObjectOutputStream oos=null;
 		try{
@@ -309,6 +311,7 @@ public class MyModel extends Observable implements model {
 			message="";
 			
 	}
+	@Override
 	public void loadMazes(){
 		ObjectInputStream ois=null;
 		try{
@@ -359,10 +362,13 @@ public class MyModel extends Observable implements model {
 		notifyObservers("display_msg Data_erased!");
 	}
 	
-	public String[] getMazesNames(){
-		String[] temp=new String[mazesNames.size()];
-		for(int i=0;i<mazesNames.size();i++)
-			temp[i]=mazesNames.get(i);
+	public String getMazesNames(){
+		String temp="";
+		for (String s : mazesNames)
+		{
+		    temp += s + " ";
+		}
+		
 		return temp;
 	}
 	public void setPropertiesEX(String[] str){
@@ -383,4 +389,20 @@ public class MyModel extends Observable implements model {
 		notifyObservers("display_msg Properties_saved!");
 		
 	}
+	public void saveNames(){
+		ObjectOutputStream oos=null;
+		try{
+			oos = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("AllMazesNamesCatch")));
+			oos.writeObject(this.mazesNames);
+			oos.close();
+			} catch (IOException e1) {
+				message = "save faild";
+			}
+			message="";
+			
+	}
+
+	
+	
+	
 }

@@ -44,7 +44,7 @@ public class Run {
 		switch (properties.getRuntimeEnv()) {
 		//GUI view
 		case 0:
-			mgv = new GUIview(in, out);
+			mgv = new GUIview(in, out,properties);
 			Presenter presenter = new Presenter(model, mgv,2,properties);
 			
 			mgv.addObserver(presenter);

@@ -2,6 +2,7 @@ package gui;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import algorithms.mazeGenerators.Position;
+import algorithms.search.State;
 
 public class Character {
 	
@@ -40,4 +41,5 @@ public class Character {
 	public void moveUp() {
 		pos.x--;
 	}
+
 }

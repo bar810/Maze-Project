@@ -29,6 +29,8 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Position;
+import algorithms.search.Solution;
 import presenter.Presenter;
 import presenter.Properties;
 import view.view;
@@ -43,12 +45,15 @@ public class GUIview extends Observable implements view, Observer{
 	Properties p;
 	ArrayList<String> names= new ArrayList<>();
 	public Maze3d maze;
+	public Solution<Position> solution=new Solution<Position>();
 
 		
-	public GUIview(BufferedReader reader ,PrintWriter writer) {
+	public GUIview(BufferedReader reader ,PrintWriter writer,Properties pro) {
 		this.in = reader;
 		this.out = writer;
+		this.p=pro;
 		loadMazes();
+		
 	}
 
 	protected void initWidgets() {
@@ -66,6 +71,7 @@ public class GUIview extends Observable implements view, Observer{
 		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	
 		mazeDisplay.setFocus();
+		
 		
 		
 	//buttons:
@@ -129,9 +135,15 @@ public class GUIview extends Observable implements view, Observer{
 			btnSolveMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				//try
-				setChanged();
 				
+			//	maze.setStartPosition(mazeDisplay.getCurentPosition());
+				setChanged();
+				notifyObservers("solve testSolve bfs");
+			
+				loadCurrentSolution();
+				mazeDisplay.setSolution(solution);
+				mazeDisplay.goToTheTarget();
+			
 //				ShellSolveMaze sol = new ShellSolveMaze();				
 //				sol.start(display);
 ////				setChanged();
@@ -259,16 +271,29 @@ public class GUIview extends Observable implements view, Observer{
 	}
 	
 	
-//	public void loadCurrentMaze(){
-//		ObjectInputStream ois=null;
-//		try{
-//		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentMaze")));
-//		this.maze=(Maze3d) ois.readObject();
-//		ois.close();
-//		} catch (IOException e1) {
-//		} catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//
-//	}	
+	public void loadCurrentMaze(){
+		ObjectInputStream ois=null;
+		try{
+		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentMaze")));
+		this.maze=(Maze3d) ois.readObject();
+		ois.close();
+		} catch (IOException e1) {
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+	}	
+	
+	public void loadCurrentSolution(){
+		ObjectInputStream ois=null;
+		try{
+		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentSolution")));
+		this.solution=(Solution<Position>) ois.readObject();
+		System.out.println(solution);
+		ois.close();
+		} catch (IOException e1) {
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 }

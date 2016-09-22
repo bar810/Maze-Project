@@ -98,9 +98,9 @@ public class MyModel extends Observable implements model {
 		}
 		else if (mazes.get(name) != null) {
 			MazeSearchableAdapter mazeAdapter = new MazeSearchableAdapter(mazes.get(name));
-			FutureTask<Solution> f = new FutureTask<Solution>(new Callable<Solution>() {
-				@Override
-				public Solution call() throws Exception {
+		//	FutureTask<Solution> f = new FutureTask<Solution>(new Callable<Solution>() {
+			//	@Override
+			//	public Solution call() throws Exception {
 					switch (algo) {
 					case "dfs":
 						solutions.put(name, new DFS().search(mazeAdapter));
@@ -116,21 +116,26 @@ public class MyModel extends Observable implements model {
 							solutions.put(name, new DFS().search(mazeAdapter));
 						break;
 					}
-					return solutions.get(name);
-				}
-			});
-			exs.execute(f);
+					//return solutions.get(name);
+				//}
+		//	});
+			//exs.execute(f);
 			message = "Solution created!\n";
+			
+			//save the solution and read in GUI view
+			
+			saveCurrentSolution(name);
 			setChanged();
 			notifyObservers("solve_ready " + name);
 		} 
-		else {
+	}
+		/*else {
 			message = "Couldn't find maze!\n";
-			setChanged();
-			notifyObservers("display_msg");
+		//	setChanged();
+			//notifyObservers("display_msg");
 		
-	}
-	}
+	}*/
+	//}
 	
 	@Override
 	public void Display_Sol(String name) {
@@ -407,7 +412,15 @@ public class MyModel extends Observable implements model {
 }
 	
 
-	
+	public void saveCurrentSolution(String name){
+		ObjectOutputStream oos=null;
+		try{
+			oos = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("cuurentSolution")));
+			oos.writeObject(this.solutions.get(name));
+			oos.close();
+			} catch (IOException e1) {
+			}
+}
 	
 	
 	

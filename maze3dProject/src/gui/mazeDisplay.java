@@ -3,6 +3,8 @@ package gui;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.zip.GZIPInputStream;
@@ -21,6 +23,8 @@ import org.eclipse.swt.widgets.Shell;
 
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Position;
+import algorithms.search.Solution;
+import algorithms.search.State;
 
 public class mazeDisplay extends Canvas {
 	
@@ -29,13 +33,11 @@ public class mazeDisplay extends Canvas {
 	private Character2 character2;
 	private target tar;
 	private int[][] mazeCurFloor;
-	
-
+	Solution<Position> sol;
 	
 	Maze3d maze;
 	int[][][] tempMaze;
-	int curFloor;
-			
+	int curFloor;	
 	
 	public mazeDisplay(Composite parent, int style) {
 		super(parent, style);
@@ -183,27 +185,8 @@ public class mazeDisplay extends Canvas {
 	public void  setMazeData(Maze3d md){
 	this.maze=md;
 	}
-//		
-//		TimerTask task = new TimerTask() {
-//			
-//			@Override
-//			public void run() {	
-//				getDisplay().syncExec(new Runnable() {					
-//
-//					@Override
-//					public void run() {
-//						
-//						//characterR.moveRight();
-//						//redraw();
-//					}
-//				});
-//				
-//			}
-//		};
-//		Timer timer = new Timer();
-//		timer.scheduleAtFixedRate(task, 0, 500);
-//	
-//	}
+		
+		
 	public void mazeDisplay(Composite parent, int style) {}
 	
 	void setMazeCurFloor(int [][] t){
@@ -222,4 +205,54 @@ public class mazeDisplay extends Canvas {
 		}
 
 	}	
+	
+	Position getCurentPosition(){
+		return character.getPos();
+	}
+	
+	void setSolution(Solution<Position> t){
+		this.sol=t;
+	}
+	
+
+
+	
+	void goToTheTarget(){
+		
+		
+			TimerTask task = new TimerTask() {
+				
+				
+				
+				int i=0;
+			@Override
+			public void run() {	
+				getDisplay().syncExec(new Runnable() {					
+					@Override
+					public void run() {
+						
+						
+						
+							if(i<sol.getSize())
+								character.setPos(sol.getStates().get(i).getPosition());
+							i++;
+							//character.moveLeft();
+							redraw();
+					}
+				});
+				
+			}
+				
+		};
+		Timer timer = new Timer();
+		timer.scheduleAtFixedRate(task, 0, 500);
+			
+		
+	}
+	
+	
+
+	
+	
+	
 }

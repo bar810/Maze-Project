@@ -45,7 +45,7 @@ public class ShellNewMaze extends Observable {
 		Label lblfloors = new Label(shell, SWT.NONE);
 		lblfloors.setText("floors: ");
 		
-		String[] floors="10,11,12,13,14,15,16,17,18,19,20".split(",");
+		String[] floors="3,4,5,10,11,12,13,14,15,16,17,18,19,20".split(",");
 		Combo comboF =new Combo(shell,SWT.SINGLE|SWT.DROP_DOWN);
 		comboF.setItems(floors);
 		
@@ -55,7 +55,7 @@ public class ShellNewMaze extends Observable {
 		Label lblRows = new Label(shell, SWT.NONE);
 		lblRows.setText("Rows: ");
 		
-		String[] rows="10,11,12,13,14,15,16,17,18,19,20".split(",");
+		String[] rows="3,4,5,10,11,12,13,14,15,16,17,18,19,20".split(",");
 		Combo comboR =new Combo(shell,SWT.SINGLE|SWT.DROP_DOWN);
 		comboR.setItems(rows);
 		
@@ -63,7 +63,7 @@ public class ShellNewMaze extends Observable {
 		Label lblCols = new Label(shell, SWT.NONE);
 		lblCols.setText("Cols: ");
 		
-		String[] cols="10,11,12,13,14,15,16,17,18,19,20".split(",");
+		String[] cols="3,4,5,10,11,12,13,14,15,16,17,18,19,20".split(",");
 		Combo comboS =new Combo(shell,SWT.SINGLE|SWT.DROP_DOWN);
 		comboS.setItems(cols);
 				

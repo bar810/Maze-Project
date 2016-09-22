@@ -1,7 +1,11 @@
 package gui;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.zip.GZIPInputStream;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
@@ -23,22 +27,21 @@ public class mazeDisplay extends Canvas {
 	private target tar;
 	private int[][] mazeCurFloor;
 	
-	//try
+
 	
 	Maze3d maze;
-	
-
-	
-	
-	
-	//
-
+	int[][][] tempMaze;
+	int curFloor;
 			
-
 	
 	public mazeDisplay(Composite parent, int style) {
 		super(parent, style);
 		 
+		loadCurrentMaze();
+		tempMaze=maze.getMaze();
+		
+		curFloor=maze.getStartPosition().x;
+		mazeCurFloor=maze.getCrossSectionByZ(curFloor);
 		
 		//do it after he got the information 
 		character= new Character();
@@ -60,7 +63,8 @@ public class mazeDisplay extends Canvas {
 			Position pos = character2.getPos();
 			switch (e.keyCode) {
 			case SWT.ARROW_DOWN:	
-				if(mazeCurFloor[character.getPos().z+1][character.getPos().y]!=1)						
+				if(mazeCurFloor[character.getPos().z+1][character.getPos().y]!=1)	
+				
 					character.moveBack();
 					redraw();
 				break;
@@ -85,7 +89,29 @@ public class mazeDisplay extends Canvas {
 					}
 				redraw();
 				break;
-				//page up set maze data
+			case SWT.PAGE_UP:
+					if(tempMaze[curFloor+1][character.getPos().y][character.getPos().z]!=1){
+			
+					character.moveUp();
+					curFloor++;
+					mazeCurFloor=maze.getCrossSectionByZ(curFloor);
+					
+					redraw();
+					break;
+					}
+//				}
+			case SWT.PAGE_DOWN:
+
+				if(tempMaze[curFloor-1][character.getPos().y][character.getPos().z]!=1){
+					character.moveUp();
+					curFloor--;
+					mazeCurFloor=maze.getCrossSectionByZ(curFloor);
+					
+					redraw();
+					break;
+				}
+			
+			
 				}
 			}
 			
@@ -128,7 +154,7 @@ public class mazeDisplay extends Canvas {
 					  character2.draw(w, h, e.gc);
 				  if(flag==0)
 				  character.draw(w, h, e.gc);
-				  
+				  if(tar.getPos().x==curFloor)
 				  tar.draw(w, h, e.gc);
 				   }
 			}
@@ -163,4 +189,17 @@ public class mazeDisplay extends Canvas {
 	void setMazeCurFloor(int [][] t){
 		mazeCurFloor=t;
 	}
+	
+	public void loadCurrentMaze(){
+		ObjectInputStream ois=null;
+		try{
+		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentMaze")));
+		this.maze=(Maze3d) ois.readObject();
+		ois.close();
+		} catch (IOException e1) {
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+	}	
 }

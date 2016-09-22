@@ -65,7 +65,7 @@ public class GUIview extends Observable implements view, Observer{
 		mazeDisplay.setBackground(new Color(null,255,255,255));
 		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	
-		//mazeDisplay.setFocus();
+		mazeDisplay.setFocus();
 		
 		
 	//buttons:
@@ -97,13 +97,20 @@ public class GUIview extends Observable implements view, Observer{
 				//need to print
 				dis.start(display);
 				
-				loadCurrentMaze();
+			//	loadCurrentMaze();
 				
 				mazeDisplay.setMazeData(maze);
 				
-				mazeDisplay.setMazeCurFloor(maze.getCrossSectionByZ(3));
+			//	mazeDisplay.setMazeCurFloor(maze.getCrossSectionByZ(3));
 				
-				mazeDisplay.redraw();
+				
+				mazeDisplay = new mazeDisplay(shell, SWT.BORDER);
+				mazeDisplay.setBackground(new Color(null,255,255,255));
+				mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+				
+				
+				
+				//mazeDisplay.redraw();
 			}
 			
 			@Override
@@ -249,16 +256,16 @@ public class GUIview extends Observable implements view, Observer{
 	}
 	
 	
-	public void loadCurrentMaze(){
-		ObjectInputStream ois=null;
-		try{
-		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentMaze")));
-		this.maze=(Maze3d) ois.readObject();
-		ois.close();
-		} catch (IOException e1) {
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-	}	
+//	public void loadCurrentMaze(){
+//		ObjectInputStream ois=null;
+//		try{
+//		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentMaze")));
+//		this.maze=(Maze3d) ois.readObject();
+//		ois.close();
+//		} catch (IOException e1) {
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//
+//	}	
 }

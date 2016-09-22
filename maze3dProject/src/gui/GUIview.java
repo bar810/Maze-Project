@@ -35,7 +35,6 @@ import view.view;
 
 public class GUIview extends Observable implements view, Observer{
 
-	private static final Observable ShellNewMaze = null;
 	protected Display display;
 	protected Shell shell;	
 	private mazeDisplay mazeDisplay;
@@ -44,8 +43,8 @@ public class GUIview extends Observable implements view, Observer{
 	Properties p;
 	ArrayList<String> names= new ArrayList<>();
 	public Maze3d maze;
-	
-	
+
+		
 	public GUIview(BufferedReader reader ,PrintWriter writer) {
 		this.in = reader;
 		this.out = writer;
@@ -59,6 +58,15 @@ public class GUIview extends Observable implements view, Observer{
 		Composite buttons = new Composite(shell, SWT.NONE);
 		RowLayout rowLayout = new RowLayout(SWT.VERTICAL);
 		buttons.setLayout(rowLayout);
+		
+		shell.setText("PIZZA MAZE GAME");
+		shell.setImage(new Image(null,"img1.jpg"));
+		mazeDisplay = new mazeDisplay(shell, SWT.BORDER);
+		mazeDisplay.setBackground(new Color(null,255,255,255));
+		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	
+		//mazeDisplay.setFocus();
+		
 		
 	//buttons:
 	//New Maze
@@ -86,12 +94,24 @@ public class GUIview extends Observable implements view, Observer{
 		btnDisplayMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				//need to print
 				dis.start(display);
+				
+				loadCurrentMaze();
+				
+				mazeDisplay.setMazeData(maze);
+				
+				mazeDisplay.setMazeCurFloor(maze.getCrossSectionByZ(3));
+				
+				mazeDisplay.redraw();
 			}
+			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 				// TODO Auto-generated method stub	
 			}
+			
+		
 		});
 	//Get Advice
 		Button btnGetAdvice = new Button(buttons, SWT.PUSH);
@@ -145,12 +165,9 @@ public class GUIview extends Observable implements view, Observer{
 				
 			}
 		});
-		shell.setText("PIZZA MAZE GAME");
-		shell.setImage(new Image(null,"img1.jpg"));
-		mazeDisplay = new mazeDisplay(shell, SWT.BORDER);
-		mazeDisplay.setBackground(new Color(null,255,255,255));
-		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		mazeDisplay.setFocus();
+		
+		
+		
 	}
 	
 	public void Print(String str) {
@@ -185,6 +202,7 @@ public class GUIview extends Observable implements view, Observer{
 			names.removeAll(names);
 			saveMazes();
 			loadMazes();
+			maze=null;
 		}
 		setChanged();
 		notifyObservers(arg1);
@@ -231,11 +249,16 @@ public class GUIview extends Observable implements view, Observer{
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-		
+	public void loadCurrentMaze(){
+		ObjectInputStream ois=null;
+		try{
+		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentMaze")));
+		this.maze=(Maze3d) ois.readObject();
+		ois.close();
+		} catch (IOException e1) {
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+	}	
 }

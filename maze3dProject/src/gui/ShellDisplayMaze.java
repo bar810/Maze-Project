@@ -78,16 +78,14 @@ public class ShellDisplayMaze extends Observable {
 				MessageBox msg = new MessageBox(shell, SWT.OK);
 				msg.setText("Display maze");
 				msg.setMessage("Button was clicked");
+				String name=combo.getText();
 				
-				msg.setMessage("Display maze: " +combo.getText());
-				
-				msg.open();
-				shell.close();
-			//try
 				setChanged();
-				notifyObservers("display_cross_section"+" "+"x"+" "+"2"+" "+ combo.getText());
-			//
-			}
+				notifyObservers("display"+" "+name);
+				shell.close();
+				
+			
+				}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {

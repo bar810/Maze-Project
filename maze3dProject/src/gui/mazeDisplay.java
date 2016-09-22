@@ -21,38 +21,37 @@ public class mazeDisplay extends Canvas {
 	private Character character;
 	private Character2 character2;
 	private target tar;
+	private int[][] mazeCurFloor;
+	
 	//try
 	
+	Maze3d maze;
+	
+
 	
 	
 	
 	//
-	private int[][] mazeData = {
-			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-			{1,0,0,0,0,0,0,0,1,1,0,1,0,0,1},
-			{0,0,1,1,1,1,1,0,0,1,0,1,0,1,1},
-			{1,1,1,0,0,0,1,0,1,1,0,1,0,0,1},
-			{1,0,1,0,1,1,1,0,0,0,0,1,1,0,1},
-			{1,1,0,0,0,1,0,0,1,1,1,1,0,0,1},
-			{1,0,0,1,0,0,1,0,0,0,0,1,0,1,1},
-			{1,0,1,1,0,1,1,0,1,1,0,0,0,1,1},
-			{1,0,0,0,0,0,0,0,0,1,0,1,0,0,1},
-			{1,1,1,1,1,1,1,1,1,1,1,1,0,1,1}		
-	};
+
+			
+
 	
 	public mazeDisplay(Composite parent, int style) {
 		super(parent, style);
+		 
 		
+		//do it after he got the information 
 		character= new Character();
-		character.setPos(new Position(1,1,1));
+		character.setPos(new Position(1, 1, 1));
 		
 		character2= new Character2();
-		character2.setPos(new Position(1,1,1));
+		character2.setPos(new Position(1, 1, 1));
 		
 		tar=new target();
-		tar.setPos(new Position(12,9,1));
+		tar.setPos(new Position(1, 1, 1));
 
 		this.addKeyListener(new KeyListener() {
+			
 			
 		
 			
@@ -61,17 +60,17 @@ public class mazeDisplay extends Canvas {
 			Position pos = character2.getPos();
 			switch (e.keyCode) {
 			case SWT.ARROW_DOWN:	
-				if(mazeData[character.getPos().z+1][character.getPos().y]!=1)						
+				if(mazeCurFloor[character.getPos().z+1][character.getPos().y]!=1)						
 					character.moveBack();
 					redraw();
 				break;
 			case SWT.ARROW_UP:
-				if(mazeData[character.getPos().z-1][character.getPos().y]!=1)
+				if(mazeCurFloor[character.getPos().z-1][character.getPos().y]!=1)
 					character.moveForward();
 				redraw();
 				break;
 			case SWT.ARROW_RIGHT:	
-				if(mazeData[character.getPos().z][character.getPos().y+1]!=1){
+				if(mazeCurFloor[character.getPos().z][character.getPos().y+1]!=1){
 					flag=0;
 					character.setPos(character2.getPos());
 					character.moveRight();
@@ -79,15 +78,17 @@ public class mazeDisplay extends Canvas {
 				redraw();
 				break;
 			case SWT.ARROW_LEFT:	
-				if(mazeData[character.getPos().z][character.getPos().y-1]!=1){
+				if(mazeCurFloor[character.getPos().z][character.getPos().y-1]!=1){
 					flag=1;
 					character.moveLeft();
 					character2.setPos(character.getPos());
 					}
 				redraw();
 				break;
+				//page up set maze data
 				}
 			}
+			
 		@Override
 		public void keyReleased(KeyEvent arg0) {
 			}
@@ -103,15 +104,23 @@ public class mazeDisplay extends Canvas {
 				
 				   int width=getSize().x;
 				   int height=getSize().y;
+				   
+				   
+				   if(mazeCurFloor!=null){
+					
+					   
+					   character.setPos(maze.getStartPosition());
+					   character.setPos(maze.getStartPosition());
+					   tar.setPos(maze.getGoalPosition());
+					   
+				   int w=width/mazeCurFloor[0].length;
+				   int h=height/mazeCurFloor.length;
 
-				   int w=width/mazeData[0].length;
-				   int h=height/mazeData.length;
-
-				   for(int i=0;i<mazeData.length;i++)
-				      for(int j=0;j<mazeData[i].length;j++){
+				   for(int i=0;i<mazeCurFloor.length;i++)
+				      for(int j=0;j<mazeCurFloor[i].length;j++){
 				          int x=j*w;
 				          int y=i*h;
-				          if(mazeData[i][j]!=0)
+				          if(mazeCurFloor[i][j]!=0)
 				              e.gc.fillRectangle(x,y,w,h);
 				      }
 				  
@@ -121,10 +130,12 @@ public class mazeDisplay extends Canvas {
 				  character.draw(w, h, e.gc);
 				  
 				  tar.draw(w, h, e.gc);
-				 
-				
+				   }
 			}
 		});
+	}
+	public void  setMazeData(Maze3d md){
+	this.maze=md;
 	}
 //		
 //		TimerTask task = new TimerTask() {
@@ -148,6 +159,8 @@ public class mazeDisplay extends Canvas {
 //	
 //	}
 	public void mazeDisplay(Composite parent, int style) {}
-
-
+	
+	void setMazeCurFloor(int [][] t){
+		mazeCurFloor=t;
+	}
 }

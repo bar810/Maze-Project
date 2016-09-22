@@ -194,8 +194,9 @@ public class MyModel extends Observable implements model {
 		if (mazes.get(name) != null) {
 			message = mazes.get(name).toString() + "\nStart Position: " + mazes.get(name).getStartPosition()
 					+ "\nGoal Position: " + mazes.get(name).getGoalPosition() + "\n";
+			saveCurrentMaze(name);
 			setChanged();
-			notifyObservers("display_msg ");
+			notifyObservers("display_msg display_"+name+"_maze");
 		} else {
 			message = "Couldn't find maze by name!\n";
 			setChanged();
@@ -394,6 +395,20 @@ public class MyModel extends Observable implements model {
 		setChanged();
 		notifyObservers("getInformation" +" "+name);
 	}
+	
+	public void saveCurrentMaze(String name){
+		ObjectOutputStream oos=null;
+		try{
+			oos = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("cuurentMaze")));
+			oos.writeObject(this.mazes.get(name));
+			oos.close();
+			} catch (IOException e1) {
+			}
+}
+	
+
+	
+	
 	
 	
 }

@@ -30,6 +30,8 @@ public class Presenter extends Observable implements Observer{
 		model.setProperties(properties);
 		view.setProperties(properties);
 	}
+	
+	
 	public HashMap<String, Command> get (){
 		return commands;
 	}
@@ -57,6 +59,7 @@ public class Presenter extends Observable implements Observer{
 		commands.put("getInformation",  new getInformation(view,model));
 		commands.put("getMaze",  new getMaze(view,model));
 	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		String Cmdstr = (String)arg;
@@ -69,4 +72,5 @@ public class Presenter extends Observable implements Observer{
 			tempCmd.doCommand(spliter);
 		}
 	}
+
 }	

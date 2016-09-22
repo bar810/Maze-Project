@@ -5,11 +5,13 @@ import java.util.Observable;
 import javax.xml.stream.Location;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
@@ -43,26 +45,35 @@ public class ShellNewMaze extends Observable {
 		Label lblfloors = new Label(shell, SWT.NONE);
 		lblfloors.setText("floors: ");
 		
-		Text txtfloors = new Text(shell, SWT.BORDER);
-		txtfloors.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		String[] floors="3,10,11,12,13,14,15,16,17,18,19,20".split(",");
+		Combo comboF =new Combo(shell,SWT.SINGLE|SWT.DROP_DOWN);
+		comboF.setItems(floors);
+		
+		
 		
 		
 		Label lblRows = new Label(shell, SWT.NONE);
 		lblRows.setText("Rows: ");
 		
-		Text txtRows = new Text(shell, SWT.BORDER);
-		txtRows.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		String[] rows="3,10,11,12,13,14,15,16,17,18,19,20".split(",");
+		Combo comboR =new Combo(shell,SWT.SINGLE|SWT.DROP_DOWN);
+		comboR.setItems(rows);
+		
 		
 		Label lblCols = new Label(shell, SWT.NONE);
 		lblCols.setText("Cols: ");
 		
-		Text txtCols = new Text(shell, SWT.BORDER);
-		txtCols.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		String[] cols="3,10,11,12,13,14,15,16,17,18,19,20".split(",");
+		Combo comboS =new Combo(shell,SWT.SINGLE|SWT.DROP_DOWN);
+		comboS.setItems(cols);
 				
 		Button btnGenerateMaze = new Button(shell, SWT.PUSH);
 		shell.setDefaultButton(btnGenerateMaze);
 		btnGenerateMaze.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
 		btnGenerateMaze.setText("Generate maze");
+		
+		
+
 		
 		btnGenerateMaze.addSelectionListener(new SelectionListener() {
 			
@@ -72,9 +83,9 @@ public class ShellNewMaze extends Observable {
 				msg.setText("Title");
 				msg.setMessage("Button was clicked");
 				String name=txtname.getText();
-				int floors = Integer.parseInt(txtfloors.getText());
-				int rows = Integer.parseInt(txtRows.getText());
-				int cols = Integer.parseInt(txtCols.getText());
+				int floors = Integer.parseInt(comboF.getText());
+				int rows = Integer.parseInt(comboR.getText());
+				int cols = Integer.parseInt(comboS.getText());
 				setChanged();
 				notifyObservers("generate_3d_maze"+ " " +name+" "+floors+" "+rows+ " "+cols);
 				
@@ -87,6 +98,9 @@ public class ShellNewMaze extends Observable {
 				
 			}
 		});	
+		
+
+		
 		
 	}
 

@@ -114,14 +114,10 @@ public class mazeDisplay extends Canvas {
 				if(curFloor>0){
 				temp=curFloor;
 				if(tempMaze[temp-1][character.getPos().y][character.getPos().z]!=1){
-					character.moveUp();
+					character.moveDown();
 					curFloor--;
 					mazeCurFloor=maze.getCrossSectionByZ(curFloor);
-					
-					
-					
 				}
-			
 				}
 				redraw();
 				break;
@@ -178,7 +174,7 @@ public class mazeDisplay extends Canvas {
 				  if(tar.getPos().x==curFloor)
 					  tar.draw(w, h, e.gc);
 				   }
-			e.gc.drawString("floor: "+curFloor, 5, 5,false);
+			e.gc.drawString("floor: "+curFloor+"  row: "+character.getPos().y+"  col: "+character.getPos().z, 5, 5,false);
 			}
 		});
 	}
@@ -222,7 +218,7 @@ public class mazeDisplay extends Canvas {
 		
 			TimerTask task = new TimerTask() {
 				
-				
+				String where;
 				
 				int i=0;
 			@Override
@@ -232,25 +228,100 @@ public class mazeDisplay extends Canvas {
 					public void run() {
 						
 						
+						if(i<sol.getSize()){
+						where=whereToMove(sol.getStates().get(i).getPosition(), sol.getStates().get(i+1).getPosition());
 						
-							if(i<sol.getSize())
-								character.setPos(sol.getStates().get(i).getPosition());
-							i++;
-							//character.moveLeft();
-							redraw();
+						
+						int temp;
+						switch(where){
+							case"down":
+									temp=curFloor;									
+										character.moveDown();
+										curFloor--;
+										mazeCurFloor=maze.getCrossSectionByZ(curFloor);
+									
+								break;
+							case"up":
+									temp=curFloor;
+									character.moveUp();
+									curFloor++;
+									mazeCurFloor=maze.getCrossSectionByZ(curFloor);
+								break;
+							case"forward":
+									character.moveForward();
+								redraw();
+								break;
+							case"left":
+//									flag=1;
+									character.moveLeft();
+//									character2.setPos(character.getPos());								
+									break;
+							case"back":
+									character.moveBack();
+									break;
+							case"right":					
+//									flag=0;
+//									character2.setPos(character2.getPos());
+									character.moveRight();
+									break;
+							default:
+									break;
+						}
+						redraw();
+						}
+						i++;
+//							if(i<sol.getSize())
+//								character.setPos(sol.getStates().get(i).getPosition());
+//							i++;
+//							character.moveUp();
+//							curFloor++;
+//							mazeCurFloor=maze.getCrossSectionByZ(curFloor);
+//							redraw();
 					}
+					
 				});
 				
-			}
+			
 				
-		};
+			}};
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(task, 0, 500);
 			
-		
+			
 	}
 	
 	
+	String whereToMove(Position now,Position to){
+		
+		
+		int x=now.x-to.x;
+		int y=now.y-to.y;
+		int z=now.z-to.z;
+		
+		if(x!=0){
+			if(x==1)
+				//return "right";
+				return "up";
+			else
+				return "down";
+				//return "left";
+		}
+		if(y!=0){
+			if(y==1)
+				return "left";
+				//return "up";
+			else
+				return"right";
+				//return "down";
+		}
+		if(z!=0){
+			if(z==1)
+				return "forward";
+			else
+				return "back";
+		}
+		return null;
+	}
 
 	
 	

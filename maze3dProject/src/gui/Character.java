@@ -23,23 +23,27 @@ public class Character {
 		gc.drawImage(img, 0, 0, img.getBounds().width, img.getBounds().height, 
 				cellWidth * pos.y, cellHeight * pos.z, cellWidth, cellHeight);
 	}
-	public void moveRight() {
+	public void moveRight() {//change all
 		pos.y++;
+
 	}
 	public void moveForward() {
 		pos.z--;
+	
 	}
 	public void moveBack() {
 		pos.z++;
+
 	}
 	public void moveLeft() {
 		pos.y--;
+	
 	}
 	public void moveDown() {
-		pos.x++;
+		pos.x--;
 	}
 	public void moveUp() {
-		pos.x--;
+		pos.x++;
 	}
 
 }

@@ -138,7 +138,7 @@ public class GUIview extends Observable implements view, Observer{
 				
 			//	maze.setStartPosition(mazeDisplay.getCurentPosition());
 				setChanged();
-				notifyObservers("solve testSolve bfs");
+				notifyObservers("solve test bfs");
 			
 				loadCurrentSolution();
 				mazeDisplay.setSolution(solution);

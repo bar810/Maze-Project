@@ -129,10 +129,13 @@ public class GUIview extends Observable implements view, Observer{
 			btnSolveMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				ShellSolveMaze sol = new ShellSolveMaze();				
-				sol.start(display);
+				//try
 				setChanged();
-				notifyObservers(sol.GetUpdate());
+				
+//				ShellSolveMaze sol = new ShellSolveMaze();				
+//				sol.start(display);
+////				setChanged();
+////				notifyObservers(sol.GetUpdate());
 			}
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {

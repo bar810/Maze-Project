@@ -13,8 +13,11 @@ import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Position;
@@ -40,15 +43,17 @@ public class mazeDisplay extends Canvas {
 		loadCurrentMaze();
 		tempMaze=maze.getMaze();
 		
-		curFloor=maze.getStartPosition().x;
-		mazeCurFloor=maze.getCrossSectionByZ(curFloor);
+	
+			curFloor=maze.getStartPosition().x;
+			mazeCurFloor=maze.getCrossSectionByZ(curFloor);
+		
 		
 		//do it after he got the information 
 		character= new Character();
 		character.setPos(new Position(1, 1, 1));
 		
-		character2= new Character2();
-		character2.setPos(new Position(1, 1, 1));
+//		character2= new Character2();
+//		character2.setPos(new Position(1, 1, 1));
 		
 		tar=new target();
 		tar.setPos(new Position(1, 1, 1));
@@ -60,8 +65,10 @@ public class mazeDisplay extends Canvas {
 			
 			@Override
 			public void keyPressed(KeyEvent e) {
-			Position pos = character2.getPos();
+			Position pos = character.getPos();
+			int temp;
 			switch (e.keyCode) {
+			
 			case SWT.ARROW_DOWN:	
 				if(mazeCurFloor[character.getPos().z+1][character.getPos().y]!=1)	
 				
@@ -75,44 +82,48 @@ public class mazeDisplay extends Canvas {
 				break;
 			case SWT.ARROW_RIGHT:	
 				if(mazeCurFloor[character.getPos().z][character.getPos().y+1]!=1){
-					flag=0;
-					character.setPos(character2.getPos());
+//					flag=0;
+//					character2.setPos(character2.getPos());
 					character.moveRight();
 					}
 				redraw();
 				break;
 			case SWT.ARROW_LEFT:	
 				if(mazeCurFloor[character.getPos().z][character.getPos().y-1]!=1){
-					flag=1;
+//					flag=1;
 					character.moveLeft();
-					character2.setPos(character.getPos());
+//					character2.setPos(character.getPos());
+					
 					}
 				redraw();
 				break;
 			case SWT.PAGE_UP:
-					if(tempMaze[curFloor+1][character.getPos().y][character.getPos().z]!=1){
-			
+				if(maze.getx()-curFloor>1){
+					temp=curFloor;
+					if(tempMaze[temp+1][character.getPos().y][character.getPos().z]!=1){
 					character.moveUp();
 					curFloor++;
 					mazeCurFloor=maze.getCrossSectionByZ(curFloor);
-					
-					redraw();
-					break;
 					}
-//				}
+				}
+				redraw();
+				break;
 			case SWT.PAGE_DOWN:
-
-				if(tempMaze[curFloor-1][character.getPos().y][character.getPos().z]!=1){
+				if(curFloor>0){
+				temp=curFloor;
+				if(tempMaze[temp-1][character.getPos().y][character.getPos().z]!=1){
 					character.moveUp();
 					curFloor--;
 					mazeCurFloor=maze.getCrossSectionByZ(curFloor);
 					
-					redraw();
-					break;
+					
+					
 				}
 			
-			
 				}
+				redraw();
+				break;
+			}
 			}
 			
 		@Override
@@ -124,9 +135,16 @@ public class mazeDisplay extends Canvas {
 			
 			@Override
 			public void paintControl(PaintEvent e) {
-				
+			
 				e.gc.setBackground(new Color(null,0,0,0));
 				e.gc.setForeground(new Color(null,255,255,255));
+				
+				
+			
+				
+				
+			
+				
 				
 				   int width=getSize().x;
 				   int height=getSize().y;
@@ -150,13 +168,15 @@ public class mazeDisplay extends Canvas {
 				              e.gc.fillRectangle(x,y,w,h);
 				      }
 				  
-				  if(flag==1)
-					  character2.draw(w, h, e.gc);
-				  if(flag==0)
-				  character.draw(w, h, e.gc);
+//				  if(flag==1)
+//					  character2.draw(w, h, e.gc);
+//				  if(flag==0)
+					  character.draw(w, h, e.gc);
+				  
 				  if(tar.getPos().x==curFloor)
-				  tar.draw(w, h, e.gc);
+					  tar.draw(w, h, e.gc);
 				   }
+			e.gc.drawString("floor: "+curFloor, 5, 5,false);
 			}
 		});
 	}

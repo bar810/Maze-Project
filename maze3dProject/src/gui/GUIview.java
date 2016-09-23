@@ -47,16 +47,16 @@ public class GUIview extends Observable implements view, Observer{
 	public Maze3d maze;
 	public Solution<Position> solution=new Solution<Position>();
 
-		
 	public GUIview(BufferedReader reader ,PrintWriter writer,Properties pro) {
 		this.in = reader;
 		this.out = writer;
 		this.p=pro;
 		loadMazes();
-		
 	}
 
 	protected void initWidgets() {
+		
+	//main Display properties
 		GridLayout grid = new GridLayout(2, false);
 		shell.setLayout(grid);
 		
@@ -72,9 +72,8 @@ public class GUIview extends Observable implements view, Observer{
 	
 		mazeDisplay.setFocus();
 		
-		
-		
 	//buttons:
+		
 	//New Maze
 		ShellNewMaze win = new ShellNewMaze();	
 		win.addObserver(this);
@@ -84,13 +83,10 @@ public class GUIview extends Observable implements view, Observer{
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				win.start(display);
-				setChanged();
-				notifyObservers("loadMazes");
+				saveMazes();
 			}
 			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-			}
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
 		});
 	//Display Maze
 		ShellDisplayMaze dis = new ShellDisplayMaze(names);	
@@ -109,22 +105,15 @@ public class GUIview extends Observable implements view, Observer{
 				
 			//	mazeDisplay.setMazeCurFloor(maze.getCrossSectionByZ(3));
 				
-				
 				mazeDisplay = new mazeDisplay(shell, SWT.BORDER);
 				mazeDisplay.setBackground(new Color(null,255,255,255));
 				mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				
-				
 				
 				//mazeDisplay.redraw();
 			}
 			
 			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub	
-			}
-			
-		
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
 		});
 	//Get Advice
 		Button btnGetAdvice = new Button(buttons, SWT.PUSH);
@@ -136,9 +125,9 @@ public class GUIview extends Observable implements view, Observer{
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				
-			//	maze.setStartPosition(mazeDisplay.getCurentPosition());
+			//	maze.setStartPosition(mazeDisplay.getCurentPosition()); --> need to chane the current position that the charctaer solve from here
 				setChanged();
-				notifyObservers("solve test bfs");
+				notifyObservers("solve b bfs");//need to chage here to the name of the maze
 			
 				loadCurrentSolution();
 				mazeDisplay.setSolution(solution);
@@ -150,9 +139,7 @@ public class GUIview extends Observable implements view, Observer{
 ////				notifyObservers(sol.GetUpdate());
 			}
 			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub	
-			}
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
 		});
 	//Properties
 		ShellProporties pro = new ShellProporties();
@@ -165,10 +152,7 @@ public class GUIview extends Observable implements view, Observer{
 				pro.start(display);
 			}
 			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
 		});
 	//exit
 		Button btnExit = new Button(buttons, SWT.PUSH);
@@ -182,14 +166,8 @@ public class GUIview extends Observable implements view, Observer{
 				display.dispose();
 			}
 			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		
-		
+			public void widgetDefaultSelected(SelectionEvent arg0) {}
+		});	
 	}
 	
 	public void Print(String str) {
@@ -200,24 +178,19 @@ public class GUIview extends Observable implements view, Observer{
 		msg2.setMessage(msg);
 		msg2.open();
 	}
-	
-	
-	
-	
 	@Override
 	public void getInformation(String name){
 		this.names.add(name);
 	}
 	
 	@Override
-	public void getMaze(String maze){
-
-	}
+	public void getMaze(String maze) {}
 	
 	
 	public void setProperties(Properties p) {
 	this.p=p;	
 	}
+	
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		if(arg1=="erase_all"){
@@ -259,7 +232,6 @@ public class GUIview extends Observable implements view, Observer{
 	public void loadMazes(){
 		ObjectInputStream ois=null;
 		try{
-			//GZIP is make it small. object can save any object. the object must be seriazible
 		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("AllMazesNamesCatch")));
 		this.names=(ArrayList<String>) ois.readObject();
 		ois.close();
@@ -276,6 +248,7 @@ public class GUIview extends Observable implements view, Observer{
 		try{
 		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentMaze")));
 		this.maze=(Maze3d) ois.readObject();
+		System.out.println(maze);//for check
 		ois.close();
 		} catch (IOException e1) {
 		} catch (ClassNotFoundException e) {
@@ -289,7 +262,7 @@ public class GUIview extends Observable implements view, Observer{
 		try{
 		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentSolution")));
 		this.solution=(Solution<Position>) ois.readObject();
-		System.out.println(solution);
+		System.out.println(solution);//for check
 		ois.close();
 		} catch (IOException e1) {
 		} catch (ClassNotFoundException e) {

@@ -24,7 +24,7 @@ public class Character2 {
 		gc.drawImage(img, 0, 0, img.getBounds().width, img.getBounds().height, 
 				cellWidth * pos.y, cellHeight * pos.z, cellWidth, cellHeight);
 	}
-	public void moveRight() {
+	public void moveRight() {//change
 		pos.y++;
 	}
 	public void moveForward() {

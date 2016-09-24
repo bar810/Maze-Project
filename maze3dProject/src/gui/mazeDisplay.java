@@ -58,6 +58,8 @@ public class mazeDisplay extends Canvas {
 		tar = new Character("target.jpg");
 		fin = new Character("pizzaTime.jpg");
 
+		redraw();
+		
 		this.addKeyListener(new KeyListener() {
 
 			@Override
@@ -237,7 +239,7 @@ public class mazeDisplay extends Canvas {
 						if (num == 0)
 							loops = 1;
 
-						if (i < loops) {
+						if (i < loops) {//here
 							where = whereToMove(sol.getStates().get(i).getPosition(),
 									sol.getStates().get(i + 1).getPosition());
 

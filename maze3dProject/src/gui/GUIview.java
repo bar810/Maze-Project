@@ -72,14 +72,13 @@ public class GUIview extends Observable implements view, Observer {
 		shell.setImage(new Image(null, "img1.jpg"));
 		
 		
-		mazeDisplay = new mazeDisplay(shell, SWT.BORDER);
-		loadCurrentMaze();
-		mazeDisplay.setMazeData(mazeName, maze);
-		mazeDisplay.setBackground(new Color(null, 255, 255, 255));
-		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	//	mazeDisplay = new mazeDisplay(shell, SWT.BORDER);
+	//	mazeDisplay.setBackground(new Color(null, 255, 255, 255));
+		//mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		//mazeDisplay.setFocus();
 
 	
-
+		
 		// buttons:
 
 		// New Maze
@@ -111,18 +110,19 @@ public class GUIview extends Observable implements view, Observer {
 		btnDisplayMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-
 				
-			
 				System.out.println("check 1");
 				
 				dis.start(display);
+				
 
-				
 				System.out.println("check 2");
-								
+					
+			
+				drawAgain();
 				
-				System.out.println("check 3");
+				
+				
 				
 			}
 
@@ -350,5 +350,17 @@ public class GUIview extends Observable implements view, Observer {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void drawAgain(){
+		loadCurrentMaze();
+		
+		mazeDisplay = new mazeDisplay(shell, SWT.BORDER);
+	
+		mazeDisplay.setBackground(new Color(null, 255, 255, 255));
+		
+		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		mazeDisplay.redraw();
 	}
 }

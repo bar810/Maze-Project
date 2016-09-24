@@ -107,13 +107,13 @@ public class MyModel extends Observable implements model {
 			changed=true;
 		} 
 		 //solve is exist
-		 if(solutions.containsKey(name)&&changed==false){
-		 setChanged();
-		 message= "The solution for this maze is already exist!";
-		 // notifyObservers("display_msg " );
-		 saveCurrentSolution(name);
-		 notifyObservers("solve_ready " + name);
-		 }
+//		 if(solutions.containsKey(name)&&changed==false){
+//		 setChanged();
+//		 message= "The solution for this maze is already exist!";
+//		 // notifyObservers("display_msg " );
+//		 saveCurrentSolution(name);
+//		 notifyObservers("solve_ready " + name);
+//	 }
 		 	if (newMaze != null) {
 			MazeSearchableAdapter mazeAdapter = new MazeSearchableAdapter(newMaze);
 			// FutureTask<Solution> f = new FutureTask<Solution>(new

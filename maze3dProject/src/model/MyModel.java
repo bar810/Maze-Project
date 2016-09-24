@@ -96,7 +96,7 @@ public class MyModel extends Observable implements model {
 	@Override
 	public void Solve(String name, String algo, String newPos) {
 		Maze3d newMaze = new Maze3d(mazes.get(name));
-		boolean changed=false;
+		boolean changed = false;
 		if (newPos != "same") {
 
 			Maze3d temp2 = new Maze3d(mazes.get(name));
@@ -104,17 +104,9 @@ public class MyModel extends Observable implements model {
 			temp2.setStartPosition(
 					new Position(Integer.parseInt(p[0]), Integer.parseInt(p[1]), Integer.parseInt(p[2])));
 			newMaze = temp2;
-			changed=true;
-		} 
-		 //solve is exist
-//		 if(solutions.containsKey(name)&&changed==false){
-//		 setChanged();
-//		 message= "The solution for this maze is already exist!";
-//		 // notifyObservers("display_msg " );
-//		 saveCurrentSolution(name);
-//		 notifyObservers("solve_ready " + name);
-//	 }
-		 	if (newMaze != null) {
+			changed = true;
+		}
+		if (newMaze != null) {
 			MazeSearchableAdapter mazeAdapter = new MazeSearchableAdapter(newMaze);
 			// FutureTask<Solution> f = new FutureTask<Solution>(new
 			// Callable<Solution>() {
@@ -135,26 +127,13 @@ public class MyModel extends Observable implements model {
 					solutions.put(name, new DFS().search(mazeAdapter));
 				break;
 			}
-			// return solutions.get(name);
-			// }
-			// });
-			// exs.execute(f);
+
 			message = "Solution created!\n";
 
-			// save the solution and read in GUI view
-
 			saveCurrentSolution(name);
-			setChanged();
-			notifyObservers("solve_ready " + name);
+
 		}
 	}
-	/*
-	 * else { message = "Couldn't find maze!\n"; // setChanged();
-	 * //notifyObservers("display_msg");
-	 * 
-	 * }
-	 */
-	// }
 
 	@Override
 	public void Display_Sol(String name) {
@@ -218,9 +197,7 @@ public class MyModel extends Observable implements model {
 		if (mazes.get(name) != null) {
 			message = mazes.get(name).toString() + "\nStart Position: " + mazes.get(name).getStartPosition()
 					+ "\nGoal Position: " + mazes.get(name).getGoalPosition() + "\n";
-			
-		
-			
+
 			saveCurrentMaze(name);
 			setChanged();
 			notifyObservers("display_msg display_" + name + "_maze");

@@ -17,15 +17,14 @@ import view.MyView;
 */
 public class Run {
 	public static void main(String[] args) throws Exception {
-		
-		
+
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		PrintWriter out = new PrintWriter(System.out);
 		MyModel model = null;
 		MyView view = null;
 		Properties properties = null;
-		GUIview mgv=null;
-		
+		GUIview mgv = null;
+
 		try {
 			properties = PropertiesHandler.getInstance();
 		} catch (FileNotFoundException e2) {
@@ -38,24 +37,24 @@ public class Run {
 			}
 		} catch (Exception e2) {
 			e2.printStackTrace();
-		}	
-		model = new MyModel(properties.getMaxNumOfThreads(),properties);
-		
+		}
+		model = new MyModel(properties.getMaxNumOfThreads(), properties);
+
 		switch (properties.getRuntimeEnv()) {
-		//GUI view
+		// GUI view
 		case 0:
-			mgv = new GUIview(in, out,properties);
-			Presenter presenter = new Presenter(model, mgv,2,properties);
-			
+			mgv = new GUIview(in, out, properties);
+			Presenter presenter = new Presenter(model, mgv, 2, properties);
+
 			mgv.addObserver(presenter);
 			model.addObserver(presenter);
 			mgv.start();
 			break;
-		//CLI view	
+		// CLI view
 		case 1:
 			try {
 				view = new MyView(in, out);
-				Presenter presenter1 = new Presenter(model, view,2,properties);
+				Presenter presenter1 = new Presenter(model, view, 2, properties);
 				view.addObserver(presenter1);
 				model.addObserver(presenter1);
 				view.start();

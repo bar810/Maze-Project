@@ -25,80 +25,68 @@ import org.eclipse.swt.widgets.Text;
 import algorithms.mazeGenerators.Maze3d;
 
 public class ShellDisplayMaze extends Observable {
-	
 
-	protected Shell shell;	
-	ArrayList<String> names=new ArrayList<>();
-	
-	public ShellDisplayMaze(ArrayList<String>names){
-		this.names=names;
+	protected Shell shell;
+	ArrayList<String> names = new ArrayList<>();
+
+	public ShellDisplayMaze(ArrayList<String> names) {
+		this.names = names;
 	}
 
-	String[] getNames(){
+	String[] getNames() {
 		String[] temp = new String[names.size()];
-		for(int i=0;i<names.size();i++)
-			temp[i]=names.get(i);
+		for (int i = 0; i < names.size(); i++)
+			temp[i] = names.get(i);
 		return temp;
 	}
-	
-	
-	public void start(Display display) {		
+
+	public void start(Display display) {
 		shell = new Shell(display);
 		initWidgets();
-		shell.open();		
+		shell.open();
 	}
-	
-	
+
 	String update;
-	
 
 	protected void initWidgets() {
 		shell.setText("Display Maze");
-		shell.setSize(400, 300);		
-		shell.setLocation(400,400);
-		shell.setLayout(new GridLayout(2, false));	
-		
+		shell.setSize(400, 300);
+		shell.setLocation(400, 400);
+		shell.setLayout(new GridLayout(2, false));
+
 		Label lblname = new Label(shell, SWT.NONE);
 		lblname.setText("choose maze: ");
-		
-		
-		
-		String[] items=getNames();
-		Combo combo =new Combo(shell,SWT.SINGLE|SWT.DROP_DOWN);
+
+		String[] items = getNames();
+		Combo combo = new Combo(shell, SWT.SINGLE | SWT.DROP_DOWN);
 		combo.setItems(items);
-		
+
 		Button BTNdisplayMaze = new Button(shell, SWT.PUSH);
 		BTNdisplayMaze.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
 		BTNdisplayMaze.setText("Display maze");
-		
+
 		BTNdisplayMaze.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {				
+			public void widgetSelected(SelectionEvent arg0) {
 				MessageBox msg = new MessageBox(shell, SWT.OK);
 				msg.setText("Display maze");
 				msg.setMessage("Button was clicked");
-				String name=combo.getText();
-				
+				String name = combo.getText();
+
 				setChanged();
-				notifyObservers("display"+" "+name);
+				notifyObservers("display" + " " + name);
 				shell.close();
-				
-			
-				}
+
+			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
-		
+
 		});
 	}
 
 }
-
-
-
-
-

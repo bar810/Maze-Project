@@ -48,18 +48,18 @@ public class mazeDisplay extends Canvas {
 
 		loadCurrentMaze();
 
+		if(maze!=null){
 		tempMaze = maze.getMaze();
-
 		curFloor = maze.getStartPosition().x;
 		mazeCurFloor = maze.getCrossSectionByZ(curFloor);
-
+		}
 		character = new Character("Character.jpg");
 		character2 = new Character("Character2.jpg");
 		tar = new Character("target.jpg");
 		fin = new Character("pizzaTime.jpg");
 
-		redraw();
-		
+
+
 		this.addKeyListener(new KeyListener() {
 
 			@Override
@@ -124,6 +124,8 @@ public class mazeDisplay extends Canvas {
 			}
 		});
 
+
+			
 		this.addPaintListener(new PaintListener() {
 
 			int moves = 0;
@@ -153,9 +155,9 @@ public class mazeDisplay extends Canvas {
 							int x = j * w;
 							int y = i * h;
 							if (mazeCurFloor[i][j] != 0 && mazeCurFloor[i][j] != 2 && mazeCurFloor[i][j] != 3)
-								e.gc.fillRectangle(x, y, w, h);
-
-						}
+								e.gc.fillRectangle(x, y, w, h);//->>>here he paint the maze
+								}
+						
 
 					if (flag == 1)
 						character2.draw(w, h, e.gc);
@@ -166,29 +168,33 @@ public class mazeDisplay extends Canvas {
 						tar.draw(w, h, e.gc);
 
 					if (character.getPos().x == tar.getPos().x && character.getPos().y == tar.getPos().y
-							&& character.getPos().z == tar.getPos().z) {// finish
+							&& character.getPos().z == tar.getPos().z) {
 						fin.draw(w, h, e.gc);
 						MessageBox msg = new MessageBox(getShell(), SWT.OK);
-						msg.setText("Display maze");
+						msg.setText("PIZZA MAZE GAME");
 						msg.setMessage("YOU GOT THE PIZZA!!!!!");
 						msg.open();
-						dispose();
+						System.exit(0);
 					}
 				}
-
-				e.gc.drawString("Maze name: " + mazeName + "   Your position:  floor: " + curFloor + "  row: "
-						+ character.getPos().y + "  col: " + character.getPos().z + "         The goal position in:  ("
+				if(maze!=null){
+				e.gc.drawString("Maze name: " + mazeName +"  ("+maze.getx()+"/"+maze.gety()+"/"+maze.getz()+")"+
+				"  Your position: (" + curFloor + " , "
+						+ character.getPos().y + " , " + character.getPos().z + ")  Goal position: ("
 						+ tar.getPos().x + " , " + tar.getPos().getY() + " , " + tar.getPos().getZ()
-						+ ")     Total moves:  " + moves, 5, 5, false);
+						+ ")Total moves:  " + moves, 5, 5, false);
 				moves++;
+				}
 			}
-
+			
 		});
 	}
+
 
 	public void setMazeData(String name, Maze3d md) {
 		this.mazeName = name;
 		this.maze = md;
+		setMazeCurFloor(md.getCrossSectionByZ(curFloor));
 	}
 
 	public void mazeDisplay(Composite parent, int style) {
@@ -239,13 +245,14 @@ public class mazeDisplay extends Canvas {
 						if (num == 0)
 							loops = 1;
 
-						if (i < loops) {//here
+						if (i < loops) {// here
 							where = whereToMove(sol.getStates().get(i).getPosition(),
 									sol.getStates().get(i + 1).getPosition());
 
 							int temp;
 							switch (where) {
 							case "down":
+								
 								temp = curFloor;
 								character.moveDown();
 								curFloor--;
@@ -259,7 +266,6 @@ public class mazeDisplay extends Canvas {
 								break;
 							case "forward":
 								character.moveForward();
-								redraw();
 								break;
 							case "left":
 								character.moveLeft();
@@ -274,8 +280,9 @@ public class mazeDisplay extends Canvas {
 								break;
 							}
 							redraw();
+							i++;
 						}
-						i++;
+					
 
 					}
 				});

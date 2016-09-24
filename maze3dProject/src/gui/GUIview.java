@@ -8,15 +8,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
-
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
@@ -29,11 +25,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
-import presenter.Presenter;
 import presenter.Properties;
 import view.view;
 
@@ -55,6 +49,7 @@ public class GUIview extends Observable implements view, Observer {
 		this.out = writer;
 		this.p = pro;
 		loadMazesNames();
+
 	}
 
 	protected void initWidgets() {
@@ -62,23 +57,20 @@ public class GUIview extends Observable implements view, Observer {
 		// main Display properties
 		GridLayout grid = new GridLayout(2, false);
 		shell.setLayout(grid);
-		
 
-		Composite buttons = new Composite(shell, SWT.NONE);
+		Composite buttons = new Composite(shell, SWT.FILL);
 		RowLayout rowLayout = new RowLayout(SWT.VERTICAL);
 		buttons.setLayout(rowLayout);
 
 		shell.setText("PIZZA MAZE GAME");
 		shell.setImage(new Image(null, "img1.jpg"));
-		
-		
-		mazeDisplay = new mazeDisplay(shell, SWT.BORDER);
-		mazeDisplay.setBackground(new Color(null, 255, 255, 255));
+
+		mazeDisplay = new mazeDisplay(shell, SWT.BORDER | SWT.PUSH);
 		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		mazeDisplay.setBackground(new Color(null, 255, 255, 255));
+
 		mazeDisplay.setFocus();
 
-	
-		
 		// buttons:
 
 		// New Maze
@@ -86,7 +78,7 @@ public class GUIview extends Observable implements view, Observer {
 		win.addObserver(this);
 		Button btnGenerateMaze = new Button(buttons, SWT.PUSH);
 		btnGenerateMaze.setText("New maze");
-		
+
 		btnGenerateMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -99,30 +91,23 @@ public class GUIview extends Observable implements view, Observer {
 			}
 		});
 		// Display Maze
-		
-		
-		
+
 		ShellDisplayMaze dis = new ShellDisplayMaze(names);
 		dis.addObserver(this);
 		Button btnDisplayMaze = new Button(buttons, SWT.PUSH);
 		btnDisplayMaze.setText("Display maze");
-		
+
 		btnDisplayMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				
-				System.out.println("check 1");
-				
+
 				dis.start(display);
-				
+
+				System.out.println("check 1");
+
 
 				System.out.println("check 2");
-					
 			
-				drawAgain();
-				
-				
-				
 				
 			}
 
@@ -130,6 +115,7 @@ public class GUIview extends Observable implements view, Observer {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
 		});
+
 		// Get Advice
 		Button btnGetAdvice = new Button(buttons, SWT.PUSH);
 		btnGetAdvice.setText("Get Advice");
@@ -166,13 +152,13 @@ public class GUIview extends Observable implements view, Observer {
 				mazeDisplay.goToTheTarget(0);
 
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
-			
+
 		});
-	
+
 		// Solve Maze
 		Button btnSolveMaze = new Button(buttons, SWT.PUSH);
 		btnSolveMaze.setText("Solve maze");
@@ -182,10 +168,6 @@ public class GUIview extends Observable implements view, Observer {
 
 				setChanged();
 				loadCurrentMaze();
-
-				/// if the start position of the maze is not equals to the
-				/// charcter position,
-				// we want to sent the charcter position to solve function
 
 				if (!(mazeDisplay.character.getPos().x == maze.getStartPosition().x
 						&& mazeDisplay.character.getPos().y == maze.getStartPosition().y
@@ -197,7 +179,6 @@ public class GUIview extends Observable implements view, Observer {
 					else
 						notifyObservers("solve" + " " + mazeName + " " + "dfs" + " " + mazeDisplay.character.getPos().x
 								+ "_" + mazeDisplay.character.getPos().y + "_" + mazeDisplay.character.getPos().z);
-
 				}
 
 				else {
@@ -242,7 +223,7 @@ public class GUIview extends Observable implements view, Observer {
 				saveMazesNames();
 				setChanged();
 				notifyObservers("exit");
-				display.dispose();
+				System.exit(0);
 			}
 
 			@Override
@@ -351,16 +332,5 @@ public class GUIview extends Observable implements view, Observer {
 			e.printStackTrace();
 		}
 	}
-	
-	public void drawAgain(){
-		loadCurrentMaze();
-		
-		mazeDisplay = new mazeDisplay(shell, SWT.BORDER);
-	
-		mazeDisplay.setBackground(new Color(null, 255, 255, 255));
-		
-		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		mazeDisplay.redraw();
-	}
+
 }

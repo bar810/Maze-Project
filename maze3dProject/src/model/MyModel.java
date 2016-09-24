@@ -405,6 +405,7 @@ public class MyModel extends Observable implements model {
 		ObjectOutputStream oos=null;
 		try{
 			oos = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("cuurentMaze")));
+			oos.writeObject(name);
 			oos.writeObject(this.mazes.get(name));
 			oos.close();
 			} catch (IOException e1) {

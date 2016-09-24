@@ -14,7 +14,8 @@ import java.util.Observer;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWT;import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
@@ -45,13 +46,14 @@ public class GUIview extends Observable implements view, Observer{
 	Properties p;
 	ArrayList<String> names= new ArrayList<>();
 	public Maze3d maze;
+	public String mazeName;
 	public Solution<Position> solution=new Solution<Position>();
 
 	public GUIview(BufferedReader reader ,PrintWriter writer,Properties pro) {
 		this.in = reader;
 		this.out = writer;
 		this.p=pro;
-		loadMazes();
+		loadMazesNames();
 	}
 
 	protected void initWidgets() {
@@ -83,7 +85,7 @@ public class GUIview extends Observable implements view, Observer{
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				win.start(display);
-				saveMazes();
+				saveMazesNames();
 			}
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {}
@@ -98,10 +100,15 @@ public class GUIview extends Observable implements view, Observer{
 			public void widgetSelected(SelectionEvent arg0) {
 				
 				dis.start(display);
-				mazeDisplay.setMazeData(maze);
-				mazeDisplay = new mazeDisplay(shell, SWT.BORDER);
-				mazeDisplay.setBackground(new Color(null,255,255,255));
-				mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+				
+				//try:
+				loadCurrentMaze();
+				
+				System.out.println(mazeName);
+				System.out.println(maze);
+				
+				mazeDisplay.setMazeData(mazeName,maze);
+			
 			}
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {}
@@ -118,10 +125,14 @@ public class GUIview extends Observable implements view, Observer{
 				
 			//	maze.setStartPosition(mazeDisplay.character.getPos()); //--> need to chane the current position that the charctaer solve from here
 				setChanged();
+				
+				loadCurrentMaze();
+				
 				if(p.getSolveAlgorithm()==1)
-					notifyObservers("solve"+" "+"vv"+" "+"bfs");//need to chage here to the name of the maze
+					notifyObservers("solve"+" "+mazeName+" "+"bfs");//need to chage here to the name of the maze
 				else
-					notifyObservers("solve"+" "+"vv"+" "+"dfs");//--->here to.
+					notifyObservers("solve"+" "+mazeName+" "+"dfs");//--->here to.
+			
 				
 				loadCurrentSolution();
 				mazeDisplay.setSolution(solution);
@@ -149,7 +160,7 @@ public class GUIview extends Observable implements view, Observer{
 		btnExit.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				saveMazes();
+				saveMazesNames();
 				setChanged();
 				notifyObservers("exit");
 				display.dispose();
@@ -184,8 +195,8 @@ public class GUIview extends Observable implements view, Observer{
 	public void update(Observable arg0, Object arg1) {
 		if(arg1=="erase_all"){
 			names.removeAll(names);
-			saveMazes();
-			loadMazes();
+			saveMazesNames();
+			loadMazesNames();
 			maze=null;
 		}
 		setChanged();
@@ -207,7 +218,7 @@ public class GUIview extends Observable implements view, Observer{
 		display.dispose();
 	}
 	
-	public void saveMazes(){
+	public void saveMazesNames(){
 		ObjectOutputStream oos=null;
 		try{
 			oos = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("AllMazesNamesCatch")));
@@ -218,7 +229,7 @@ public class GUIview extends Observable implements view, Observer{
 			
 	}
 	
-	public void loadMazes(){
+	public void loadMazesNames(){
 		ObjectInputStream ois=null;
 		try{
 		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("AllMazesNamesCatch")));
@@ -235,9 +246,9 @@ public class GUIview extends Observable implements view, Observer{
 	public void loadCurrentMaze(){
 		ObjectInputStream ois=null;
 		try{
-		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentMaze")));
+		ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentMaze")));
+		this.mazeName=(String) ois.readObject(); 
 		this.maze=(Maze3d) ois.readObject();
-		System.out.println(maze);//for check
 		ois.close();
 		} catch (IOException e1) {
 		} catch (ClassNotFoundException e) {

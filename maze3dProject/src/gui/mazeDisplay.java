@@ -31,13 +31,14 @@ public class mazeDisplay extends Canvas {
 	
 	int flag=0;
 	public Character character;
-	private Character2 character2;
-	private target tar;
-	private finish fin;
+	private Character character2;
+	private Character tar;
+	private Character fin;
 	private int[][] mazeCurFloor;
 	Solution<Position> sol;
 	
 	Maze3d maze;
+	String mazeName;
 	int[][][] tempMaze;
 	int curFloor;	
 	
@@ -47,24 +48,16 @@ public class mazeDisplay extends Canvas {
 		loadCurrentMaze();
 		tempMaze=maze.getMaze();
 		
-		System.out.println(maze);//------------------->for check
 		
 		curFloor=maze.getStartPosition().x;
 		mazeCurFloor=maze.getCrossSectionByZ(curFloor);
 		
 		
-		//do it after he got the information 
-		character= new Character();
-		character.setPos(new Position(1, 1, 1));
-		
-		character2= new Character2();
-		character2.setPos(new Position(1, 1, 1));//--------------------->character 2 or two moves look
-		
-		tar=new target();
-		tar.setPos(new Position(1, 2, 1));
 
-		fin=new finish();
-		fin.setPos(new Position(1,1,2));
+		character= new Character("Character.jpg");
+		character2= new Character("Character2.jpg");
+		tar=new Character("target.jpg");
+		fin=new Character("pizzaTime.jpg");
 		
 		this.addKeyListener(new KeyListener() {
 			
@@ -137,6 +130,9 @@ public class mazeDisplay extends Canvas {
 			@Override
 			public void paintControl(PaintEvent e) {
 			
+				
+		//		----------------->here he painting
+				
 			
 				e.gc.setBackground(new Color(null,0,0,0));
 				e.gc.setForeground(new Color(null,255,255,255));
@@ -152,7 +148,7 @@ public class mazeDisplay extends Canvas {
 					   tar.setPos(maze.getGoalPosition());
 					   fin.setPos(maze.getGoalPosition());
 					   
-					   System.out.println("start:"+maze.getStartPosition()+"  finish:"+ maze.getGoalPosition());//for check only
+					  
 					   
 				   int w=width/mazeCurFloor[0].length;
 				   int h=height/mazeCurFloor.length;
@@ -183,7 +179,7 @@ public class mazeDisplay extends Canvas {
 				  			}
 				   }	   
 				   
-			e.gc.drawString("Your position:  floor: "+curFloor+"  row: "+character.getPos().y+"  col: "+character.getPos().z+
+			e.gc.drawString("Maze name: "+mazeName+ "   Your position:  floor: "+curFloor+"  row: "+character.getPos().y+"  col: "+character.getPos().z+
 					"         The goal position in:  ("+tar.getPos().x+" , "+tar.getPos().getY()+" , "+tar.getPos().getZ()+")     Total moves:  "+moves, 5, 5,false);
 			moves++;
 		}
@@ -191,7 +187,8 @@ public class mazeDisplay extends Canvas {
 			
 		});
 	}
-	public void  setMazeData(Maze3d md){
+	public void  setMazeData(String name,Maze3d md){
+		this.mazeName=name;
 	this.maze=md;
 	}
 		
@@ -206,6 +203,7 @@ public class mazeDisplay extends Canvas {
 		ObjectInputStream ois=null;
 		try{
 		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentMaze")));
+		 this.mazeName=(String) ois.readObject();
 		this.maze=(Maze3d) ois.readObject();
 		ois.close();
 		} catch (IOException e1) {

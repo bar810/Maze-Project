@@ -9,8 +9,8 @@ public class Character {
 	private Position pos;
 	private Image img;
 	
-	public Character() {
-		img = new Image(null, "Character.jpg");
+	public Character(String imageLocation) {
+		img = new Image(null, imageLocation);
 	}
 
 	public Position getPos() {

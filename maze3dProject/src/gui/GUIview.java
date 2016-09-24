@@ -62,6 +62,7 @@ public class GUIview extends Observable implements view, Observer {
 		// main Display properties
 		GridLayout grid = new GridLayout(2, false);
 		shell.setLayout(grid);
+		
 
 		Composite buttons = new Composite(shell, SWT.NONE);
 		RowLayout rowLayout = new RowLayout(SWT.VERTICAL);
@@ -69,12 +70,15 @@ public class GUIview extends Observable implements view, Observer {
 
 		shell.setText("PIZZA MAZE GAME");
 		shell.setImage(new Image(null, "img1.jpg"));
+		
+		
 		mazeDisplay = new mazeDisplay(shell, SWT.BORDER);
-
+		loadCurrentMaze();
+		mazeDisplay.setMazeData(mazeName, maze);
 		mazeDisplay.setBackground(new Color(null, 255, 255, 255));
 		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		mazeDisplay.setFocus();
+	
 
 		// buttons:
 
@@ -83,6 +87,7 @@ public class GUIview extends Observable implements view, Observer {
 		win.addObserver(this);
 		Button btnGenerateMaze = new Button(buttons, SWT.PUSH);
 		btnGenerateMaze.setText("New maze");
+		
 		btnGenerateMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -95,26 +100,30 @@ public class GUIview extends Observable implements view, Observer {
 			}
 		});
 		// Display Maze
+		
+		
+		
 		ShellDisplayMaze dis = new ShellDisplayMaze(names);
 		dis.addObserver(this);
 		Button btnDisplayMaze = new Button(buttons, SWT.PUSH);
 		btnDisplayMaze.setText("Display maze");
+		
 		btnDisplayMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 
+				
+			
 				System.out.println("check 1");
+				
 				dis.start(display);
 
-				loadCurrentMaze();
+				
 				System.out.println("check 2");
-				// try
-
-				mazeDisplay.setMazeData(mazeName, maze);
-
-				mazeDisplay.setBackground(new Color(null, 255, 255, 255));
-				mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				mazeDisplay.redraw();
+								
+				
+				System.out.println("check 3");
+				
 			}
 
 			@Override

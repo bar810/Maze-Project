@@ -114,7 +114,7 @@ public class MyModel extends Observable implements model {
 		 saveCurrentSolution(name);
 		 notifyObservers("solve_ready " + name);
 		 }
-		 else	if (newMaze != null) {
+		 	if (newMaze != null) {
 			MazeSearchableAdapter mazeAdapter = new MazeSearchableAdapter(newMaze);
 			// FutureTask<Solution> f = new FutureTask<Solution>(new
 			// Callable<Solution>() {
@@ -218,6 +218,9 @@ public class MyModel extends Observable implements model {
 		if (mazes.get(name) != null) {
 			message = mazes.get(name).toString() + "\nStart Position: " + mazes.get(name).getStartPosition()
 					+ "\nGoal Position: " + mazes.get(name).getGoalPosition() + "\n";
+			
+		
+			
 			saveCurrentMaze(name);
 			setChanged();
 			notifyObservers("display_msg display_" + name + "_maze");

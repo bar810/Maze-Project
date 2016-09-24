@@ -68,7 +68,6 @@ public class GUIview extends Observable implements view, Observer {
 		mazeDisplay = new mazeDisplay(shell, SWT.BORDER | SWT.PUSH);
 		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		mazeDisplay.setBackground(new Color(null, 255, 255, 255));
-
 		mazeDisplay.setFocus();
 
 		// buttons:
@@ -103,10 +102,10 @@ public class GUIview extends Observable implements view, Observer {
 
 				dis.start(display);
 
-				System.out.println("check 1");
-
-
-				System.out.println("check 2");
+//				System.out.println("check 1");
+//
+//
+//				System.out.println("check 2");
 			
 				
 			}

@@ -46,7 +46,7 @@ public class mazeDisplay extends Canvas {
 	public mazeDisplay(Composite parent, int style) {
 		super(parent, style);
 
-		loadCurrentMaze();
+	//	loadCurrentMaze();---> with this the first screen is the last maze
 
 		if(maze!=null){
 		tempMaze = maze.getMaze();
@@ -132,7 +132,8 @@ public class mazeDisplay extends Canvas {
 
 			@Override
 			public void paintControl(PaintEvent e) {
-
+			
+//				redraw();
 				// ----------------->here he painting
 
 				e.gc.setBackground(new Color(null, 0, 0, 0));
@@ -177,18 +178,20 @@ public class mazeDisplay extends Canvas {
 						System.exit(0);
 					}
 				}
-				if(maze!=null){
-				e.gc.drawString("Maze name: " + mazeName +"  ("+maze.getx()+"/"+maze.gety()+"/"+maze.getz()+")"+
-				"  Your position: (" + curFloor + " , "
-						+ character.getPos().y + " , " + character.getPos().z + ")  Goal position: ("
-						+ tar.getPos().x + " , " + tar.getPos().getY() + " , " + tar.getPos().getZ()
-						+ ")Total moves:  " + moves, 5, 5, false);
+//				if(maze!=null){
+//				e.gc.drawString("Maze name: " + mazeName +"  ("+maze.getx()+"/"+maze.gety()+"/"+maze.getz()+")"+
+//				"  Your position: (" + curFloor + " , "
+//						+ character.getPos().y + " , " + character.getPos().z + ")  Goal position: ("
+//						+ tar.getPos().x + " , " + tar.getPos().getY() + " , " + tar.getPos().getZ()
+//						+ ")Total moves:  " + moves, 5, 5, false);
 				moves++;
 				}
-			}
+//			}
 			
 		});
 	}
+
+
 
 
 	public void setMazeData(String name, Maze3d md) {

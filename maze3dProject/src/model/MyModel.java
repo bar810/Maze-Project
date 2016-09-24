@@ -105,7 +105,7 @@ public class MyModel extends Observable implements model {
 					new Position(Integer.parseInt(p[0]), Integer.parseInt(p[1]), Integer.parseInt(p[2])));
 			newMaze = temp2;
 			changed=true;
-		} /////// --------------------->add it again
+		} 
 		 //solve is exist
 		 if(solutions.containsKey(name)&&changed==false){
 		 setChanged();
@@ -114,7 +114,7 @@ public class MyModel extends Observable implements model {
 		 saveCurrentSolution(name);
 		 notifyObservers("solve_ready " + name);
 		 }
-		if (newMaze != null) {
+		 else	if (newMaze != null) {
 			MazeSearchableAdapter mazeAdapter = new MazeSearchableAdapter(newMaze);
 			// FutureTask<Solution> f = new FutureTask<Solution>(new
 			// Callable<Solution>() {

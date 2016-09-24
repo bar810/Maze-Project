@@ -230,14 +230,15 @@ public class mazeDisplay extends Canvas {
 
 
 	
-	void goToTheTarget(){
-		
-		
+	void goToTheTarget(int num){
+		//if num=1 solve, if num=0 advice
+		int j=0;
 			TimerTask task = new TimerTask() {
 				
 				String where;
 				
 				int i=0;
+				int loops=sol.getSize()-1;
 			@Override
 			public void run() {	
 				getDisplay().syncExec(new Runnable() {					
@@ -245,7 +246,10 @@ public class mazeDisplay extends Canvas {
 					public void run() {
 						
 						
-						if(i<sol.getSize()-1){
+						if(num==0)
+							loops=1;
+							
+						if(i<loops){
 						where=whereToMove(sol.getStates().get(i).getPosition(), sol.getStates().get(i+1).getPosition());
 						
 						
@@ -282,9 +286,15 @@ public class mazeDisplay extends Canvas {
 						redraw();
 						}
 						i++;
+						
+							
 					}
 				});
 			}};
+			
+		
+			
+		
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(task, 0, 200);	
 	}

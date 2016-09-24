@@ -17,27 +17,27 @@ public class Character {
 		return pos;
 	}
 	public void setPos(Position pos) {
-		this.pos = pos;
+		this.pos=pos;
 	}
 	public void draw(int cellWidth, int cellHeight, GC gc) {
 		gc.drawImage(img, 0, 0, img.getBounds().width, img.getBounds().height, 
-				cellWidth * pos.y, cellHeight * pos.z, cellWidth, cellHeight);
+				cellWidth * pos.z, cellHeight * pos.y, cellWidth, cellHeight);
 	}
 	public void moveRight() {//change all
-		pos.y++;
+		pos.z++;
 
 	}
 	public void moveForward() {
-		pos.z--;
+		pos.y--;
 	
 	}
 	public void moveBack() {
-		pos.z++;
+		pos.y++;
 		
 
 	}
 	public void moveLeft() {
-		pos.y--;
+		pos.z--;
 	
 	}
 	public void moveDown() {

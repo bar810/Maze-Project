@@ -30,7 +30,7 @@ import controller.exit;
 public class mazeDisplay extends Canvas {
 	
 	int flag=0;
-	private Character character;
+	public Character character;
 	private Character2 character2;
 	private target tar;
 	private finish fin;
@@ -57,8 +57,8 @@ public class mazeDisplay extends Canvas {
 		character= new Character();
 		character.setPos(new Position(1, 1, 1));
 		
-//		character2= new Character2();
-//		character2.setPos(new Position(1, 1, 1));--------------------->character 2 or two moves look
+		character2= new Character2();
+		character2.setPos(new Position(1, 1, 1));//--------------------->character 2 or two moves look
 		
 		tar=new target();
 		tar.setPos(new Position(1, 2, 1));
@@ -74,29 +74,31 @@ public class mazeDisplay extends Canvas {
 			int temp;
 			switch (e.keyCode) {
 			
+			
+			
 			case SWT.ARROW_DOWN:	
-				if(mazeCurFloor[character.getPos().z+1][character.getPos().y]!=1)
+				if(mazeCurFloor[character.getPos().y+1][character.getPos().z]!=1)
 					character.moveBack();
 				redraw();
 				break;
 			case SWT.ARROW_UP:
-				if(mazeCurFloor[character.getPos().z-1][character.getPos().y]!=1)
+				if(mazeCurFloor[character.getPos().y-1][character.getPos().z]!=1)
 					character.moveForward();
 				redraw();
 				break;
 			case SWT.ARROW_RIGHT:	
-				if(mazeCurFloor[character.getPos().z][character.getPos().y+1]!=1){
-//					flag=0;
-//					character2.setPos(character2.getPos());
+				if(mazeCurFloor[character.getPos().y][character.getPos().z+1]!=1){
+					flag=0;
+					character2.setPos(character2.getPos());
 					character.moveRight();
 					}
 				redraw();
 				break;
 			case SWT.ARROW_LEFT:	
-				if(mazeCurFloor[character.getPos().z][character.getPos().y-1]!=1){
-//					flag=1;
+				if(mazeCurFloor[character.getPos().y][character.getPos().z-1]!=1){
+					flag=1;
 					character.moveLeft();
-//					character2.setPos(character.getPos());
+					character2.setPos(character.getPos());
 					}
 				redraw();
 				break;
@@ -164,9 +166,9 @@ public class mazeDisplay extends Canvas {
 				          
 				      		}
 				  
-//				  if(flag==1)
-//					  character2.draw(w, h, e.gc);
-//				  if(flag==0)
+				  if(flag==1)
+					  character2.draw(w, h, e.gc);
+				  if(flag==0)
 					  character.draw(w, h, e.gc);
 				  
 				  if(tar.getPos().x==curFloor)
@@ -239,7 +241,7 @@ public class mazeDisplay extends Canvas {
 					public void run() {
 						
 						
-						if(i<sol.getSize()){
+						if(i<sol.getSize()-1){
 						where=whereToMove(sol.getStates().get(i).getPosition(), sol.getStates().get(i+1).getPosition());
 						
 						
@@ -250,7 +252,6 @@ public class mazeDisplay extends Canvas {
 										character.moveDown();
 										curFloor--;
 										mazeCurFloor=maze.getCrossSectionByZ(curFloor);
-									
 								break;
 							case"up":
 									temp=curFloor;
@@ -263,16 +264,12 @@ public class mazeDisplay extends Canvas {
 								redraw();
 								break;
 							case"left":
-//									flag=1;
-									character.moveLeft();
-//									character2.setPos(character.getPos());								
+									character.moveLeft();							
 									break;
 							case"back":
 									character.moveBack();
 									break;
 							case"right":					
-//									flag=0;
-//									character2.setPos(character2.getPos());
 									character.moveRight();
 									break;
 							default:
@@ -285,7 +282,7 @@ public class mazeDisplay extends Canvas {
 				});
 			}};
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(task, 0, 500);	
+		timer.scheduleAtFixedRate(task, 0, 200);	
 	}
 	
 	String whereToMove(Position now,Position to){

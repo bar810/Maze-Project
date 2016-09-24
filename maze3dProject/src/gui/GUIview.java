@@ -96,22 +96,13 @@ public class GUIview extends Observable implements view, Observer{
 		btnDisplayMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				//need to print
+				
 				dis.start(display);
-				
-			//	loadCurrentMaze();
-				
 				mazeDisplay.setMazeData(maze);
-				
-			//	mazeDisplay.setMazeCurFloor(maze.getCrossSectionByZ(3));
-				
 				mazeDisplay = new mazeDisplay(shell, SWT.BORDER);
 				mazeDisplay.setBackground(new Color(null,255,255,255));
 				mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				
-				//mazeDisplay.redraw();
 			}
-			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {}
 		});
@@ -125,18 +116,16 @@ public class GUIview extends Observable implements view, Observer{
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				
-			//	maze.setStartPosition(mazeDisplay.getCurentPosition()); --> need to chane the current position that the charctaer solve from here
+			//	maze.setStartPosition(mazeDisplay.character.getPos()); //--> need to chane the current position that the charctaer solve from here
 				setChanged();
-				notifyObservers("solve b bfs");//need to chage here to the name of the maze
-			
+				if(p.getSolveAlgorithm()==1)
+					notifyObservers("solve"+" "+"vv"+" "+"bfs");//need to chage here to the name of the maze
+				else
+					notifyObservers("solve"+" "+"vv"+" "+"dfs");//--->here to.
+				
 				loadCurrentSolution();
 				mazeDisplay.setSolution(solution);
 				mazeDisplay.goToTheTarget();
-			
-//				ShellSolveMaze sol = new ShellSolveMaze();				
-//				sol.start(display);
-////				setChanged();
-////				notifyObservers(sol.GetUpdate());
 			}
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {}

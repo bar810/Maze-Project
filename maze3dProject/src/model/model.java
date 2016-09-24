@@ -3,7 +3,7 @@ import presenter.Properties;
 
 public interface model {
 	public void generateMaze(String name, int flos, int rows, int cols);
-	public void Solve(String name, String algo);
+	public void Solve(String name, String algo,String newPos);
 	public void Display_Sol(String name);
 	public void getCrossSection(String axis, int index, String name);
 	public void getMaze3d(String name);	

@@ -19,6 +19,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import algorithms.mazeGenerators.Maze3d;
@@ -176,6 +177,11 @@ public class mazeDisplay extends Canvas {
 				 
 				  if(character.getPos().x==tar.getPos().x&&character.getPos().y==tar.getPos().y&&character.getPos().z==tar.getPos().z){//finish
 					   fin.draw(w, h, e.gc);
+					   MessageBox msg = new MessageBox(getShell(), SWT.OK);   
+						msg.setText("Display maze");
+						msg.setMessage("YOU GOT THE PIZZA!!!!!");
+						msg.open();
+						dispose();
 				  			}
 				   }	   
 				   
@@ -310,7 +316,7 @@ public class mazeDisplay extends Canvas {
 		return null;
 	}
 
-	
+
 	
 	
 }

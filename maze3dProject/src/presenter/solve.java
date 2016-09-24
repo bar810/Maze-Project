@@ -21,10 +21,13 @@ public class solve implements Command {
 	@Override
 	public void doCommand(String[] args) {
 		if (args.length == 3){
-			m.Solve(args[1] , args[2]);
+			m.Solve(args[1] , args[2],"same");
+		}
+		if (args.length == 4){
+			m.Solve(args[1] , args[2],args[3]);
 		}
 		else if(args.length==2){
-			m.Solve(args[1],"properties" );
+			m.Solve(args[1],"properties","same");
 		}
 		else{
 			 v.Print("Solve [(name] [(dfs/bfs) algorithm]\n");

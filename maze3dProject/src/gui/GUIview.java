@@ -14,7 +14,8 @@ import java.util.Observer;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-import org.eclipse.swt.SWT;import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -36,48 +37,49 @@ import presenter.Presenter;
 import presenter.Properties;
 import view.view;
 
-public class GUIview extends Observable implements view, Observer{
+public class GUIview extends Observable implements view, Observer {
 
 	protected Display display;
-	protected Shell shell;	
+	protected Shell shell;
 	private mazeDisplay mazeDisplay;
 	BufferedReader in;
 	PrintWriter out;
 	Properties p;
-	ArrayList<String> names= new ArrayList<>();
+	ArrayList<String> names = new ArrayList<>();
 	public Maze3d maze;
 	public String mazeName;
-	public Solution<Position> solution=new Solution<Position>();
+	public Solution<Position> solution = new Solution<Position>();
 
-	public GUIview(BufferedReader reader ,PrintWriter writer,Properties pro) {
+	public GUIview(BufferedReader reader, PrintWriter writer, Properties pro) {
 		this.in = reader;
 		this.out = writer;
-		this.p=pro;
+		this.p = pro;
 		loadMazesNames();
 	}
 
 	protected void initWidgets() {
-		
-	//main Display properties
+
+		// main Display properties
 		GridLayout grid = new GridLayout(2, false);
 		shell.setLayout(grid);
-		
+
 		Composite buttons = new Composite(shell, SWT.NONE);
 		RowLayout rowLayout = new RowLayout(SWT.VERTICAL);
 		buttons.setLayout(rowLayout);
-		
+
 		shell.setText("PIZZA MAZE GAME");
-		shell.setImage(new Image(null,"img1.jpg"));
+		shell.setImage(new Image(null, "img1.jpg"));
 		mazeDisplay = new mazeDisplay(shell, SWT.BORDER);
-		mazeDisplay.setBackground(new Color(null,255,255,255));
+
+		mazeDisplay.setBackground(new Color(null, 255, 255, 255));
 		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-	
+
 		mazeDisplay.setFocus();
-		
-	//buttons:
-		
-	//New Maze
-		ShellNewMaze win = new ShellNewMaze();	
+
+		// buttons:
+
+		// New Maze
+		ShellNewMaze win = new ShellNewMaze();
 		win.addObserver(this);
 		Button btnGenerateMaze = new Button(buttons, SWT.PUSH);
 		btnGenerateMaze.setText("New maze");
@@ -87,63 +89,92 @@ public class GUIview extends Observable implements view, Observer{
 				win.start(display);
 				saveMazesNames();
 			}
+
 			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {}
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
 		});
-	//Display Maze
-		ShellDisplayMaze dis = new ShellDisplayMaze(names);	
+		// Display Maze
+		ShellDisplayMaze dis = new ShellDisplayMaze(names);
 		dis.addObserver(this);
 		Button btnDisplayMaze = new Button(buttons, SWT.PUSH);
 		btnDisplayMaze.setText("Display maze");
 		btnDisplayMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				
+
+				System.out.println("check 1");
 				dis.start(display);
-				
-				//try:
+
 				loadCurrentMaze();
-				
-				System.out.println(mazeName);
-				System.out.println(maze);
-				
-				mazeDisplay.setMazeData(mazeName,maze);
-			
+				System.out.println("check 2");
+				// try
+
+				mazeDisplay.setMazeData(mazeName, maze);
+
+				mazeDisplay.setBackground(new Color(null, 255, 255, 255));
+				mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+				mazeDisplay.redraw();
 			}
+
 			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {}
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
 		});
-	//Get Advice
+		// Get Advice
 		Button btnGetAdvice = new Button(buttons, SWT.PUSH);
 		btnGetAdvice.setText("Get Advice");
-	//Solve Maze
+		// Solve Maze
 		Button btnSolveMaze = new Button(buttons, SWT.PUSH);
 		btnSolveMaze.setText("Solve maze");
-			btnSolveMaze.addSelectionListener(new SelectionListener() {
+		btnSolveMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				
-			//	maze.setStartPosition(mazeDisplay.character.getPos()); //--> need to chane the current position that the charctaer solve from here
+
 				setChanged();
-				
 				loadCurrentMaze();
+
+				/// if the start position of the maze is not equals to the
+				/// charcter position,
+				// we want to sent the charcter position to solve function
 				
-				if(p.getSolveAlgorithm()==1)
-					notifyObservers("solve"+" "+mazeName+" "+"bfs");//need to chage here to the name of the maze
+				
+				
+				if (!(mazeDisplay.character.getPos().x == maze.getStartPosition().x&&mazeDisplay.character.getPos().y == maze.getStartPosition().y
+						&&mazeDisplay.character.getPos().z == maze.getStartPosition().z)) {
+						System.out.println("start!=charcterPlace");
+					if (p.getSolveAlgorithm() == 1)
+						notifyObservers("solve" + " " + mazeName + " " + "bfs" + " " + mazeDisplay.character.getPos().x
+								+ "_" + mazeDisplay.character.getPos().y + "_" + mazeDisplay.character.getPos().z);
+					else
+						notifyObservers("solve" + " " + mazeName + " " + "dfs" + " " + mazeDisplay.character.getPos().x
+								+ "_" + mazeDisplay.character.getPos().y + "_" + mazeDisplay.character.getPos().z);
+
+				}
+
+					
 				else
-					notifyObservers("solve"+" "+mazeName+" "+"dfs");//--->here to.
-			
-				
+				{
+					if (p.getSolveAlgorithm() == 1)
+						notifyObservers("solve" + " " + mazeName + " " + "bfs");
+					else
+						notifyObservers("solve" + " " + mazeName + " " + "dfs");
+
+				}
+
 				loadCurrentSolution();
 				mazeDisplay.setSolution(solution);
 				mazeDisplay.goToTheTarget();
+
 			}
+
 			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {}
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
 		});
-	//Properties
+		// Properties
 		ShellProporties pro = new ShellProporties();
-		pro.addObserver(this);	
+		pro.addObserver(this);
 		Button btnProporties = new Button(buttons, SWT.PUSH);
 		btnProporties.setText("Properties");
 		btnProporties.addSelectionListener(new SelectionListener() {
@@ -151,10 +182,12 @@ public class GUIview extends Observable implements view, Observer{
 			public void widgetSelected(SelectionEvent arg0) {
 				pro.start(display);
 			}
+
 			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {}
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
 		});
-	//exit
+		// exit
 		Button btnExit = new Button(buttons, SWT.PUSH);
 		btnExit.setText("Exit");
 		btnExit.addSelectionListener(new SelectionListener() {
@@ -165,105 +198,108 @@ public class GUIview extends Observable implements view, Observer{
 				notifyObservers("exit");
 				display.dispose();
 			}
+
 			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {}
-		});	
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
 	}
-	
+
 	public void Print(String str) {
 		// TODO Auto-generated method stub
 	}
+
 	public void displayMessage(String msg) {
 		MessageBox msg2 = new MessageBox(shell, SWT.OK);
 		msg2.setMessage(msg);
 		msg2.open();
 	}
+
 	@Override
-	public void getInformation(String name){
+	public void getInformation(String name) {
 		this.names.add(name);
 	}
-	
+
 	@Override
-	public void getMaze(String maze) {}
-	
-	
-	public void setProperties(Properties p) {
-	this.p=p;	
+	public void getMaze(String maze) {
 	}
-	
+
+	public void setProperties(Properties p) {
+		this.p = p;
+	}
+
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		if(arg1=="erase_all"){
+		if (arg1 == "erase_all") {
 			names.removeAll(names);
 			saveMazesNames();
 			loadMazesNames();
-			maze=null;
+			maze = null;
 		}
 		setChanged();
 		notifyObservers(arg1);
 	}
+
 	public void start() {
 		display = new Display();
 		shell = new Shell(display);
-		
+
 		initWidgets();
-		shell.open();		
-		
+		shell.open();
+
 		// main event loop
-		while(!shell.isDisposed()){ // window isn't closed
-			if(!display.readAndDispatch()){
+		while (!shell.isDisposed()) { // window isn't closed
+			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
 		}
 		display.dispose();
 	}
-	
-	public void saveMazesNames(){
-		ObjectOutputStream oos=null;
-		try{
+
+	public void saveMazesNames() {
+		ObjectOutputStream oos = null;
+		try {
 			oos = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("AllMazesNamesCatch")));
 			oos.writeObject(this.names);
 			oos.close();
-			} catch (IOException e1) {
-			}
-			
+		} catch (IOException e1) {
+		}
+
 	}
-	
-	public void loadMazesNames(){
-		ObjectInputStream ois=null;
-		try{
-		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("AllMazesNamesCatch")));
-		this.names=(ArrayList<String>) ois.readObject();
-		ois.close();
+
+	public void loadMazesNames() {
+		ObjectInputStream ois = null;
+		try {
+			ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("AllMazesNamesCatch")));
+			this.names = (ArrayList<String>) ois.readObject();
+			ois.close();
 		} catch (IOException e1) {
 
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	public void loadCurrentMaze(){
-		ObjectInputStream ois=null;
-		try{
-		ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentMaze")));
-		this.mazeName=(String) ois.readObject(); 
-		this.maze=(Maze3d) ois.readObject();
-		ois.close();
+
+	public void loadCurrentMaze() {
+		ObjectInputStream ois = null;
+		try {
+			ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentMaze")));
+			this.mazeName = (String) ois.readObject();
+			this.maze = (Maze3d) ois.readObject();
+			ois.close();
 		} catch (IOException e1) {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
 
-	}	
-	
-	public void loadCurrentSolution(){
-		ObjectInputStream ois=null;
-		try{
-		 ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentSolution")));
-		this.solution=(Solution<Position>) ois.readObject();
-		System.out.println(solution);//for check
-		ois.close();
+	public void loadCurrentSolution() {
+		ObjectInputStream ois = null;
+		try {
+			ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentSolution")));
+			this.solution = (Solution<Position>) ois.readObject();
+			System.out.println(solution);// for check
+			ois.close();
 		} catch (IOException e1) {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

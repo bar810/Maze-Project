@@ -18,6 +18,12 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * shell new maze
+ * 
+ * @author bar brownshtein
+ *
+ */
 public class ShellNewMaze extends Observable {
 
 	protected Shell shell;
@@ -92,10 +98,6 @@ public class ShellNewMaze extends Observable {
 			}
 		});
 
-		
-		
-		
-		
 	}
 
 }

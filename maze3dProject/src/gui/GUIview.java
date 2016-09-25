@@ -44,6 +44,14 @@ public class GUIview extends Observable implements view, Observer {
 	public String mazeName;
 	public Solution<Position> solution = new Solution<Position>();
 
+	/**
+	 * GUI view class all the animation is here, all this things the user will
+	 * see- butttons and windows.
+	 * 
+	 * @param reader
+	 * @param writer
+	 * @param pro
+	 */
 	public GUIview(BufferedReader reader, PrintWriter writer, Properties pro) {
 		this.in = reader;
 		this.out = writer;
@@ -54,7 +62,9 @@ public class GUIview extends Observable implements view, Observer {
 
 	protected void initWidgets() {
 
-		// main Display properties
+		/**
+		 * main Display properties
+		 */
 		GridLayout grid = new GridLayout(2, false);
 		shell.setLayout(grid);
 
@@ -70,9 +80,13 @@ public class GUIview extends Observable implements view, Observer {
 		mazeDisplay.setBackground(new Color(null, 255, 255, 255));
 		mazeDisplay.setFocus();
 
-		// buttons:
+		/**
+		 * buttons:
+		 */
 
-		// New Maze
+		/**
+		 * new MAZE window
+		 */
 		ShellNewMaze win = new ShellNewMaze();
 		win.addObserver(this);
 		Button btnGenerateMaze = new Button(buttons, SWT.PUSH);
@@ -89,7 +103,9 @@ public class GUIview extends Observable implements view, Observer {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
 		});
-		// load Maze
+		/**
+		 * load Maze
+		 */
 
 		ShellDisplayMaze dis = new ShellDisplayMaze(names);
 		dis.addObserver(this);
@@ -99,10 +115,9 @@ public class GUIview extends Observable implements view, Observer {
 		btnDisplayMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-			
+
 				dis.start(display);
-				
-				
+
 			}
 
 			@Override
@@ -110,10 +125,10 @@ public class GUIview extends Observable implements view, Observer {
 			}
 		});
 
-		
-		// Start Maze
+		/**
+		 * Start Maze
+		 */
 
-		
 		Button btnStartGame = new Button(buttons, SWT.PUSH);
 		btnStartGame.setText("Start Game");
 
@@ -121,39 +136,43 @@ public class GUIview extends Observable implements view, Observer {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 
-					loadCurrentMaze();
-					mazeDisplay.setMazeData(mazeName, maze);
-					mazeDisplay.redraw();
-					mazeDisplay.setFocus();
+				loadCurrentMaze();
+				mazeDisplay.setMazeData(mazeName, maze);
+				mazeDisplay.redraw();
+				mazeDisplay.setFocus();
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
 		});
-		
-		// Get Advice
+
+		/**
+		 * Get Advice
+		 */
 		Button btnGetAdvice = new Button(buttons, SWT.PUSH);
 		btnGetAdvice.setText("Get Advice");
 		btnGetAdvice.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				if(maze!=null){
+				if (maze != null) {
 					setChanged();
 					loadCurrentMaze();
-				
+
 					System.out.println(mazeName);
-					
+
 					if (!(mazeDisplay.character.getPos().x == maze.getStartPosition().x
 							&& mazeDisplay.character.getPos().y == maze.getStartPosition().y
 							&& mazeDisplay.character.getPos().z == maze.getStartPosition().z)) {
 						System.out.println("start!=charcterPlace");
 						if (p.getSolveAlgorithm() == 1)
-							notifyObservers("solve" + " " + mazeName + " " + "bfs" + " " + mazeDisplay.character.getPos().x
-									+ "_" + mazeDisplay.character.getPos().y + "_" + mazeDisplay.character.getPos().z);
+							notifyObservers("solve" + " " + mazeName + " " + "bfs" + " "
+									+ mazeDisplay.character.getPos().x + "_" + mazeDisplay.character.getPos().y + "_"
+									+ mazeDisplay.character.getPos().z);
 						else
-							notifyObservers("solve" + " " + mazeName + " " + "dfs" + " " + mazeDisplay.character.getPos().x
-									+ "_" + mazeDisplay.character.getPos().y + "_" + mazeDisplay.character.getPos().z);
+							notifyObservers("solve" + " " + mazeName + " " + "dfs" + " "
+									+ mazeDisplay.character.getPos().x + "_" + mazeDisplay.character.getPos().y + "_"
+									+ mazeDisplay.character.getPos().z);
 					}
 
 					else {
@@ -168,60 +187,66 @@ public class GUIview extends Observable implements view, Observer {
 					mazeDisplay.setSolution(solution);
 					mazeDisplay.goToTheTarget(0);
 
-				
 				}
-				}
+			}
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
 
 		});
 
-		// Solve Maze
+		/**
+		 * Solve Maze
+		 */
 		Button btnSolveMaze = new Button(buttons, SWT.PUSH);
 		btnSolveMaze.setText("Solve maze");
 		btnSolveMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 
-				if(maze!=null){
-				setChanged();
-				loadCurrentMaze();
-			
-				System.out.println(mazeName);
-				
-				if (!(mazeDisplay.character.getPos().x == maze.getStartPosition().x
-						&& mazeDisplay.character.getPos().y == maze.getStartPosition().y
-						&& mazeDisplay.character.getPos().z == maze.getStartPosition().z)) {
-					System.out.println("start!=charcterPlace");
-					if (p.getSolveAlgorithm() == 1)
-						notifyObservers("solve" + " " + mazeName + " " + "bfs" + " " + mazeDisplay.character.getPos().x
-								+ "_" + mazeDisplay.character.getPos().y + "_" + mazeDisplay.character.getPos().z);
-					else
-						notifyObservers("solve" + " " + mazeName + " " + "dfs" + " " + mazeDisplay.character.getPos().x
-								+ "_" + mazeDisplay.character.getPos().y + "_" + mazeDisplay.character.getPos().z);
+				if (maze != null) {
+					setChanged();
+					loadCurrentMaze();
+
+					System.out.println(mazeName);
+
+					if (!(mazeDisplay.character.getPos().x == maze.getStartPosition().x
+							&& mazeDisplay.character.getPos().y == maze.getStartPosition().y
+							&& mazeDisplay.character.getPos().z == maze.getStartPosition().z)) {
+						System.out.println("start!=charcterPlace");
+						if (p.getSolveAlgorithm() == 1)
+							notifyObservers("solve" + " " + mazeName + " " + "bfs" + " "
+									+ mazeDisplay.character.getPos().x + "_" + mazeDisplay.character.getPos().y + "_"
+									+ mazeDisplay.character.getPos().z);
+						else
+							notifyObservers("solve" + " " + mazeName + " " + "dfs" + " "
+									+ mazeDisplay.character.getPos().x + "_" + mazeDisplay.character.getPos().y + "_"
+									+ mazeDisplay.character.getPos().z);
+					}
+
+					else {
+						if (p.getSolveAlgorithm() == 1)
+							notifyObservers("solve" + " " + mazeName + " " + "bfs");
+						else
+							notifyObservers("solve" + " " + mazeName + " " + "dfs");
+
+					}
+
+					loadCurrentSolution();
+					mazeDisplay.setSolution(solution);
+					mazeDisplay.goToTheTarget(1);
+
 				}
-
-				else {
-					if (p.getSolveAlgorithm() == 1)
-						notifyObservers("solve" + " " + mazeName + " " + "bfs");
-					else
-						notifyObservers("solve" + " " + mazeName + " " + "dfs");
-
-				}
-
-				loadCurrentSolution();
-				mazeDisplay.setSolution(solution);
-				mazeDisplay.goToTheTarget(1);
-
-			
 			}
-			}
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
 		});
-		// Properties
+		/**
+		 * Properties
+		 */
 		ShellProporties pro = new ShellProporties();
 		pro.addObserver(this);
 		Button btnProporties = new Button(buttons, SWT.PUSH);
@@ -236,7 +261,9 @@ public class GUIview extends Observable implements view, Observer {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
 		});
-		// exit
+		/**
+		 * exit
+		 */
 		Button btnExit = new Button(buttons, SWT.PUSH);
 		btnExit.setText("Exit");
 		btnExit.addSelectionListener(new SelectionListener() {
@@ -277,6 +304,9 @@ public class GUIview extends Observable implements view, Observer {
 		this.p = p;
 	}
 
+	/**
+	 * update function as MVP structure
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		if (arg1 == "erase_all") {
@@ -296,7 +326,9 @@ public class GUIview extends Observable implements view, Observer {
 		initWidgets();
 		shell.open();
 
-		// main event loop
+		/**
+		 * main event loop
+		 */
 		while (!shell.isDisposed()) { // window isn't closed
 			if (!display.readAndDispatch()) {
 				display.sleep();
@@ -305,6 +337,9 @@ public class GUIview extends Observable implements view, Observer {
 		display.dispose();
 	}
 
+	/**
+	 * save mazes names
+	 */
 	public void saveMazesNames() {
 		ObjectOutputStream oos = null;
 		try {
@@ -316,6 +351,9 @@ public class GUIview extends Observable implements view, Observer {
 
 	}
 
+	/**
+	 * load mazes names
+	 */
 	public void loadMazesNames() {
 		ObjectInputStream ois = null;
 		try {
@@ -329,6 +367,9 @@ public class GUIview extends Observable implements view, Observer {
 		}
 	}
 
+	/**
+	 * load the current maze
+	 */
 	public void loadCurrentMaze() {
 		ObjectInputStream ois = null;
 		try {
@@ -342,12 +383,14 @@ public class GUIview extends Observable implements view, Observer {
 		}
 	}
 
+	/**
+	 * load the current solution
+	 */
 	public void loadCurrentSolution() {
 		ObjectInputStream ois = null;
 		try {
 			ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentSolution")));
 			this.solution = (Solution<Position>) ois.readObject();
-			System.out.println(solution);// for check
 			ois.close();
 		} catch (IOException e1) {
 		} catch (ClassNotFoundException e) {

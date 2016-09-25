@@ -18,6 +18,12 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * shell properties
+ * 
+ * @author bar brownshtein
+ *
+ */
 public class ShellProporties extends Observable {
 
 	protected Shell shell;

@@ -11,10 +11,13 @@ import presenter.Presenter;
 import presenter.Properties;
 import presenter.PropertiesHandler;
 import view.MyView;
-
-/*TODO:
-			
-*/
+/**
+ * RUN class
+ * manager all the program
+ * you have to choose between GUI or CLI view
+ * @author bar brownshtein
+ *
+ */
 public class Run {
 	public static void main(String[] args) throws Exception {
 

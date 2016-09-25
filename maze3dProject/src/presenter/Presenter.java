@@ -11,7 +11,12 @@ import org.eclipse.swt.widgets.MessageBox;
 
 import model.model;
 import view.view;
-
+/**
+ * presenter
+ * managing all the program and between the model and the view
+ * @author bar brownshtein
+ *
+ */
 public class Presenter extends Observable implements Observer{
 
 	private model model;

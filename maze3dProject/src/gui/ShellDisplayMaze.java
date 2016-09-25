@@ -24,6 +24,12 @@ import org.eclipse.swt.widgets.Text;
 
 import algorithms.mazeGenerators.Maze3d;
 
+/**
+ * shell display maze
+ * 
+ * @author bar brownshtein
+ *
+ */
 public class ShellDisplayMaze extends Observable {
 
 	protected Shell shell;

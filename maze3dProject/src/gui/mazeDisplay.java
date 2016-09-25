@@ -28,6 +28,12 @@ import algorithms.search.Solution;
 import algorithms.search.State;
 import controller.exit;
 
+/**
+ * maze display class extend Canvas and make the maze view
+ * 
+ * @author bar brownshtein
+ *
+ */
 public class mazeDisplay extends Canvas {
 
 	int flag = 0;
@@ -43,29 +49,33 @@ public class mazeDisplay extends Canvas {
 	int[][][] tempMaze;
 	int curFloor;
 
+	/**
+	 * print all the maze and the characters
+	 * 
+	 * @param parent
+	 * @param style
+	 */
 	public mazeDisplay(Composite parent, int style) {
 		super(parent, style);
 
-		//loadCurrentMaze();//---> with this the first screen is the last maze
-
-		if(maze!=null){
-		tempMaze = maze.getMaze();
-		curFloor = maze.getStartPosition().x;
-		mazeCurFloor = maze.getCrossSectionByZ(curFloor);
+		if (maze != null) {
+			tempMaze = maze.getMaze();
+			curFloor = maze.getStartPosition().x;
+			mazeCurFloor = maze.getCrossSectionByZ(curFloor);
 		}
 		character = new Character("Character.jpg");
 		character2 = new Character("Character2.jpg");
 		tar = new Character("target.jpg");
 		fin = new Character("pizzaTime.jpg");
 
-
-
 		this.addKeyListener(new KeyListener() {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
 				Position pos = character.getPos();
+				tempMaze = maze.getMaze();
 				int temp;
+
 				switch (e.keyCode) {
 
 				case SWT.ARROW_DOWN:
@@ -124,20 +134,19 @@ public class mazeDisplay extends Canvas {
 			}
 		});
 
-
-			
 		this.addPaintListener(new PaintListener() {
 
 			int moves = 0;
 
+			/**
+			 * paint control
+			 */
 			@Override
 			public void paintControl(PaintEvent e) {
-			
-//				redraw();
-				// ----------------->here he painting
-				if(maze!=null)
-					curFloor=maze.getStartPosition().x;
-				
+
+				if (maze != null)
+					curFloor = maze.getStartPosition().x;
+
 				e.gc.setBackground(new Color(null, 0, 0, 0));
 				e.gc.setForeground(new Color(null, 255, 255, 255));
 
@@ -158,9 +167,10 @@ public class mazeDisplay extends Canvas {
 							int x = j * w;
 							int y = i * h;
 							if (mazeCurFloor[i][j] != 0 && mazeCurFloor[i][j] != 2 && mazeCurFloor[i][j] != 3)
-								e.gc.fillRectangle(x, y, w, h);//->>>here he paint the maze
-								}
-						
+								e.gc.fillRectangle(x, y, w, h);// ->>>here he
+																// paint the
+																// maze
+						}
 
 					if (flag == 1)
 						character2.draw(w, h, e.gc);
@@ -180,23 +190,27 @@ public class mazeDisplay extends Canvas {
 						System.exit(0);
 					}
 				}
-				if(maze!=null){
-				e.gc.drawString("Maze name: " + mazeName +"  ("+maze.getx()+"/"+maze.gety()+"/"+maze.getz()+")"+
-				"  Your position: (" + character.getPos().x + " , "
-						+ character.getPos().y + " , " + character.getPos().z + ")  Goal position: ("
-						+ tar.getPos().x + " , " + tar.getPos().getY() + " , " + tar.getPos().getZ()
-						+ ")Total moves:  " + moves, 5, 5, false);
-				moves++;
+				if (maze != null) {
+					e.gc.drawString(
+							"Maze name: " + mazeName + "  (" + maze.getx() + "/" + maze.gety() + "/" + maze.getz() + ")"
+									+ "  Your position: (" + character.getPos().x + " , " + character.getPos().y + " , "
+									+ character.getPos().z + ")  Goal position: (" + tar.getPos().x + " , "
+									+ tar.getPos().getY() + " , " + tar.getPos().getZ() + ")Total moves:  " + moves,
+							5, 5, false);
+					moves++;
 				}
 
-		}
-			
+			}
+
 		});
 	}
 
-
-
-
+	/**
+	 * set maze data
+	 * 
+	 * @param name
+	 * @param md
+	 */
 	public void setMazeData(String name, Maze3d md) {
 
 		this.mazeName = name;
@@ -206,12 +220,14 @@ public class mazeDisplay extends Canvas {
 
 	public void mazeDisplay(Composite parent, int style) {
 	}
-	
 
 	void setMazeCurFloor(int[][] t) {
 		mazeCurFloor = t;
 	}
 
+	/**
+	 * load current maze
+	 */
 	public void loadCurrentMaze() {
 		ObjectInputStream ois = null;
 		try {
@@ -234,8 +250,14 @@ public class mazeDisplay extends Canvas {
 		this.sol = t;
 	}
 
+	/**
+	 * go to the target- when the user want to solve if num==1 solve if num==0
+	 * is just advice
+	 * 
+	 * @param num
+	 */
 	void goToTheTarget(int num) {
-		// if num=1 solve, if num=0 advice
+
 		int j = 0;
 		TimerTask task = new TimerTask() {
 
@@ -253,14 +275,14 @@ public class mazeDisplay extends Canvas {
 						if (num == 0)
 							loops = 1;
 
-						if (i < loops) {// here
+						if (i < loops) {
 							where = whereToMove(sol.getStates().get(i).getPosition(),
 									sol.getStates().get(i + 1).getPosition());
 
 							int temp;
 							switch (where) {
 							case "down":
-								
+
 								temp = curFloor;
 								character.moveDown();
 								curFloor--;
@@ -290,7 +312,6 @@ public class mazeDisplay extends Canvas {
 							redraw();
 							i++;
 						}
-					
 
 					}
 				});
@@ -301,6 +322,13 @@ public class mazeDisplay extends Canvas {
 		timer.scheduleAtFixedRate(task, 0, 200);
 	}
 
+	/**
+	 * this function tell you where to move
+	 * 
+	 * @param now
+	 * @param to
+	 * @return
+	 */
 	String whereToMove(Position now, Position to) {
 
 		int x = now.x - to.x;
@@ -327,5 +355,5 @@ public class mazeDisplay extends Canvas {
 		}
 		return null;
 	}
-	
+
 }

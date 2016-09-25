@@ -31,6 +31,12 @@ import io.MyDecompressorInputStream;
 import io.myCompressorOutputStream;
 import presenter.Properties;
 
+/**
+ * my model class this class is all the algorithms build as MVP structure
+ * 
+ * @author bar brownshtein
+ *
+ */
 public class MyModel extends Observable implements model {
 
 	private HashMap<String, Maze3d> mazes = new HashMap<String, Maze3d>();

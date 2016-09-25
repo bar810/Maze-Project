@@ -55,7 +55,7 @@ public class mazeDisplay extends Canvas {
 	 * @param parent
 	 * @param style
 	 */
-	public mazeDisplay(Composite parent, int style) {
+	public mazeDisplay(Composite parent, int style, String Photoselected) {
 		super(parent, style);
 
 		if (maze != null) {
@@ -63,8 +63,14 @@ public class mazeDisplay extends Canvas {
 			curFloor = maze.getStartPosition().x;
 			mazeCurFloor = maze.getCrossSectionByZ(curFloor);
 		}
-		character = new Character("Character.jpg");
-		character2 = new Character("Character2.jpg");
+		
+		if (Photoselected == null) {
+			character = new Character("Character.jpg");
+			character2 = new Character("Character2.jpg");
+		} else {
+			character = new Character(Photoselected);
+			character2 = new Character(Photoselected);
+		}
 		tar = new Character("target.jpg");
 		fin = new Character("pizzaTime.jpg");
 

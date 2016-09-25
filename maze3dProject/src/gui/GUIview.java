@@ -23,6 +23,7 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import algorithms.mazeGenerators.Maze3d;
@@ -30,7 +31,13 @@ import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 import presenter.Properties;
 import view.view;
-
+/*
+TODO:
+	fix-> photo selected how can i move the picture
+	properties
+	when i put X close the program
+	javaDoc
+*/
 public class GUIview extends Observable implements view, Observer {
 
 	protected Display display;
@@ -42,6 +49,7 @@ public class GUIview extends Observable implements view, Observer {
 	ArrayList<String> names = new ArrayList<>();
 	public Maze3d maze;
 	public String mazeName;
+	public String Photoselected=null;
 	public Solution<Position> solution = new Solution<Position>();
 
 	/**
@@ -75,7 +83,7 @@ public class GUIview extends Observable implements view, Observer {
 		shell.setText("PIZZA MAZE GAME");
 		shell.setImage(new Image(null, "img1.jpg"));
 
-		mazeDisplay = new mazeDisplay(shell, SWT.BORDER | SWT.PUSH);
+		mazeDisplay = new mazeDisplay(shell, SWT.BORDER | SWT.PUSH,Photoselected);
 		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		mazeDisplay.setBackground(new Color(null, 255, 255, 255));
 		mazeDisplay.setFocus();
@@ -159,12 +167,12 @@ public class GUIview extends Observable implements view, Observer {
 					setChanged();
 					loadCurrentMaze();
 
-					System.out.println(mazeName);
+					
 
 					if (!(mazeDisplay.character.getPos().x == maze.getStartPosition().x
 							&& mazeDisplay.character.getPos().y == maze.getStartPosition().y
 							&& mazeDisplay.character.getPos().z == maze.getStartPosition().z)) {
-						System.out.println("start!=charcterPlace");
+				
 						if (p.getSolveAlgorithm() == 1)
 							notifyObservers("solve" + " " + mazeName + " " + "bfs" + " "
 									+ mazeDisplay.character.getPos().x + "_" + mazeDisplay.character.getPos().y + "_"
@@ -209,12 +217,12 @@ public class GUIview extends Observable implements view, Observer {
 					setChanged();
 					loadCurrentMaze();
 
-					System.out.println(mazeName);
+				
 
 					if (!(mazeDisplay.character.getPos().x == maze.getStartPosition().x
 							&& mazeDisplay.character.getPos().y == maze.getStartPosition().y
 							&& mazeDisplay.character.getPos().z == maze.getStartPosition().z)) {
-						System.out.println("start!=charcterPlace");
+					
 						if (p.getSolveAlgorithm() == 1)
 							notifyObservers("solve" + " " + mazeName + " " + "bfs" + " "
 									+ mazeDisplay.character.getPos().x + "_" + mazeDisplay.character.getPos().y + "_"
@@ -261,6 +269,30 @@ public class GUIview extends Observable implements view, Observer {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
 		});
+		
+		/**
+		 * Your photo
+		 */
+		Button btnYourPhoto = new Button(buttons, SWT.PUSH);
+		btnYourPhoto.setText("Your Photo");
+		btnYourPhoto.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				FileDialog fd=new FileDialog(shell,SWT.OPEN);
+				fd.setText("open");
+				fd.setFilterPath("C:/Users/bar brownshtein/MyMaze/git/maze3dProject");
+				String[] filterExt={"*.jpg"};
+				fd.setFilterExtensions(filterExt);
+				Photoselected=fd.open();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {}	
+		});
+		
+		
+		
 		/**
 		 * exit
 		 */

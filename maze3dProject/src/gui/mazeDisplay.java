@@ -46,7 +46,7 @@ public class mazeDisplay extends Canvas {
 	public mazeDisplay(Composite parent, int style) {
 		super(parent, style);
 
-	//	loadCurrentMaze();---> with this the first screen is the last maze
+		loadCurrentMaze();//---> with this the first screen is the last maze
 
 		if(maze!=null){
 		tempMaze = maze.getMaze();
@@ -178,15 +178,16 @@ public class mazeDisplay extends Canvas {
 						System.exit(0);
 					}
 				}
-//				if(maze!=null){
-//				e.gc.drawString("Maze name: " + mazeName +"  ("+maze.getx()+"/"+maze.gety()+"/"+maze.getz()+")"+
-//				"  Your position: (" + curFloor + " , "
-//						+ character.getPos().y + " , " + character.getPos().z + ")  Goal position: ("
-//						+ tar.getPos().x + " , " + tar.getPos().getY() + " , " + tar.getPos().getZ()
-//						+ ")Total moves:  " + moves, 5, 5, false);
+				if(maze!=null){
+				e.gc.drawString("Maze name: " + mazeName +"  ("+maze.getx()+"/"+maze.gety()+"/"+maze.getz()+")"+
+				"  Your position: (" + character.getPos().x + " , "
+						+ character.getPos().y + " , " + character.getPos().z + ")  Goal position: ("
+						+ tar.getPos().x + " , " + tar.getPos().getY() + " , " + tar.getPos().getZ()
+						+ ")Total moves:  " + moves, 5, 5, false);
 				moves++;
 				}
-//			}
+
+		}
 			
 		});
 	}
@@ -195,9 +196,10 @@ public class mazeDisplay extends Canvas {
 
 
 	public void setMazeData(String name, Maze3d md) {
+
 		this.mazeName = name;
 		this.maze = md;
-		setMazeCurFloor(md.getCrossSectionByZ(curFloor));
+		setMazeCurFloor(maze.getCrossSectionByZ(maze.getStartPosition().x));
 	}
 
 	public void mazeDisplay(Composite parent, int style) {
@@ -322,5 +324,5 @@ public class mazeDisplay extends Canvas {
 		}
 		return null;
 	}
-
+	
 }

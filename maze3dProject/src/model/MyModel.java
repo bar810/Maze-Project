@@ -83,6 +83,7 @@ public class MyModel extends Observable implements model {
 			saveMazes();
 			saveSolutions();
 			sendMazesNames(name);
+			saveCurrentMaze(name);
 			setChanged();
 			message = "Maze: " + name + " Generated succesfully!\n";
 			notifyObservers("maze_ready " + name);

@@ -89,24 +89,19 @@ public class GUIview extends Observable implements view, Observer {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
 		});
-		// Display Maze
+		// load Maze
 
 		ShellDisplayMaze dis = new ShellDisplayMaze(names);
 		dis.addObserver(this);
 		Button btnDisplayMaze = new Button(buttons, SWT.PUSH);
-		btnDisplayMaze.setText("Display maze");
+		btnDisplayMaze.setText("Load maze");
 
 		btnDisplayMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-
-				dis.start(display);
-
-//				System.out.println("check 1");
-//
-//
-//				System.out.println("check 2");
 			
+				dis.start(display);
+				
 				
 			}
 
@@ -115,6 +110,28 @@ public class GUIview extends Observable implements view, Observer {
 			}
 		});
 
+		
+		// Start Maze
+
+		
+		Button btnStartGame = new Button(buttons, SWT.PUSH);
+		btnStartGame.setText("Start Game");
+
+		btnStartGame.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+
+					loadCurrentMaze();
+					mazeDisplay.setMazeData(mazeName, maze);
+					mazeDisplay.redraw();
+					mazeDisplay.setFocus();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		
 		// Get Advice
 		Button btnGetAdvice = new Button(buttons, SWT.PUSH);
 		btnGetAdvice.setText("Get Advice");
@@ -122,6 +139,7 @@ public class GUIview extends Observable implements view, Observer {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 
+				if(maze!=null){
 				setChanged();
 				loadCurrentMaze();
 
@@ -151,7 +169,8 @@ public class GUIview extends Observable implements view, Observer {
 				mazeDisplay.goToTheTarget(0);
 
 			}
-
+			
+			}
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
@@ -165,9 +184,12 @@ public class GUIview extends Observable implements view, Observer {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 
+			//	if(maze!=null){
 				setChanged();
 				loadCurrentMaze();
-
+			
+				System.out.println(mazeName);
+				
 				if (!(mazeDisplay.character.getPos().x == maze.getStartPosition().x
 						&& mazeDisplay.character.getPos().y == maze.getStartPosition().y
 						&& mazeDisplay.character.getPos().z == maze.getStartPosition().z)) {
@@ -192,8 +214,9 @@ public class GUIview extends Observable implements view, Observer {
 				mazeDisplay.setSolution(solution);
 				mazeDisplay.goToTheTarget(1);
 
+			
+			//}
 			}
-
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}

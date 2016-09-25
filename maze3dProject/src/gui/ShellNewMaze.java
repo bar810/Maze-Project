@@ -92,6 +92,10 @@ public class ShellNewMaze extends Observable {
 			}
 		});
 
+		
+		
+		
+		
 	}
 
 }

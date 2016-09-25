@@ -138,39 +138,39 @@ public class GUIview extends Observable implements view, Observer {
 		btnGetAdvice.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-
 				if(maze!=null){
-				setChanged();
-				loadCurrentMaze();
+					setChanged();
+					loadCurrentMaze();
+				
+					System.out.println(mazeName);
+					
+					if (!(mazeDisplay.character.getPos().x == maze.getStartPosition().x
+							&& mazeDisplay.character.getPos().y == maze.getStartPosition().y
+							&& mazeDisplay.character.getPos().z == maze.getStartPosition().z)) {
+						System.out.println("start!=charcterPlace");
+						if (p.getSolveAlgorithm() == 1)
+							notifyObservers("solve" + " " + mazeName + " " + "bfs" + " " + mazeDisplay.character.getPos().x
+									+ "_" + mazeDisplay.character.getPos().y + "_" + mazeDisplay.character.getPos().z);
+						else
+							notifyObservers("solve" + " " + mazeName + " " + "dfs" + " " + mazeDisplay.character.getPos().x
+									+ "_" + mazeDisplay.character.getPos().y + "_" + mazeDisplay.character.getPos().z);
+					}
 
-				if (!(mazeDisplay.character.getPos().x == maze.getStartPosition().x
-						&& mazeDisplay.character.getPos().y == maze.getStartPosition().y
-						&& mazeDisplay.character.getPos().z == maze.getStartPosition().z)) {
-					System.out.println("start!=charcterPlace");
-					if (p.getSolveAlgorithm() == 1)
-						notifyObservers("solve" + " " + mazeName + " " + "bfs" + " " + mazeDisplay.character.getPos().x
-								+ "_" + mazeDisplay.character.getPos().y + "_" + mazeDisplay.character.getPos().z);
-					else
-						notifyObservers("solve" + " " + mazeName + " " + "dfs" + " " + mazeDisplay.character.getPos().x
-								+ "_" + mazeDisplay.character.getPos().y + "_" + mazeDisplay.character.getPos().z);
+					else {
+						if (p.getSolveAlgorithm() == 1)
+							notifyObservers("solve" + " " + mazeName + " " + "bfs");
+						else
+							notifyObservers("solve" + " " + mazeName + " " + "dfs");
 
+					}
+
+					loadCurrentSolution();
+					mazeDisplay.setSolution(solution);
+					mazeDisplay.goToTheTarget(0);
+
+				
 				}
-
-				else {
-					if (p.getSolveAlgorithm() == 1)
-						notifyObservers("solve" + " " + mazeName + " " + "bfs");
-					else
-						notifyObservers("solve" + " " + mazeName + " " + "dfs");
-
 				}
-
-				loadCurrentSolution();
-				mazeDisplay.setSolution(solution);
-				mazeDisplay.goToTheTarget(0);
-
-			}
-			
-			}
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
@@ -184,7 +184,7 @@ public class GUIview extends Observable implements view, Observer {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 
-			//	if(maze!=null){
+				if(maze!=null){
 				setChanged();
 				loadCurrentMaze();
 			
@@ -215,7 +215,7 @@ public class GUIview extends Observable implements view, Observer {
 				mazeDisplay.goToTheTarget(1);
 
 			
-			//}
+			}
 			}
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {

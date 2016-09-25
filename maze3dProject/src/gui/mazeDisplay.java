@@ -46,7 +46,7 @@ public class mazeDisplay extends Canvas {
 	public mazeDisplay(Composite parent, int style) {
 		super(parent, style);
 
-		loadCurrentMaze();//---> with this the first screen is the last maze
+		//loadCurrentMaze();//---> with this the first screen is the last maze
 
 		if(maze!=null){
 		tempMaze = maze.getMaze();
@@ -135,7 +135,9 @@ public class mazeDisplay extends Canvas {
 			
 //				redraw();
 				// ----------------->here he painting
-
+				if(maze!=null)
+					curFloor=maze.getStartPosition().x;
+				
 				e.gc.setBackground(new Color(null, 0, 0, 0));
 				e.gc.setForeground(new Color(null, 255, 255, 255));
 
@@ -204,6 +206,7 @@ public class mazeDisplay extends Canvas {
 
 	public void mazeDisplay(Composite parent, int style) {
 	}
+	
 
 	void setMazeCurFloor(int[][] t) {
 		mazeCurFloor = t;

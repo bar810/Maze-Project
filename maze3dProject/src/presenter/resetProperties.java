@@ -2,7 +2,11 @@ package presenter;
 import model.model;
 import view.view;
 
-
+/**
+ * reser properties
+ * @author bar brownshtein
+ *
+ */
 public class resetProperties implements Command {
 	private model m;
 	public resetProperties(view v , model m) {

@@ -88,8 +88,6 @@ public class ShellDisplayMaze extends Observable {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-
 			}
 
 		});

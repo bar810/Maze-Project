@@ -24,7 +24,13 @@ public class Presenter extends Observable implements Observer{
 	private HashMap<String, Command> commands;
 	private ExecutorService exs;
 	public Properties properties;
-	
+	/**
+	 * Constructor
+	 * @param model
+	 * @param view
+	 * @param threads
+	 * @param p
+	 */
 	public Presenter(model model, view view,int threads,Properties p) {
 		this.model = model;
 		this.view = view;
@@ -36,7 +42,10 @@ public class Presenter extends Observable implements Observer{
 		view.setProperties(properties);
 	}
 	
-	
+	/**
+	 * all the commands
+	 * @return
+	 */
 	public HashMap<String, Command> get (){
 		return commands;
 	}
@@ -65,6 +74,9 @@ public class Presenter extends Observable implements Observer{
 		commands.put("getMaze",  new getMaze(view,model));
 	}
 	
+	/**
+	 * update function MVP structure
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		String Cmdstr = (String)arg;

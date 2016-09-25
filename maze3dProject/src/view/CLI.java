@@ -5,7 +5,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Observable;
 
-public class CLI extends Observable{
+/**
+ * CLI class MVP structure manage the program
+ * 
+ * @author bar brownshtein
+ *
+ */
+public class CLI extends Observable {
 
 	private BufferedReader in;
 	private PrintWriter out;
@@ -14,9 +20,16 @@ public class CLI extends Observable{
 		this.in = in;
 		this.out = out;
 	}
+
+	/**
+	 * start function manage the program
+	 * 
+	 * @throws Exception
+	 */
 	public void start() throws Exception {
 		Thread thread = new Thread(new Runnable() {
 			String cmd = null;
+
 			@Override
 			public void run() {
 				do {
@@ -33,8 +46,6 @@ public class CLI extends Observable{
 				} while (!(cmd.equals("exit")));
 			}
 		});
-		//thread.start();
-		//thread.join();
 		thread.run();
 	}
 }

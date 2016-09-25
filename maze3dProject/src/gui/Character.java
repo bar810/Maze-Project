@@ -27,12 +27,19 @@ public class Character {
 	public void setPos(Position pos) {
 		this.pos = pos;
 	}
-
+/**
+ * drawing
+ * @param cellWidth
+ * @param cellHeight
+ * @param gc
+ */
 	public void draw(int cellWidth, int cellHeight, GC gc) {
 		gc.drawImage(img, 0, 0, img.getBounds().width, img.getBounds().height, cellWidth * pos.z, cellHeight * pos.y,
 				cellWidth, cellHeight);
 	}
-
+/**
+ * moving
+ */
 	public void moveRight() {
 		pos.z++;
 

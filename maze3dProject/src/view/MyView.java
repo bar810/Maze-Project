@@ -9,74 +9,91 @@ import algorithms.mazeGenerators.Maze3d;
 import algorithms.search.Solution;
 import presenter.Properties;
 
+/**
+ * My View class this class is implements view interface
+ * 
+ * @author bar brownshtein
+ *
+ */
 public class MyView extends Observable implements view, Observer {
 
 	CLI cli;
 	private BufferedReader reader;
 	private PrintWriter writer;
 	Properties properties;
-	
-	public MyView(BufferedReader reader ,PrintWriter writer) throws Exception {
+
+	/**
+	 * constructor
+	 * 
+	 * @param reader
+	 * @param writer
+	 * @throws Exception
+	 */
+	public MyView(BufferedReader reader, PrintWriter writer) throws Exception {
 		this.reader = reader;
 		this.writer = writer;
 		cli = new CLI(reader, writer);
 		cli.addObserver(this);
 	}
+
+	/**
+	 * update function MVP structure
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		if (arg0 == cli){
+		if (arg0 == cli) {
 			this.setChanged();
-			this.notifyObservers(arg1);	
-		}		
+			this.notifyObservers(arg1);
+		}
 	}
+
+	/**
+	 * START class run the program
+	 */
 	@Override
 	public void start() throws Exception {
-		Thread cliThread = new Thread (new Runnable() {		
+		Thread cliThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				try {
 					cli.start();
 				} catch (Exception e) {
 					e.printStackTrace();
-				}				
+				}
 			}
 		});
-		
-		//cliThread.join();		
-		//cliThread.start();	
 		cliThread.run();
 	}
+
 	@Override
-	public void Print (String str){
+	public void Print(String str) {
 		writer.write(str);
 		writer.flush();
 	}
 
 	public void setMaze3dData(Maze3d maze) {
-		// TODO Auto-generated method stub
 	}
-	
+
 	public void setSolution(Solution arg) {
-		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public void displayMessage(String msg) {
 		writer.println(msg);
-		writer.flush();		
+		writer.flush();
 	}
+
 	@Override
 	public void setProperties(Properties p) {
-	this.properties=p;
-		
+		this.properties = p;
+
 	}
+
 	@Override
 	public void getInformation(String info) {
-		// TODO Auto-generated method stub
-		
 	}
+
 	@Override
 	public void getMaze(String name) {
-		// TODO Auto-generated method stub
-		
 	}
 }

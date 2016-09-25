@@ -2,36 +2,45 @@ package presenter;
 
 import java.io.Serializable;
 
+/**
+ * properties class save all the properties of the program
+ * 
+ * @author bar brownshtein
+ *
+ */
 public class Properties implements Serializable {
 
-
-	/*
-	 * solveAlgorithem: DFS = 0 / BFS = 1
-	 * runTimeEnv: GUI = 0 / CLI = 1
-	 * mazeGenerator: Simple  = 0 / growing = 1 
-	 * 
-	 */
-	
-
 	/**
-	 * 
+	 * solveAlgorithem: DFS = 0 / BFS = 1 runTimeEnv: GUI = 0 / CLI = 1
+	 * mazeGenerator: Simple = 0 / growing = 1
 	 */
+
 	private static final long serialVersionUID = 1L;
 	private Integer mazeGenerator;
 	private Integer solveAlgorithm;
 	private Integer maxNumOfThreads;
 	private Integer runtimeEnv;
-	
+
+	/**
+	 * deafult
+	 */
 	public Properties() {
 		mazeGenerator = 1;
 		solveAlgorithm = 1;
-		runtimeEnv =0;
+		runtimeEnv = 0;
 		maxNumOfThreads = 50;
-		
-       
+
 	}
 
-	public Properties(Integer mazeGenerator, Integer solveAlgorithm,Integer runtimeEnv, Integer maxNumOfThreads) {
+	/**
+	 * constructor
+	 * 
+	 * @param mazeGenerator
+	 * @param solveAlgorithm
+	 * @param runtimeEnv
+	 * @param maxNumOfThreads
+	 */
+	public Properties(Integer mazeGenerator, Integer solveAlgorithm, Integer runtimeEnv, Integer maxNumOfThreads) {
 		super();
 		this.mazeGenerator = mazeGenerator;
 		this.solveAlgorithm = solveAlgorithm;
@@ -39,7 +48,6 @@ public class Properties implements Serializable {
 		this.runtimeEnv = runtimeEnv;
 
 	}
-
 
 	public Integer getMazeGenerator() {
 		return mazeGenerator;
@@ -72,5 +80,5 @@ public class Properties implements Serializable {
 	public void setRuntimeEnv(Integer runtimeEnv) {
 		this.runtimeEnv = runtimeEnv;
 	}
-	
+
 }

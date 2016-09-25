@@ -49,6 +49,12 @@ public class MyModel extends Observable implements model {
 	Maze3dGenerator mg;
 	Properties properties;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param numThreads
+	 * @param p
+	 */
 	public MyModel(int numThreads, Properties p) {
 		exs = Executors.newFixedThreadPool(numThreads);
 		this.properties = p;
@@ -56,6 +62,9 @@ public class MyModel extends Observable implements model {
 		loadMazes();
 	}
 
+	/**
+	 * generate maze
+	 */
 	@Override
 	public void generateMaze(String name, int flos, int rows, int cols) {
 
@@ -100,6 +109,9 @@ public class MyModel extends Observable implements model {
 		}
 	}
 
+	/**
+	 * solve maze
+	 */
 	@Override
 	public void Solve(String name, String algo, String newPos) {
 		Maze3d newMaze = new Maze3d(mazes.get(name));
@@ -142,6 +154,9 @@ public class MyModel extends Observable implements model {
 		}
 	}
 
+	/**
+	 * display solution
+	 */
 	@Override
 	public void Display_Sol(String name) {
 		if (mazes.get(name) != null) {
@@ -157,6 +172,9 @@ public class MyModel extends Observable implements model {
 		notifyObservers("display_msg");
 	}
 
+	/**
+	 * get cross by section
+	 */
 	@Override
 	public void getCrossSection(String axis, int index, String name) {
 
@@ -199,6 +217,9 @@ public class MyModel extends Observable implements model {
 		notifyObservers("getMaze message");
 	}
 
+	/**
+	 * get maze3D
+	 */
 	@Override
 	public void getMaze3d(String name) {
 		if (mazes.get(name) != null) {
@@ -215,6 +236,9 @@ public class MyModel extends Observable implements model {
 		}
 	}
 
+	/**
+	 * save to file
+	 */
 	@Override
 	public void saveToFile(String name) {
 		if (mazes.get(name) != null) {
@@ -238,6 +262,9 @@ public class MyModel extends Observable implements model {
 		}
 	}
 
+	/**
+	 * load from file
+	 */
 	@Override
 	public void loadFromFile(String name) {
 		byte[] b = new byte[3];
@@ -275,6 +302,9 @@ public class MyModel extends Observable implements model {
 		}
 	}
 
+	/**
+	 * save solutions
+	 */
 	public void saveSolutions() {
 		ObjectOutputStream oos = null;
 		try {
@@ -286,6 +316,9 @@ public class MyModel extends Observable implements model {
 		}
 	}
 
+	/**
+	 * load solutions
+	 */
 	public void loadSolutions() {
 		ObjectInputStream ois = null;
 		try {
@@ -302,6 +335,9 @@ public class MyModel extends Observable implements model {
 
 	}
 
+	/**
+	 * save mazes
+	 */
 	@Override
 	public void saveMazes() {
 		ObjectOutputStream oos = null;
@@ -316,12 +352,15 @@ public class MyModel extends Observable implements model {
 
 	}
 
+	/**
+	 * load mazes GZIP is make it small. object can save any object. the object
+	 * must be seriazible
+	 */
 	@Override
 	public void loadMazes() {
 		ObjectInputStream ois = null;
 		try {
-			// GZIP is make it small. object can save any object. the object
-			// must be seriazible
+
 			ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("AllMazesCatch")));
 			this.mazes = (HashMap<String, Maze3d>) ois.readObject();
 			ois.close();
@@ -339,6 +378,9 @@ public class MyModel extends Observable implements model {
 		return message;
 	}
 
+	/**
+	 * exit
+	 */
 	@Override
 	public void Exit() {
 		saveSolutions();
@@ -352,6 +394,9 @@ public class MyModel extends Observable implements model {
 		this.properties = p;
 	}
 
+	/**
+	 * reset properties
+	 */
 	@Override
 	public void resetProperties() {
 		properties.setMaxNumOfThreads(50);
@@ -363,6 +408,9 @@ public class MyModel extends Observable implements model {
 
 	}
 
+	/**
+	 * erase all data
+	 */
 	public void eraseAllData() {
 		this.mazes.clear();
 		this.solutions.clear();
@@ -370,6 +418,9 @@ public class MyModel extends Observable implements model {
 		notifyObservers("display_msg Data_erased!");
 	}
 
+	/**
+	 * get mazes names
+	 */
 	public String getMazesNames() {
 		String temp = "";
 		for (String s : mazesNames) {
@@ -379,6 +430,9 @@ public class MyModel extends Observable implements model {
 		return temp;
 	}
 
+	/**
+	 * set properties
+	 */
 	public void setPropertiesEX(String[] str) {
 		if (str[1] == "GrowingTree")
 			properties.setMazeGenerator(1);
@@ -403,6 +457,11 @@ public class MyModel extends Observable implements model {
 		notifyObservers("getInformation" + " " + name);
 	}
 
+	/**
+	 * save current maze
+	 * 
+	 * @param name
+	 */
 	public void saveCurrentMaze(String name) {
 		ObjectOutputStream oos = null;
 		try {
@@ -414,6 +473,11 @@ public class MyModel extends Observable implements model {
 		}
 	}
 
+	/**
+	 * save current solution
+	 * 
+	 * @param name
+	 */
 	public void saveCurrentSolution(String name) {
 		ObjectOutputStream oos = null;
 		try {

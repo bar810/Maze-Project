@@ -2,7 +2,11 @@ package presenter;
 
 import model.model;
 import view.view;
-
+/**
+ * set properties
+ * @author bar brownshtein
+ *
+ */
 public class setProperties implements Command {
 
 	private model m;

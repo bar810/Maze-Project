@@ -1,10 +1,13 @@
 package presenter;
+
 import model.model;
 import view.view;
+
 /**
- * Generate 3d maze class
- * the class is implements Command interface and override doCommand function
- * the purpose of the class is to generate a maze with the parameters that the user put inside
+ * Generate 3d maze class the class is implements Command interface and override
+ * doCommand function the purpose of the class is to generate a maze with the
+ * parameters that the user put inside
+ * 
  * @param name
  * @param flors
  * @param rows
@@ -14,42 +17,45 @@ import view.view;
 public class generate_3d_maze implements Command {
 	private model m;
 	private view v;
-	public generate_3d_maze(view view , model model) {
+
+	public generate_3d_maze(view view, model model) {
 		this.m = model;
 		this.v = view;
 	}
+
 	@Override
 	public void doCommand(String[] args) {
-		if 	(args.length == 5){
+		if (args.length == 5) {
 			String name = args[1];
-			if(isInteger(args[2])){
+			if (isInteger(args[2])) {
 				int flos = Integer.parseInt(args[2]);
-				if(isInteger((args[3]))) {
+				if (isInteger((args[3]))) {
 					int rows = Integer.parseInt(args[3]);
-					if(isInteger(args[4])) {
+					if (isInteger(args[4])) {
 						int cols = Integer.parseInt(args[4]);
-						m.generateMaze(name, flos, rows, cols);					
+						m.generateMaze(name, flos, rows, cols);
 					}
-				}	
-			}	
-		}
-		else{
-			 v.Print("Syntax should be: generate_3d_maze [name] [flors] [rows] [colums]\n");
+				}
+			}
+		} else {
+			v.Print("Syntax should be: generate_3d_maze [name] [flors] [rows] [colums]\n");
 		}
 	}
+
 	/**
 	 * chack if the number is int
+	 * 
 	 * @param s
 	 * @return true/false
 	 */
 	public static boolean isInteger(String s) {
-	    try { 
-	        Integer.parseInt(s); 
-	    } catch(NumberFormatException e) { 
-	        return false; 
-	    } catch(NullPointerException e) {
-	        return false;
-	    }
-	    return true;
+		try {
+			Integer.parseInt(s);
+		} catch (NumberFormatException e) {
+			return false;
+		} catch (NullPointerException e) {
+			return false;
+		}
+		return true;
 	}
 }

@@ -27,6 +27,7 @@ import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 import algorithms.search.State;
 import controller.exit;
+import presenter.getMaze;
 
 /**
  * maze display class extend Canvas and make the maze view
@@ -43,6 +44,11 @@ public class mazeDisplay extends Canvas {
 	private Character fin;
 	private int[][] mazeCurFloor;
 	Solution<Position> sol;
+	
+	//try:
+	private int[][] nextFloor;
+	private int[][] previosFloor;
+	
 
 	Maze3d maze;
 	String mazeName;
@@ -115,7 +121,8 @@ public class mazeDisplay extends Canvas {
 						temp = curFloor;
 						if (tempMaze[temp + 1][character.getPos().y][character.getPos().z] != 1) {
 							character.moveUp();
-							curFloor++;
+							character.moveUp();
+							curFloor+=2;
 							mazeCurFloor = maze.getCrossSectionByZ(curFloor);
 						}
 					}
@@ -126,7 +133,8 @@ public class mazeDisplay extends Canvas {
 						temp = curFloor;
 						if (tempMaze[temp - 1][character.getPos().y][character.getPos().z] != 1) {
 							character.moveDown();
-							curFloor--;
+							character.moveDown();
+							curFloor-=2;
 							mazeCurFloor = maze.getCrossSectionByZ(curFloor);
 						}
 					}
@@ -150,8 +158,12 @@ public class mazeDisplay extends Canvas {
 			@Override
 			public void paintControl(PaintEvent e) {
 
-				if (maze != null)
+				if (maze != null){
 					curFloor = maze.getStartPosition().x;
+					nextFloor=maze.getCrossSectionByZ(curFloor+1);
+					previosFloor=maze.getCrossSectionByZ(curFloor-1);
+				
+				}
 
 				e.gc.setBackground(new Color(null, 0, 0, 0));
 				e.gc.setForeground(new Color(null, 255, 255, 255));
@@ -172,12 +184,34 @@ public class mazeDisplay extends Canvas {
 						for (int j = 0; j < mazeCurFloor[i].length; j++) {
 							int x = j * w;
 							int y = i * h;
+							
+							
+							
 							if (mazeCurFloor[i][j] != 0 && mazeCurFloor[i][j] != 2 && mazeCurFloor[i][j] != 3)
 								e.gc.fillRectangle(x, y, w, h);// ->>>here he
 																// paint the
 																// maze
-						}
+							
+							if(nextFloor[i][j]==0){
+								e.gc.drawString("U", x, y);
+							}
+							else if(previosFloor[i][j]==0){
+								e.gc.drawString("D", x, y);
+							
+							}
+						
 
+							
+						}
+					
+					
+
+
+					
+		
+					
+					
+					
 					if (flag == 1)
 						character2.draw(w, h, e.gc);
 					if (flag == 0)
@@ -193,7 +227,7 @@ public class mazeDisplay extends Canvas {
 						msg.setText("PIZZA MAZE GAME");
 						msg.setMessage("YOU GOT THE PIZZA!!!!!");
 						msg.open();
-						System.exit(0);
+					
 					}
 				}
 				if (maze != null) {

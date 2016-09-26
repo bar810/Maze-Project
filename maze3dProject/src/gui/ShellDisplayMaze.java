@@ -55,7 +55,7 @@ public class ShellDisplayMaze extends Observable {
 	String update;
 
 	protected void initWidgets() {
-		shell.setText("Display Maze");
+		shell.setText("Load Maze");
 		shell.setSize(400, 300);
 		shell.setLocation(400, 400);
 		shell.setLayout(new GridLayout(2, false));

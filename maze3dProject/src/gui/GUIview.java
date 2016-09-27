@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Canvas;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -35,12 +36,10 @@ import view.view;
 
 /*
 TODO:
-	photo selected-> how can i move the picture to the library
+
 	properties
-	when i put X close the program
-	fix the backGround layOut
-	[V] javaDoc
-	opacity for the up and down 3D
+
+
 */
 public class GUIview extends Observable implements view, Observer {
 
@@ -71,7 +70,7 @@ public class GUIview extends Observable implements view, Observer {
 		loadMazesNames();
 
 	}
-
+	
 	protected void initWidgets() {
 
 		/**
@@ -80,19 +79,20 @@ public class GUIview extends Observable implements view, Observer {
 		GridLayout grid = new GridLayout(2, false);
 		shell.setLayout(grid);
 
-		Composite buttons = new Composite(shell, SWT.FILL);
+		Composite buttons = new Composite(shell, SWT.NONE);
+	
 		RowLayout rowLayout = new RowLayout(SWT.VERTICAL);
 		buttons.setLayout(rowLayout);
 
 		shell.setText("PIZZA MAZE GAME");
-		shell.setImage(new Image(null, "img1.jpg"));
+		shell.setImage(new Image(null, "pictures/img1.jpg"));		
+		
+		mazeDisplay = new mazeDisplay(shell, SWT.NONE , Photoselected);
+		
+		mazeDisplay.setBackgroundImage(new Image(null, "pictures/backGround.jpg"));
+		
+		mazeDisplay.setLayoutData(new GridData(SWT.FILL,SWT.FILL, true, true));
 
-		mazeDisplay = new mazeDisplay(shell, SWT.BORDER | SWT.PUSH, Photoselected);
-
-		mazeDisplay.setBackgroundImage(new Image(null, "backGround.jpg"));
-
-		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		mazeDisplay.setBackground(new Color(null, 255, 255, 255));
 		mazeDisplay.setFocus();
 
 		/**
@@ -121,7 +121,7 @@ public class GUIview extends Observable implements view, Observer {
 		/**
 		 * load Maze
 		 */
-
+		
 		ShellDisplayMaze dis = new ShellDisplayMaze(names);
 		dis.addObserver(this);
 		Button btnDisplayMaze = new Button(buttons, SWT.PUSH);
@@ -130,7 +130,7 @@ public class GUIview extends Observable implements view, Observer {
 		btnDisplayMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-
+				
 				dis.start(display);
 
 			}
@@ -150,7 +150,8 @@ public class GUIview extends Observable implements view, Observer {
 		btnStartGame.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-
+	
+				mazeDisplay.setBackgroundImage(new Image(null, "pictures/white.jpg"));
 				loadCurrentMaze();
 				mazeDisplay.setMazeData(mazeName, maze);
 				mazeDisplay.redraw();
@@ -282,12 +283,11 @@ public class GUIview extends Observable implements view, Observer {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				FileDialog fd = new FileDialog(shell, SWT.OPEN);
-				fd.setText("open");
-				fd.setFilterPath("C:/Users/bar brownshtein/MyMaze/git/maze3dProject");
-				String[] filterExt = { "*.jpg" };
-				fd.setFilterExtensions(filterExt);
-				Photoselected = fd.open();
+				MessageBox msg=new MessageBox(shell);
+				msg.setText("Your photo");
+				msg.setMessage("In the future");
+				msg.open();
+				
 			}
 
 			@Override
@@ -328,6 +328,7 @@ public class GUIview extends Observable implements view, Observer {
 	@Override
 	public void getInformation(String name) {
 		this.names.add(name);
+		saveMazesNames();
 	}
 
 	@Override
@@ -377,7 +378,7 @@ public class GUIview extends Observable implements view, Observer {
 	public void saveMazesNames() {
 		ObjectOutputStream oos = null;
 		try {
-			oos = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("AllMazesNamesCatch")));
+			oos = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("files/AllMazesNamesCatch")));
 			oos.writeObject(this.names);
 			oos.close();
 		} catch (IOException e1) {
@@ -391,7 +392,7 @@ public class GUIview extends Observable implements view, Observer {
 	public void loadMazesNames() {
 		ObjectInputStream ois = null;
 		try {
-			ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("AllMazesNamesCatch")));
+			ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("files/AllMazesNamesCatch")));
 			this.names = (ArrayList<String>) ois.readObject();
 			ois.close();
 		} catch (IOException e1) {
@@ -407,7 +408,7 @@ public class GUIview extends Observable implements view, Observer {
 	public void loadCurrentMaze() {
 		ObjectInputStream ois = null;
 		try {
-			ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentMaze")));
+			ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("files/cuurentMaze")));
 			this.mazeName = (String) ois.readObject();
 			this.maze = (Maze3d) ois.readObject();
 			ois.close();
@@ -423,7 +424,7 @@ public class GUIview extends Observable implements view, Observer {
 	public void loadCurrentSolution() {
 		ObjectInputStream ois = null;
 		try {
-			ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentSolution")));
+			ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("files/cuurentSolution")));
 			this.solution = (Solution<Position>) ois.readObject();
 			ois.close();
 		} catch (IOException e1) {

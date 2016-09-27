@@ -17,7 +17,7 @@ public class Character {
 	private Image img;
 
 	public Character(String imageLocation) {
-		img = new Image(null, imageLocation);
+		img = new Image(null, "pictures/"+imageLocation);
 	}
 
 	public Position getPos() {

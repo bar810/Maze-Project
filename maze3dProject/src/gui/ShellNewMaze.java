@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Text;
  */
 public class ShellNewMaze extends Observable {
 
+	private static final Object[] String = null;
 	protected Shell shell;
 
 	public void start(Display display) {
@@ -51,21 +52,24 @@ public class ShellNewMaze extends Observable {
 		Label lblfloors = new Label(shell, SWT.NONE);
 		lblfloors.setText("floors: ");
 
-		String[] floors = "5,10,11,12,13,14,15,16,17,18,19,20".split(",");
-		Combo comboF = new Combo(shell, SWT.SINGLE | SWT.DROP_DOWN);
+		
+	
+		
+		String[] floors = "5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50".split(",");
+		Combo comboF = new Combo(shell, SWT.SINGLE | SWT.DROP_DOWN );
 		comboF.setItems(floors);
 
 		Label lblRows = new Label(shell, SWT.NONE);
 		lblRows.setText("Rows: ");
 
-		String[] rows = "5,10,11,12,13,14,15,16,17,18,19,20".split(",");
+		String[] rows = "5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50".split(",");
 		Combo comboR = new Combo(shell, SWT.SINGLE | SWT.DROP_DOWN);
 		comboR.setItems(rows);
 
 		Label lblCols = new Label(shell, SWT.NONE);
 		lblCols.setText("Cols: ");
 
-		String[] cols = "5,10,11,12,13,14,15,16,17,18,19,20".split(",");
+		String[] cols = "5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50".split(",");
 		Combo comboS = new Combo(shell, SWT.SINGLE | SWT.DROP_DOWN);
 		comboS.setItems(cols);
 

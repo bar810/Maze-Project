@@ -15,6 +15,7 @@ import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
@@ -164,8 +165,10 @@ public class mazeDisplay extends Canvas {
 					previosFloor=maze.getCrossSectionByZ(curFloor-1);
 				
 				}
-
+			
 				e.gc.setBackground(new Color(null, 0, 0, 0));
+			
+				
 				e.gc.setForeground(new Color(null, 255, 255, 255));
 
 				int width = getSize().x;
@@ -188,15 +191,21 @@ public class mazeDisplay extends Canvas {
 							
 							
 							if (mazeCurFloor[i][j] != 0 && mazeCurFloor[i][j] != 2 && mazeCurFloor[i][j] != 3)
-								e.gc.fillRectangle(x, y, w, h);// ->>>here he
-																// paint the
-																// maze
+								e.gc.fillRectangle(x, y, w, h);// ->>>here he paint the maze
+								
+							if(previosFloor[i][j]==0){
+								
+								e.gc.setBackground(new Color(null, 230, 230, 230));
+								e.gc.fillRectangle(x, y, w, h);
+								e.gc.setBackground(new Color(null, 0, 0, 0));
+					
 							
-							if(nextFloor[i][j]==0){
-								e.gc.drawString("U", x, y);
 							}
-							else if(previosFloor[i][j]==0){
-								e.gc.drawString("D", x, y);
+							if(nextFloor[i][j]==0){
+								
+								e.gc.setBackground(new Color(null ,0, 255, 255));
+								e.gc.fillRectangle(x, y, w, h);
+								e.gc.setBackground(new Color(null, 0, 0, 0));
 							
 							}
 						
@@ -204,14 +213,7 @@ public class mazeDisplay extends Canvas {
 							
 						}
 					
-					
-
-
-					
-		
-					
-					
-					
+			
 					if (flag == 1)
 						character2.draw(w, h, e.gc);
 					if (flag == 0)
@@ -271,7 +273,7 @@ public class mazeDisplay extends Canvas {
 	public void loadCurrentMaze() {
 		ObjectInputStream ois = null;
 		try {
-			ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("cuurentMaze")));
+			ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("files/cuurentMaze")));
 			this.mazeName = (String) ois.readObject();
 			this.maze = (Maze3d) ois.readObject();
 			ois.close();
@@ -352,6 +354,9 @@ public class mazeDisplay extends Canvas {
 							redraw();
 							i++;
 						}
+						
+						if(character.getPos()==maze.getGoalPosition())
+							cancel();
 
 					}
 				});

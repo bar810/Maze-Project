@@ -30,9 +30,12 @@ public class Run {
 
 		try {
 			properties = PropertiesHandler.getInstance();
+
 		} catch (FileNotFoundException e2) {
 			System.out.println("Could not find properties file, using default set");
 			properties = new Properties();
+			
+			
 			try {
 				PropertiesHandler.write(properties, "properties.xml");
 			} catch (Exception e) {

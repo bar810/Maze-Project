@@ -27,7 +27,7 @@ public class Properties implements Serializable {
 	public Properties() {
 		mazeGenerator = 1;
 		solveAlgorithm = 1;
-		runtimeEnv = 0;
+		runtimeEnv =0;
 		maxNumOfThreads = 50;
 
 	}

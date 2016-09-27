@@ -438,13 +438,13 @@ public class MyModel extends Observable implements model {
 			properties.setMazeGenerator(0);
 
 		if (str[2] == "BFS")
-			properties.setMazeGenerator(1);
+			properties.setSolveAlgorithm(1);
 		else
-			properties.setMazeGenerator(0);
+			properties.setSolveAlgorithm(0);
 		if (str[3] == "GUI")
-			properties.setMazeGenerator(0);
+			properties.setRuntimeEnv(0);
 		else
-			properties.setMazeGenerator(1);
+			properties.setRuntimeEnv(1);
 		setChanged();
 		notifyObservers("display_msg Properties_saved!");
 

@@ -45,11 +45,10 @@ public class mazeDisplay extends Canvas {
 	private Character fin;
 	private int[][] mazeCurFloor;
 	Solution<Position> sol;
-	
-	//try:
+
+	// try:
 	private int[][] nextFloor;
 	private int[][] previosFloor;
-	
 
 	Maze3d maze;
 	String mazeName;
@@ -70,7 +69,7 @@ public class mazeDisplay extends Canvas {
 			curFloor = maze.getStartPosition().x;
 			mazeCurFloor = maze.getCrossSectionByZ(curFloor);
 		}
-		
+
 		if (Photoselected == null) {
 			character = new Character("Character.jpg");
 			character2 = new Character("Character2.jpg");
@@ -123,7 +122,7 @@ public class mazeDisplay extends Canvas {
 						if (tempMaze[temp + 1][character.getPos().y][character.getPos().z] != 1) {
 							character.moveUp();
 							character.moveUp();
-							curFloor+=2;
+							curFloor += 2;
 							mazeCurFloor = maze.getCrossSectionByZ(curFloor);
 						}
 					}
@@ -135,7 +134,7 @@ public class mazeDisplay extends Canvas {
 						if (tempMaze[temp - 1][character.getPos().y][character.getPos().z] != 1) {
 							character.moveDown();
 							character.moveDown();
-							curFloor-=2;
+							curFloor -= 2;
 							mazeCurFloor = maze.getCrossSectionByZ(curFloor);
 						}
 					}
@@ -159,89 +158,96 @@ public class mazeDisplay extends Canvas {
 			@Override
 			public void paintControl(PaintEvent e) {
 
-				if (maze != null){
-					curFloor = maze.getStartPosition().x;
-					nextFloor=maze.getCrossSectionByZ(curFloor+1);
-					previosFloor=maze.getCrossSectionByZ(curFloor-1);
-				
-				}
-			
-				e.gc.setBackground(new Color(null, 0, 0, 0));
-			
-				
-				e.gc.setForeground(new Color(null, 255, 255, 255));
-
-				int width = getSize().x;
-				int height = getSize().y;
-
-				if (mazeCurFloor != null) {
-
-					character.setPos(maze.getStartPosition());
-					tar.setPos(maze.getGoalPosition());
-					fin.setPos(maze.getGoalPosition());
-
-					int w = width / mazeCurFloor[0].length;
-					int h = height / mazeCurFloor.length;
-
-					for (int i = 0; i < mazeCurFloor.length; i++)
-						for (int j = 0; j < mazeCurFloor[i].length; j++) {
-							int x = j * w;
-							int y = i * h;
-							
-							
-							
-							if (mazeCurFloor[i][j] != 0 && mazeCurFloor[i][j] != 2 && mazeCurFloor[i][j] != 3)
-								e.gc.fillRectangle(x, y, w, h);// ->>>here he paint the maze
-								
-							if(previosFloor[i][j]==0){
-								
-								e.gc.setBackground(new Color(null, 230, 230, 230));
-								e.gc.fillRectangle(x, y, w, h);
-								e.gc.setBackground(new Color(null, 0, 0, 0));
-					
-							
-							}
-							if(nextFloor[i][j]==0){
-								
-								e.gc.setBackground(new Color(null ,0, 255, 255));
-								e.gc.fillRectangle(x, y, w, h);
-								e.gc.setBackground(new Color(null, 0, 0, 0));
-							
-							}
-						
-
-							
-						}
-					
-			
-					if (flag == 1)
-						character2.draw(w, h, e.gc);
-					if (flag == 0)
-						character.draw(w, h, e.gc);
-
-					if (tar.getPos().x == curFloor)
-						tar.draw(w, h, e.gc);
-
-					if (character.getPos().x == tar.getPos().x && character.getPos().y == tar.getPos().y
-							&& character.getPos().z == tar.getPos().z) {
-						fin.draw(w, h, e.gc);
-						MessageBox msg = new MessageBox(getShell(), SWT.OK);
-						msg.setText("PIZZA MAZE GAME");
-						msg.setMessage("YOU GOT THE PIZZA!!!!!");
-						msg.open();
-					
-					}
-				}
 				if (maze != null) {
-					e.gc.drawString(
-							"Maze name: " + mazeName + "  (" + maze.getx() + "/" + maze.gety() + "/" + maze.getz() + ")"
-									+ "  Your position: (" + character.getPos().x + " , " + character.getPos().y + " , "
-									+ character.getPos().z + ")  Goal position: (" + tar.getPos().x + " , "
-									+ tar.getPos().getY() + " , " + tar.getPos().getZ() + ")Total moves:  " + moves,
-							5, 5, false);
-					moves++;
-				}
+					curFloor = maze.getStartPosition().x;
 
+					boolean next = false;
+					boolean prev = false;
+
+					if (maze.getz() - curFloor > 1) {
+						nextFloor = maze.getCrossSectionByZ(curFloor + 1);
+						next = true;
+					}
+					if (curFloor > 2) {
+						previosFloor = maze.getCrossSectionByZ(curFloor - 1);
+						prev = true;
+					}
+
+					e.gc.setBackground(new Color(null, 0, 0, 0));
+
+					e.gc.setForeground(new Color(null, 255, 255, 255));
+
+					int width = getSize().x;
+					int height = getSize().y;
+
+					if (mazeCurFloor != null) {
+
+						character.setPos(maze.getStartPosition());
+						tar.setPos(maze.getGoalPosition());
+						fin.setPos(maze.getGoalPosition());
+
+						int w = width / mazeCurFloor[0].length;
+						int h = height / mazeCurFloor.length;
+
+						for (int i = 0; i < mazeCurFloor.length; i++)
+							for (int j = 0; j < mazeCurFloor[i].length; j++) {
+								int x = j * w;
+								int y = i * h;
+
+								if (mazeCurFloor[i][j] != 0 && mazeCurFloor[i][j] != 2 && mazeCurFloor[i][j] != 3)
+									e.gc.fillRectangle(x, y, w, h);// ->>>here
+																	// he paint
+																	// the maze
+
+								if (prev == true) {
+									if (previosFloor[i][j] == 0) {
+
+										e.gc.setBackground(new Color(null, 230, 230, 230));
+										e.gc.fillRectangle(x, y, w, h);
+										e.gc.setBackground(new Color(null, 0, 0, 0));
+
+									}
+								}
+								if (next == true) {
+									if (nextFloor[i][j] == 0) {
+
+										e.gc.setBackground(new Color(null, 0, 255, 255));
+										e.gc.fillRectangle(x, y, w, h);
+										e.gc.setBackground(new Color(null, 0, 0, 0));
+
+									}
+								}
+
+							}
+
+						if (flag == 1)
+							character2.draw(w, h, e.gc);
+						if (flag == 0)
+							character.draw(w, h, e.gc);
+
+						if (tar.getPos().x == curFloor)
+							tar.draw(w, h, e.gc);
+
+						if (character.getPos().x == tar.getPos().x && character.getPos().y == tar.getPos().y
+								&& character.getPos().z == tar.getPos().z) {
+							fin.draw(w, h, e.gc);
+							MessageBox msg = new MessageBox(getShell(), SWT.OK);
+							msg.setText("PIZZA MAZE GAME");
+							msg.setMessage("YOU GOT THE PIZZA!!!!!");
+							msg.open();
+
+						}
+					}
+					if (maze != null) {
+						e.gc.drawString("Maze name: " + mazeName + "  (" + maze.getx() + "/" + maze.gety() + "/"
+								+ maze.getz() + ")" + "  Your position: (" + character.getPos().x + " , "
+								+ character.getPos().y + " , " + character.getPos().z + ")  Goal position: ("
+								+ tar.getPos().x + " , " + tar.getPos().getY() + " , " + tar.getPos().getZ()
+								+ ")Total moves:  " + moves, 5, 5, false);
+						moves++;
+					}
+
+				}
 			}
 
 		});
@@ -354,8 +360,8 @@ public class mazeDisplay extends Canvas {
 							redraw();
 							i++;
 						}
-						
-						if(character.getPos()==maze.getGoalPosition())
+
+						if (character.getPos() == maze.getGoalPosition())
 							cancel();
 
 					}

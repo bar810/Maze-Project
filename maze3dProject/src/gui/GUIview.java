@@ -34,13 +34,6 @@ import algorithms.search.Solution;
 import presenter.Properties;
 import view.view;
 
-/*
-TODO:
-
-	properties
-
-
-*/
 public class GUIview extends Observable implements view, Observer {
 
 	protected Display display;

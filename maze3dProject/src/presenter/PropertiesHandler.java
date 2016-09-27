@@ -27,7 +27,7 @@ public class PropertiesHandler {
 	 */
 	public static Properties getInstance() throws FileNotFoundException, Exception {
 		if (properties == null) {
-
+		
 			properties = read("properties.xml");
 		
 		}

@@ -200,6 +200,7 @@ public class GUIview extends Observable implements view, Observer {
 					loadCurrentSolution();
 					mazeDisplay.setSolution(solution);
 					mazeDisplay.goToTheTarget(0);
+					mazeDisplay.setFocus();
 
 				}
 			}
@@ -248,6 +249,7 @@ public class GUIview extends Observable implements view, Observer {
 					loadCurrentSolution();
 					mazeDisplay.setSolution(solution);
 					mazeDisplay.goToTheTarget(1);
+					mazeDisplay.setFocus();
 
 				}
 			}

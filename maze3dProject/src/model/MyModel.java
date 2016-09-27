@@ -30,6 +30,7 @@ import algorithms.search.Solution;
 import io.MyDecompressorInputStream;
 import io.myCompressorOutputStream;
 import presenter.Properties;
+import presenter.PropertiesHandler;
 
 /**
  * my model class this class is all the algorithms build as MVP structure
@@ -48,6 +49,7 @@ public class MyModel extends Observable implements model {
 	ExecutorService exs;
 	Maze3dGenerator mg;
 	Properties properties;
+	PropertiesHandler ph=new PropertiesHandler();
 
 	/**
 	 * Constructor
@@ -383,6 +385,12 @@ public class MyModel extends Observable implements model {
 	public void Exit() {
 		saveSolutions();
 		saveMazes();
+		try {
+			PropertiesHandler.write(properties, "properties.xml");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		setChanged();
 		notifyObservers("display_msg GOOD_BYE_!");
 	}
@@ -399,8 +407,14 @@ public class MyModel extends Observable implements model {
 	public void resetProperties() {
 		properties.setMaxNumOfThreads(50);
 		properties.setMazeGenerator(1);
-		properties.setRuntimeEnv(1);
+		properties.setRuntimeEnv(0);
 		properties.setSolveAlgorithm(1);
+		try {
+			PropertiesHandler.write(properties, "properties.xml");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		setChanged();
 		notifyObservers("display_msg Return_to_deafult_properties!");
 
@@ -434,7 +448,6 @@ public class MyModel extends Observable implements model {
 	public void setPropertiesEX(String[] str) {
 		if (str[1] == "GrowingTree")
 			properties.setMazeGenerator(1);
-		else
 			properties.setMazeGenerator(0);
 
 		if (str[2] == "BFS")
@@ -445,6 +458,12 @@ public class MyModel extends Observable implements model {
 			properties.setRuntimeEnv(0);
 		else
 			properties.setRuntimeEnv(1);
+		try {
+			PropertiesHandler.write(properties, "properties.xml");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		setChanged();
 		notifyObservers("display_msg Properties_saved!");
 

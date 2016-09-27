@@ -123,6 +123,7 @@ public class GUIview extends Observable implements view, Observer {
 		btnDisplayMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+			
 				
 				dis.start(display);
 

@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
@@ -31,6 +33,7 @@ import io.MyDecompressorInputStream;
 import io.myCompressorOutputStream;
 import presenter.Properties;
 import presenter.PropertiesHandler;
+import java.net.Socket;
 
 /**
  * my model class this class is all the algorithms build as MVP structure
@@ -50,6 +53,7 @@ public class MyModel extends Observable implements model {
 	Maze3dGenerator mg;
 	Properties properties;
 	PropertiesHandler ph=new PropertiesHandler();
+	private final String file = "newFile.zip";
 
 	/**
 	 * Constructor
@@ -62,48 +66,70 @@ public class MyModel extends Observable implements model {
 		this.properties = p;
 		loadSolutions();
 		loadMazes();
+		
 	}
 
 	/**
 	 * generate maze
 	 */
+//	@Override
+//	public void generateMaze(String name, int floor, int rows, int cols) {
+//
+//		exs.submit(new Callable<Maze3d>() {
+//
+//			@Override
+//			public Maze3d call() throws Exception {
+//
+//				Maze3d maze = (Maze3d) queryServer("127.0.0.1", 8090, "generate maze",
+//						name + "," + floor + "," + rows + "," + cols, "GrowingTree");
+//
+//				mazes.put(name, maze);
+//				mazesNames.add(name);
+//				saveMazes();
+//				saveSolutions();
+//				sendMazesNames(name);
+//				saveCurrentMaze(name);
+//				setChanged();
+//				notifyObservers("maze_ready " + name);
+//			
+//				return maze;
+//
+//			}
+//		});
+//
+//	}
+
 	@Override
 	public void generateMaze(String name, int flos, int rows, int cols) {
 
-		mg = null;
-		switch (properties.getMazeGenerator()) {
-		case 0:
-			mg = new SimpleMaze3dGenerator();
-			break;
-		case 1:
-			mg = new GrowingTreeGenerator();
-			break;
-		default:
-			break;
-		}
+
+		
+		
 		maze = mazes.get(name);
 		if (maze == null) {
-			FutureTask<Maze3d> f = new FutureTask<Maze3d>(new Callable<Maze3d>() {
+			exs.submit(new Callable<Maze3d>() {
+
 				@Override
 				public Maze3d call() throws Exception {
-					return mg.generate(flos, rows, cols);
+
+					Maze3d maze = (Maze3d) queryServer("127.0.0.1", 8090, "generate maze",
+							name + "," + flos + "," + rows + "," + cols, "GrowingTree");
+
+					mazes.put(name, maze);
+					mazesNames.add(name);
+					saveMazes();
+					saveSolutions();
+					sendMazesNames(name);
+					saveCurrentMaze(name);
+					message = "Maze: " + name + " Generated succesfully!\n";
+					setChanged();
+					notifyObservers("maze_ready " + name);
+				
+					return maze;
+
 				}
 			});
-			exs.execute(f);
-			try {
-				maze = f.get();
-			} catch (InterruptedException | ExecutionException e) {
-				e.printStackTrace();
-			}
-			mazes.put(name, maze);
-			mazesNames.add(name);
-			saveMazes();
-			saveSolutions();
-			sendMazesNames(name);
-			saveCurrentMaze(name);
-			setChanged();
-			message = "Maze: " + name + " Generated succesfully!\n";
-			notifyObservers("maze_ready " + name);
+			
 		} else {
 			message = "This name already exists!\n";
 			setChanged();
@@ -504,5 +530,33 @@ public class MyModel extends Observable implements model {
 		} catch (IOException e1) {
 		}
 	}
+	private Object queryServer(String serverIP, int serverPort, String command, String data, String property) {
+		Object result = null;
+		Socket server = null;
+		
+		try {
+			System.out.println("Trying to connect server, IP: " + serverIP + " " + serverPort);
+			server = new Socket("127.0.0.1", 8090);// (serverIP,serverPort);
+			PrintWriter writerToServer = new PrintWriter((new OutputStreamWriter(server.getOutputStream())));
+			writerToServer.println(command);
+			writerToServer.flush();
+			writerToServer.println(property);
+			writerToServer.flush();
+			writerToServer.println(data);
+			writerToServer.flush();
+			ObjectInputStream inputDecompressed = null;
+			inputDecompressed = new ObjectInputStream(server.getInputStream());
+			result = inputDecompressed.readObject();
+			writerToServer.close();
+			inputDecompressed.close();
+			server.close();
+			
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
 
+		}
+
+		return result;
+
+	}
 }

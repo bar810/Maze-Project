@@ -21,6 +21,7 @@ public class maze_ready implements Command {
 	public void doCommand(String[] args) {
 		String msg = "maze " + args[1] + " is ready !";
 		v.displayMessage(msg);
+	
 	}
 
 }

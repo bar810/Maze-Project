@@ -71,6 +71,7 @@ public class GUIview extends Observable implements view, Observer {
 		 */
 		GridLayout grid = new GridLayout(2, false);
 		shell.setLayout(grid);
+		
 
 		Composite buttons = new Composite(shell, SWT.NONE);
 	
@@ -79,6 +80,7 @@ public class GUIview extends Observable implements view, Observer {
 
 		shell.setText("PIZZA MAZE GAME");
 		shell.setImage(new Image(null, "pictures/img1.jpg"));		
+		
 		
 		mazeDisplay = new mazeDisplay(shell, SWT.NONE , Photoselected);
 		
@@ -98,7 +100,7 @@ public class GUIview extends Observable implements view, Observer {
 		ShellNewMaze win = new ShellNewMaze();
 		win.addObserver(this);
 		Button btnGenerateMaze = new Button(buttons, SWT.PUSH);
-		btnGenerateMaze.setText("New maze");
+		btnGenerateMaze.setText(" New maze  ");
 
 		btnGenerateMaze.addSelectionListener(new SelectionListener() {
 			@Override
@@ -118,7 +120,7 @@ public class GUIview extends Observable implements view, Observer {
 		ShellDisplayMaze dis = new ShellDisplayMaze(names);
 		dis.addObserver(this);
 		Button btnDisplayMaze = new Button(buttons, SWT.PUSH);
-		btnDisplayMaze.setText("Load maze");
+		btnDisplayMaze.setText(" Load maze ");
 
 		btnDisplayMaze.addSelectionListener(new SelectionListener() {
 			@Override
@@ -139,7 +141,7 @@ public class GUIview extends Observable implements view, Observer {
 		 */
 
 		Button btnStartGame = new Button(buttons, SWT.PUSH);
-		btnStartGame.setText("Start Game");
+		btnStartGame.setText(" Start Game ");
 
 		btnStartGame.addSelectionListener(new SelectionListener() {
 			@Override
@@ -161,7 +163,7 @@ public class GUIview extends Observable implements view, Observer {
 		 * Get Advice
 		 */
 		Button btnGetAdvice = new Button(buttons, SWT.PUSH);
-		btnGetAdvice.setText("Get Advice");
+		btnGetAdvice.setText(" Get Advice ");
 		btnGetAdvice.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -209,7 +211,7 @@ public class GUIview extends Observable implements view, Observer {
 		 * Solve Maze
 		 */
 		Button btnSolveMaze = new Button(buttons, SWT.PUSH);
-		btnSolveMaze.setText("Solve maze");
+		btnSolveMaze.setText("Solve maze ");
 		btnSolveMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -221,7 +223,7 @@ public class GUIview extends Observable implements view, Observer {
 					if (!(mazeDisplay.character.getPos().x == maze.getStartPosition().x
 							&& mazeDisplay.character.getPos().y == maze.getStartPosition().y
 							&& mazeDisplay.character.getPos().z == maze.getStartPosition().z)) {
-
+						System.out.println("start!=charcterPlace");
 						if (p.getSolveAlgorithm() == 1)
 							notifyObservers("solve" + " " + mazeName + " " + "bfs" + " "
 									+ mazeDisplay.character.getPos().x + "_" + mazeDisplay.character.getPos().y + "_"
@@ -244,6 +246,7 @@ public class GUIview extends Observable implements view, Observer {
 					mazeDisplay.setSolution(solution);
 					mazeDisplay.goToTheTarget(1);
 					mazeDisplay.setFocus();
+				
 
 				}
 			}
@@ -258,7 +261,7 @@ public class GUIview extends Observable implements view, Observer {
 		ShellProporties pro = new ShellProporties();
 		pro.addObserver(this);
 		Button btnProporties = new Button(buttons, SWT.PUSH);
-		btnProporties.setText("Properties");
+		btnProporties.setText(" Properties  ");
 		btnProporties.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -274,7 +277,7 @@ public class GUIview extends Observable implements view, Observer {
 		 * Your photo
 		 */
 		Button btnYourPhoto = new Button(buttons, SWT.PUSH);
-		btnYourPhoto.setText("Your Photo");
+		btnYourPhoto.setText("Your Photo ");
 		btnYourPhoto.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -295,7 +298,7 @@ public class GUIview extends Observable implements view, Observer {
 		 * exit
 		 */
 		Button btnExit = new Button(buttons, SWT.PUSH);
-		btnExit.setText("Exit");
+		btnExit.setText("       Exit      ");
 		btnExit.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -422,6 +425,7 @@ public class GUIview extends Observable implements view, Observer {
 		try {
 			ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("files/cuurentSolution")));
 			this.solution = (Solution<Position>) ois.readObject();
+			System.out.println(solution);////////////////////////////////////////
 			ois.close();
 		} catch (IOException e1) {
 		} catch (ClassNotFoundException e) {

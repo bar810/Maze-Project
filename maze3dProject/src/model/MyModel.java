@@ -111,18 +111,18 @@ public class MyModel extends Observable implements model {
 	 */
 	@Override
 	public void Solve(String name, String algo, String newPos) {
-		Maze3d newMaze = new Maze3d(mazes.get(name));
-		boolean changed = false;
-		if (newPos != "same") {
-
+		if (newPos == "same") {
+			@SuppressWarnings("unchecked")
+			Solution<Position> sol = (Solution<Position>) queryServer("127.0.0.1", 8090, "solve maze", name, algo);
+			solutions.put(name, sol);
+		}
+		else{
+			Maze3d newMaze = new Maze3d(mazes.get(name));
 			Maze3d temp2 = new Maze3d(mazes.get(name));
 			String[] p = newPos.split("_");
 			temp2.setStartPosition(
 					new Position(Integer.parseInt(p[0]), Integer.parseInt(p[1]), Integer.parseInt(p[2])));
 			newMaze = temp2;
-			changed = true;
-		}
-		if (newMaze != null) {
 			MazeSearchableAdapter mazeAdapter = new MazeSearchableAdapter(newMaze);
 			switch (algo) {
 			case "dfs":
@@ -139,16 +139,13 @@ public class MyModel extends Observable implements model {
 					solutions.put(name, new DFS().search(mazeAdapter));
 				break;
 			}
-
-			message = "Solution created!\n";
-
-			saveCurrentSolution(name);
-
 		}
+		message = "Solution created!\n";
+		saveCurrentSolution(name);	
 	}
 
 	/**
-	 * display solution
+	 * display solutionnew
 	 */
 	@Override
 	public void Display_Sol(String name) {

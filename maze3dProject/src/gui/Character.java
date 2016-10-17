@@ -4,10 +4,12 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.State;
+
 /**
- * Character class
- * in the program we used few kinds of characters
- * the different between them is only the picture so in the constructor this class get image location.
+ * Character class in the program we used few kinds of characters the different
+ * between them is only the picture so in the constructor this class get image
+ * location.
+ * 
  * @author bar brownshtein
  *
  */
@@ -17,7 +19,7 @@ public class Character {
 	private Image img;
 
 	public Character(String imageLocation) {
-		img = new Image(null, "pictures/"+imageLocation);
+		img = new Image(null, "pictures/" + imageLocation);
 	}
 
 	public Position getPos() {
@@ -27,19 +29,22 @@ public class Character {
 	public void setPos(Position pos) {
 		this.pos = pos;
 	}
-/**
- * drawing
- * @param cellWidth
- * @param cellHeight
- * @param gc
- */
+
+	/**
+	 * drawing
+	 * 
+	 * @param cellWidth
+	 * @param cellHeight
+	 * @param gc
+	 */
 	public void draw(int cellWidth, int cellHeight, GC gc) {
 		gc.drawImage(img, 0, 0, img.getBounds().width, img.getBounds().height, cellWidth * pos.z, cellHeight * pos.y,
 				cellWidth, cellHeight);
 	}
-/**
- * moving
- */
+
+	/**
+	 * moving
+	 */
 	public void moveRight() {
 		pos.z++;
 

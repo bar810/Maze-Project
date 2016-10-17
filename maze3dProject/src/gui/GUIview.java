@@ -63,7 +63,7 @@ public class GUIview extends Observable implements view, Observer {
 		loadMazesNames();
 
 	}
-	
+
 	protected void initWidgets() {
 
 		/**
@@ -71,22 +71,20 @@ public class GUIview extends Observable implements view, Observer {
 		 */
 		GridLayout grid = new GridLayout(2, false);
 		shell.setLayout(grid);
-		
 
 		Composite buttons = new Composite(shell, SWT.NONE);
-	
+
 		RowLayout rowLayout = new RowLayout(SWT.VERTICAL);
 		buttons.setLayout(rowLayout);
 
 		shell.setText("PIZZA MAZE GAME");
-		shell.setImage(new Image(null, "pictures/img1.jpg"));		
-		
-		
-		mazeDisplay = new mazeDisplay(shell, SWT.NONE , Photoselected);
-		
+		shell.setImage(new Image(null, "pictures/img1.jpg"));
+
+		mazeDisplay = new mazeDisplay(shell, SWT.NONE, Photoselected);
+
 		mazeDisplay.setBackgroundImage(new Image(null, "pictures/backGround.jpg"));
-		
-		mazeDisplay.setLayoutData(new GridData(SWT.FILL,SWT.FILL, true, true));
+
+		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		mazeDisplay.setFocus();
 
@@ -116,7 +114,7 @@ public class GUIview extends Observable implements view, Observer {
 		/**
 		 * load Maze
 		 */
-		
+
 		ShellDisplayMaze dis = new ShellDisplayMaze(names);
 		dis.addObserver(this);
 		Button btnDisplayMaze = new Button(buttons, SWT.PUSH);
@@ -125,8 +123,7 @@ public class GUIview extends Observable implements view, Observer {
 		btnDisplayMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-			
-				
+
 				dis.start(display);
 
 			}
@@ -146,7 +143,7 @@ public class GUIview extends Observable implements view, Observer {
 		btnStartGame.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-	
+
 				mazeDisplay.setBackgroundImage(new Image(null, "pictures/white.jpg"));
 				loadCurrentMaze();
 				mazeDisplay.setMazeData(mazeName, maze);
@@ -223,7 +220,6 @@ public class GUIview extends Observable implements view, Observer {
 					if (!(mazeDisplay.character.getPos().x == maze.getStartPosition().x
 							&& mazeDisplay.character.getPos().y == maze.getStartPosition().y
 							&& mazeDisplay.character.getPos().z == maze.getStartPosition().z)) {
-						System.out.println("start!=charcterPlace");
 						if (p.getSolveAlgorithm() == 1)
 							notifyObservers("solve" + " " + mazeName + " " + "bfs" + " "
 									+ mazeDisplay.character.getPos().x + "_" + mazeDisplay.character.getPos().y + "_"
@@ -246,7 +242,6 @@ public class GUIview extends Observable implements view, Observer {
 					mazeDisplay.setSolution(solution);
 					mazeDisplay.goToTheTarget(1);
 					mazeDisplay.setFocus();
-				
 
 				}
 			}
@@ -282,11 +277,11 @@ public class GUIview extends Observable implements view, Observer {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				MessageBox msg=new MessageBox(shell);
+				MessageBox msg = new MessageBox(shell);
 				msg.setText("Your photo");
 				msg.setMessage("In the future");
 				msg.open();
-				
+
 			}
 
 			@Override
@@ -425,7 +420,6 @@ public class GUIview extends Observable implements view, Observer {
 		try {
 			ois = new ObjectInputStream(new GZIPInputStream(new FileInputStream("files/cuurentSolution")));
 			this.solution = (Solution<Position>) ois.readObject();
-			System.out.println(solution);////////////////////////////////////////
 			ois.close();
 		} catch (IOException e1) {
 		} catch (ClassNotFoundException e) {

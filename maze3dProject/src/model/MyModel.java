@@ -111,6 +111,7 @@ public class MyModel extends Observable implements model {
 	 */
 	@Override
 	public void Solve(String name, String algo, String newPos) {
+		
 		if (newPos == "same") {
 			@SuppressWarnings("unchecked")
 			Solution<Position> sol = (Solution<Position>) queryServer("127.0.0.1", 8090, "solve maze", name, algo);

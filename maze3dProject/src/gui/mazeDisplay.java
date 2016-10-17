@@ -326,10 +326,6 @@ public class mazeDisplay extends Canvas {
 						if (i < loops) {
 							where = whereToMove(sol.getStates().get(i).getPosition(),
 									sol.getStates().get(i + 1).getPosition());
-							
-							
-							
-							
 
 							int temp;
 							switch (where) {

@@ -52,7 +52,7 @@ public class MyModel extends Observable implements model {
 	ExecutorService exs;
 	Maze3dGenerator mg;
 	Properties properties;
-	PropertiesHandler ph=new PropertiesHandler();
+	PropertiesHandler ph = new PropertiesHandler();
 	private final String file = "newFile.zip";
 
 	/**
@@ -66,7 +66,7 @@ public class MyModel extends Observable implements model {
 		this.properties = p;
 		loadSolutions();
 		loadMazes();
-		
+
 	}
 
 	/**
@@ -74,10 +74,6 @@ public class MyModel extends Observable implements model {
 	 */
 	@Override
 	public void generateMaze(String name, int flos, int rows, int cols) {
-
-
-		
-		
 		maze = mazes.get(name);
 		if (maze == null) {
 			exs.submit(new Callable<Maze3d>() {
@@ -97,12 +93,12 @@ public class MyModel extends Observable implements model {
 					message = "Maze: " + name + " Generated succesfully!\n";
 					setChanged();
 					notifyObservers("maze_ready " + name);
-				
+
 					return maze;
 
 				}
 			});
-			
+
 		} else {
 			message = "This name already exists!\n";
 			setChanged();
@@ -226,7 +222,7 @@ public class MyModel extends Observable implements model {
 			saveCurrentMaze(name);
 			setChanged();
 			notifyObservers("display_msg display_" + name + "_maze");
-			if(properties.getRuntimeEnv()==1)
+			if (properties.getRuntimeEnv() == 1)
 				System.out.println(mazes.get(name));
 		} else {
 			message = "Couldn't find maze by name!\n";
@@ -447,7 +443,7 @@ public class MyModel extends Observable implements model {
 	public void setPropertiesEX(String[] str) {
 		if (str[1] == "GrowingTree")
 			properties.setMazeGenerator(1);
-			properties.setMazeGenerator(0);
+		properties.setMazeGenerator(0);
 
 		if (str[2] == "BFS")
 			properties.setSolveAlgorithm(1);
@@ -503,10 +499,11 @@ public class MyModel extends Observable implements model {
 		} catch (IOException e1) {
 		}
 	}
+
 	private Object queryServer(String serverIP, int serverPort, String command, String data, String property) {
 		Object result = null;
 		Socket server = null;
-		
+
 		try {
 			System.out.println("Trying to connect server, IP: " + serverIP + " " + serverPort);
 			server = new Socket("127.0.0.1", 8090);// (serverIP,serverPort);
@@ -523,7 +520,7 @@ public class MyModel extends Observable implements model {
 			writerToServer.close();
 			inputDecompressed.close();
 			server.close();
-			
+
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 
@@ -532,4 +529,6 @@ public class MyModel extends Observable implements model {
 		return result;
 
 	}
+
+
 }

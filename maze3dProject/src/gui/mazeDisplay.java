@@ -12,6 +12,10 @@ import java.util.zip.GZIPInputStream;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.MouseWheelListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
@@ -148,6 +152,55 @@ public class mazeDisplay extends Canvas {
 			}
 		});
 
+		
+		addMouseWheelListener(new MouseWheelListener() {
+			
+		
+			@Override
+			public void mouseScrolled(MouseEvent e) {
+				tempMaze = maze.getMaze();
+				int noches=e.count;
+			
+				if(noches>0){
+					if(maze.getx()-curFloor>=1){
+				
+					if (tempMaze[curFloor + 1][character.getPos().y][character.getPos().z] != 1) {
+					character.moveUp();
+					character.moveUp();
+					curFloor += 2;
+					mazeCurFloor = maze.getCrossSectionByZ(curFloor);
+					redraw();
+				}
+				}
+					
+				}
+					if(noches<0){
+						if(curFloor>0){
+						if (tempMaze[curFloor - 1][character.getPos().y][character.getPos().z] != 1) {
+							character.moveDown();
+							character.moveDown();
+							curFloor -= 2;
+							mazeCurFloor = maze.getCrossSectionByZ(curFloor);
+							redraw();
+						}
+						}
+				}
+				
+				
+			}
+
+			public void mouseScrolled1(MouseEvent arg0) {
+			}
+		
+			});
+	
+	
+	
+
+		
+
+	
+		
 		this.addPaintListener(new PaintListener() {
 
 			int moves = 0;

@@ -72,33 +72,6 @@ public class MyModel extends Observable implements model {
 	/**
 	 * generate maze
 	 */
-//	@Override
-//	public void generateMaze(String name, int floor, int rows, int cols) {
-//
-//		exs.submit(new Callable<Maze3d>() {
-//
-//			@Override
-//			public Maze3d call() throws Exception {
-//
-//				Maze3d maze = (Maze3d) queryServer("127.0.0.1", 8090, "generate maze",
-//						name + "," + floor + "," + rows + "," + cols, "GrowingTree");
-//
-//				mazes.put(name, maze);
-//				mazesNames.add(name);
-//				saveMazes();
-//				saveSolutions();
-//				sendMazesNames(name);
-//				saveCurrentMaze(name);
-//				setChanged();
-//				notifyObservers("maze_ready " + name);
-//			
-//				return maze;
-//
-//			}
-//		});
-//
-//	}
-
 	@Override
 	public void generateMaze(String name, int flos, int rows, int cols) {
 
